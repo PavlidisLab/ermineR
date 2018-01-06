@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<title>Using the generic ermineJ distribution</title>
+</head>
+
+<body>
+	<h1>Using the generic ermineJ distribution</h1>
+
+	<h2>Quick overview</h2>
+
+	<p>The following are the basic steps. Operating-system specific instructions follow below.</p>
+
+	<ol>
+
+		<li>Unpack the distribution. You should have a directory called 'ermineJ-3.0' or something like that.</li>
+		<li>Set the environment variable <code> ERMINEJ_HOME </code> to this directory. Confirm that the variable is set
+			using <code> echo $ERMINEJ_HOME </code> (Unix); you can use <code> env </code> under Windows. You must also set the
+			JAVA_HOME variable. Make sure the scripts in $ERMINEJ_HOME/bin have the executable permission.
+		</li>
+		<li>Add <code> $ERMINEJ_HOME/bin </code> to your path, if you want to make it easier to execute.
+		</li>
+		<li>You can now execute ermineJ by running the script ermineJ.sh (Unix) or ermineJ.bat (Windows) in the bin
+			directory.</li>
+
+	</ol>
+
+	<p>
+		You may need to do
+		<code> chmod a+x $ERMINEJ_HOME/bin/ermineJ.sh </code>
+		to make the file executable on your system.
+	</p>
+
+	<p>
+		By default, executing the script will simply print usage instructions. To fire up the gui, use
+		<code> $ERMINEJ_HOME/bin/ermineJ.sh -G </code>
+		.
+	</p>
+
+	<p>By using the other options, you can cause ermineJ to run an analysis non-interactively.</p>
+
+	<h2>Linux, Solaris and other *nix's</h2>
+
+	<p>Unpack the distribution in your home directory (~) or in ~/bin, or somewhere else you have permission and can
+		find later.</p>
+
+	<h3>If your shell is bash</h3>
+
+	<ol>
+		<li>export ERMINEJ_HOME=/path/to/erminej</li>
+	</ol>
+
+	<h3>If your shell is csh or tcsh</h3>
+
+	<ol>
+		<li><code> setenv ERMINEJ_HOME=/path/to/erminej </code></li>
+	</ol>
+
+	<h2>MacOSX</h2>
+
+	<p>We recommend using the provided ErmineJ MacOSX Application package. It should work much as it does under Unix.</p>
+	<h2>Windows</h2>
+
+	<p>We recommend using the windows installer, but you can follow steps similar to the above:</p>
+
+	<ol>
+		<li>Right click on the "my computer" icon on your desktop.</li>
+		<li>Select "properties" from the menu.</li>
+		<li>From the window that comes up, select the "advanced" tab.</li>
+		<li>Click "Environment variables"</li>
+		<li>Under "System variables", click "New".</li>
+		<li>Enter ERMINEJ_HOME for the name, and the path to your download under value (Might be something like
+			C:\Program Files\ermineJ-3.0).</li>
+		<li>Click ok, and ok again, then once more.</li>
+	</ol>
+
+	<p>Follow similar steps to set the JAVA_HOME environment variable, which should point to your java installation
+		directory (e.g., C:\Program Files\Java\jre6)</p>
+
+
+	<script type="text/javascript">
+		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl."
+				: "http://www.");
+		document
+				.write(unescape("%3Cscript src='"
+						+ gaJsHost
+						+ "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<script type="text/javascript">
+		var pageTracker = _gat._getTracker('UA-4826357-1');
+		pageTracker._initData();
+		pageTracker._trackPageview();
+	</script>
+</body>
+</html>
+
