@@ -9,7 +9,7 @@ getGemmaAnnot = function(chipName,chipFile,annotType = c('bioProcess','noParents
         annotType = paste0('_',annotType)
     }
     if(file.exists(chipFile) & !overwrite){
-        print('the file already exists. not overwriting')
+        warning('annotation file already exists. not overwriting')
         return(FALSE)
     }
     download.file(paste0('http://chibi.ubc.ca/microannots/',chipName,annotType,'.an.txt.gz'),
