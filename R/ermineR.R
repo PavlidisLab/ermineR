@@ -67,21 +67,14 @@ ermineR = function(annotation, #
                    output, # 
                    # quantile = 50,
                    expression =NULL,
-                   minClassSize = 10,
-                   maxClassSize =100){
+                   minClassSize = 10, #
+                   maxClassSize =100){ # 
     
     test = match.arg(test)
     pAdjust = match.arg(pAdjust)
     geneReplicates = match.arg(geneReplicates)
         
     # set ermineJ home so users won't have to
-    ermineJHome = system.file("ermineJ-3.0.3",package = 'ermineR')
-    Sys.setenv(ERMINEJ_HOME = ermineJHome)
-    
-    # iterations are mandatory for GSR and CORR
-    # scoreFile and scoreColumn mandatory for  all but CORR
-    # expression is only used by CORR
-    
     ermineJHome = system.file("ermineJ-3.0.3",package = 'ermineR')
     Sys.setenv(ERMINEJ_HOME = ermineJHome)
     
