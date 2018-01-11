@@ -13,8 +13,11 @@
 #' If providing a custom annotation file, see
 #' \url{erminej.msl.ubc.ca/help/input-files/gene-annotations/}
 #' @param scores A file path or a data.frame. See \url{http://erminej.msl.ubc.ca/help/input-files/gene-scores/}
-#' for information about format for this file.
-#' @param scoreColumn Integer. Which column of the \code{scores} includes the scores
+#' for information about format for this file. (for test = ORA, GSR and ROC)
+#' @param scoreColumn Integer. Which column of the \code{scores} includes the scores  (for test = ORA, GSR and ROC)
+#' @param expression A file path or a data frame. Expression data. (test = CORR only)
+#' Necesary correlation anaylsis. See http://erminej.msl.ubc.ca/help/input-files/gene-expression-profiles/
+#' for data format
 #' @param bigIsBetter Logical. If TRUE large scores are considered to be higher.
 #' \code{FALSE} by default (as in p values).
 #' @param customGeneSets Directory path or a named list of character strings.
@@ -23,57 +26,59 @@
 #' See \url{http://erminej.msl.ubc.ca/help/input-files/gene-sets/}
 #' for information about format for this file. If you are providing a list, only gene
 #' symbols are accepted.
-#' @param filterNonSpecific 
-#' @param geneReplicates 
-#' @param iterations 
-#' @param genesOut Logical. Should output include gene symbols
+#' @param filterNonSpecific Logical. Filter out non-specific probes
+#' @param geneReplicates  What to do when genes have multiple scores in input file
+#'  (due to multiple probes per gene)
+#' @param genesOut Logical.  Should output include gene symbols for all gene sets 
 #' @param logTrans Logical. Should the data be log transformed. Recommended for 
 #' p values. \code{TRUE} by default
 #' @param pAdjust Which multiple test correction method to use. Can be "FDR" or
 #' 'Westfall-Young' (slower).
-#' @param test 
+#' @param test Method for computing gene set significance
+#' @param iterations Number of iterations (test = GSR and CORR methods only)
+#' @param stats Method for computing raw class statistics (test = GSR only)
+#' @param quantile Integer. Quantile to use. (stats = meanAboveQuantile only)
 #' @param geneSetDescription "Latest_GO", a file path that leads to a GO XML file
 #' or a URL that leads to a go ontology file that ends with rdf-xml.gz. Note that
 #' this is a mandatory argument. It defaults to Latest_GO but that option won't
 #' work if you don't have a working internet connection. See \url{http://erminej.msl.ubc.ca/help/input-files/gene-set-descriptions/}
 #' for details
-#' @param multifunctionalityCorrection 
-#' @param output 
-#' @param quantile 
-#' @param expression A file path or a data frame.Expression data. 
-#' Necesary correlation anaylsis. See http://erminej.msl.ubc.ca/help/input-files/gene-expression-profiles/
-#' for data format
-#' @param minClassSize 
-#' @param maxClassSize 
+#' @param multifunctionalityCorrection Logical. Should the resutls be corrected 
+#' for multifunctionality.
+#' @param output Output file name.
+#' @param minClassSize minimum class size
+#' @param maxClassSize maximum class size
 #'
 #' @return
 #' @export
 #'
 #' @examples
-ermineR = function(annotation, #
-                   scores = NULL, #
-                   scoreColumn = 2, #
-                   bigIsBetter = FALSE, # 
-                   customGeneSets = NULL, #
-                   filterNonSpecific = TRUE, # 
-                   geneReplicates = c('mean','best'), # 
-                   iterations = NULL, # 
-                   genesOut = FALSE, # 
-                   logTrans = FALSE, # 
-                   pAdjust = c('FDR','Westfall-Young'), #
-                   test = c('ORA','GSR','CORR','ROC'), # 
-                   geneSetDescription = 'Latest_GO', # 
-                   multifunctionalityCorrection = TRUE, # 
-                   output, # 
-                   # quantile = 50,
+ermineR = function(annotation, 
+                   scores = NULL, 
+                   scoreColumn = 2, 
                    expression =NULL,
-                   minClassSize = 10, #
-                   maxClassSize =100){ # 
+                   bigIsBetter = FALSE, 
+                   customGeneSets = NULL,
+                   filterNonSpecific = TRUE, 
+                   geneReplicates = c('mean','best'),
+                   genesOut = FALSE, 
+                   logTrans = FALSE, 
+                   pAdjust = c('FDR','Westfall-Young'),
+                   test = c('ORA','GSR','CORR','ROC'), 
+                   iterations = NULL, 
+                   stats = c('mean','quantile','meanAboveQuantile','precisionRecall'),
+                   quantile= 50,
+                   geneSetDescription = 'Latest_GO', 
+                   multifunctionalityCorrection = TRUE, 
+                   output, 
+                   minClassSize = 10, 
+                   maxClassSize =100){ 
     
     test = match.arg(test)
     pAdjust = match.arg(pAdjust)
     geneReplicates = match.arg(geneReplicates)
-        
+    stats = match.arg(stats)
+    
     # set ermineJ home so users won't have to
     ermineJHome = system.file("ermineJ-3.0.3",package = 'ermineR')
     Sys.setenv(ERMINEJ_HOME = ermineJHome)
@@ -81,7 +86,7 @@ ermineR = function(annotation, #
     arguments = list()
     
     # get the annotation data.  -------------
-    if(class(annotation)=='character'){
+    if('character' %in% class(annotation)){
         if(!file.exists(annotation)){
             print('Attempting to download annotation file')
             tryCatch(suppressWarnings(getGemmaAnnot(annotation,
@@ -113,7 +118,7 @@ ermineR = function(annotation, #
     } # and else, geneSetDescription is a local file
     
     assertthat::is.string(geneSetDescription) # geneSetDescription is mandatory
-    arguments$geneSetDescription = paste('--scoreCol',shQuote(geneSetDescription))
+    arguments$geneSetDescription = paste('--classFile',shQuote(geneSetDescription))
     
     # get scores -------------
     if ('data.frame' %in% class(scores)){
@@ -122,10 +127,31 @@ ermineR = function(annotation, #
         scores = temp
     } # otherwise it is a character that leads to a score file
     
-    if(!test %in% c('ORA','GSR','ROC')){
-        arguments$scores = paste('--scoreFile',scores)
+    if(test %in% c('ORA','GSR','ROC')){
+        if(is.null(scores)){
+            stop(test,' method requries a score list.')
+        }
+        arguments$scores = paste('--scoreFile',shQuote(scores))
     } else if(test == 'CORR' & !is.null(scores)){
         warning('You have provided gene scores to use with correlation analysis.',
+                ' This is not possible. Gene scores will be ignored. Please refer',
+                ' to ermineJ documentation.')
+    }
+    
+    # get expression data -------------
+    if('data.frame' %in% class(expression)){
+        temp = tempfile()
+        expression %>% readr::write_tsv(temp)
+        expression = temp
+    }
+    
+    if(test=='CORR'){
+        if(is.null(expression)){
+            stop('CORR method requires expression data')
+        }
+        arguments(expression) = paste('--rawData',shQuote(expression))
+    } else if(test %in% c('ORA','GSR','ROC') & !is.null(expression)){
+        warning('You have provided expression data to use with ',test,' method.',
                 ' This is not possible. Gene scores will be ignored. Please refer',
                 ' to ermineJ documentation.')
     }
@@ -193,15 +219,37 @@ ermineR = function(annotation, #
     assertthat::is.number(maxClassSize)
     arguments$maxClassSize = paste('--maxClassSize',maxClassSize)
     
+    if(test == 'GSR'){
+        stats = switch(stats,
+                       mean = 'MEAN',
+                       quantile = 'QUANTILE',
+                       meanAboveQuantile = 'MEAN_ABOVE_QUANTILE',
+                       precisionRecall = 'PRECISIONRECALL')
+        
+        arguments$stats = paste('--stats',stats)
+        if(stats =='MEAN_ABOVE_QUANTILE'){
+            assertthat::is.number(quantile)
+            arguments$quantile = paste('--quantile',quantile)
+        }
+    } # no warning because there's a default
+    
+    assertthat::is.number(scoreColumn)
+    arguments$scoreColumn = paste('--scoreCol',scoreColumn)
+    
+    
     # make the sh call ---------------
-    if(Sys.info()['sysname' =='Windows']){
+    if(Sys.info()['sysname'] =='Windows'){
         ermineExec = file.path(ermineJHome,'bin/ermineJ.bat')
     } else{
         ermineExec = file.path(ermineJHome,'bin/ermineJ.sh')
     }
     
-    system2(shQuote(ermineExec),
-            args = unlist(arguments))
+    browser()
+    
+    # system2(shQuote(ermineExec),
+    #         args = unlist(arguments))
+    
+    system(paste(shQuote(ermineExec),paste(unlist(arguments),collapse = ' ')))
 
 
 }
