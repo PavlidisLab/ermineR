@@ -45,7 +45,8 @@
 #' for details
 #' @param multifunctionalityCorrection Logical. Should the resutls be corrected 
 #' for multifunctionality.
-#' @param output Output file name.
+#' @param output Output file name. 
+#' @param return If results should be returned. Set to FALSE if you only want a file
 #' @param minClassSize minimum class size
 #' @param maxClassSize maximum class size
 #'
@@ -70,7 +71,8 @@ ermineR = function(annotation,
                    quantile= 50,
                    geneSetDescription = 'Latest_GO', 
                    multifunctionalityCorrection = TRUE, 
-                   output, 
+                   output = NULL, 
+                   return = TRUE,
                    minClassSize = 10, 
                    maxClassSize =100){ 
     
@@ -211,8 +213,13 @@ ermineR = function(annotation,
         arguments$multifunctionalityCorrection = '-nomf'
     }
     
-    assertthat::is.string(output)
-    arguments$output = paste('--output',shQuote(output))
+    if(!is.null(output)){
+        assertthat::is.string(output)
+        arguments$output = paste('--output',shQuote(output))
+    }else{
+        output = tempfile()
+        arguments$output = paste('--output',shQuote(output))
+    }
     
     assertthat::is.number(minClassSize)
     arguments$minClassSize = paste('--minClassSize',minClassSize)
@@ -244,12 +251,12 @@ ermineR = function(annotation,
         ermineExec = file.path(ermineJHome,'bin/ermineJ.sh')
     }
     
-    browser()
-    
     # system2(shQuote(ermineExec),
     #         args = unlist(arguments))
     
     system(paste(shQuote(ermineExec),paste(unlist(arguments),collapse = ' ')))
 
-
+    if(return){
+        return(readErmineJOutput(output))
+    }
 }

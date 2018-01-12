@@ -11,7 +11,7 @@ ermineR(annotation, scores = NULL, scoreColumn = 2, expression = NULL,
   "ROC"), iterations = NULL, stats = c("mean", "quantile",
   "meanAboveQuantile", "precisionRecall"), quantile = 50,
   geneSetDescription = "Latest_GO", multifunctionalityCorrection = TRUE,
-  output, minClassSize = 10, maxClassSize = 100)
+  output = NULL, return = TRUE, minClassSize = 10, maxClassSize = 100)
 }
 \arguments{
 \item{annotation}{Annotation. A file path, a data.frame or a platform short 
@@ -73,6 +73,8 @@ for details}
 for multifunctionality.}
 
 \item{output}{Output file name.}
+
+\item{return}{If results should be returned. Set to FALSE if you only want a file}
 
 \item{minClassSize}{minimum class size}
 
