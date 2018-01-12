@@ -8,7 +8,7 @@ Imports:
     magrittr,
     readr,
     assertthat
-License: What license is it under?
+License: Apache License 2.0
 Encoding: UTF-8
 LazyData: true
 Suggests: testthat
