@@ -10,7 +10,8 @@ test_that('ermineJ basic usage',{
                      output = 'out',
                      genesOut = TRUE,
                      return = TRUE)
-    testthat::expect_is(result1,'data.frame')
+    testthat::expect_is(result1,'list')
+    testthat::expect_is(result1$results,'data.frame')
     
     # check column names and integers give the same results
     result2 = ermineR(annotation = 'Generic_human.txt',
@@ -20,7 +21,7 @@ test_that('ermineJ basic usage',{
                        genesOut = TRUE,
                        return = TRUE)
     
-    testthat::expect_identical(result1,result2)
+    testthat::expect_identical(result1$results,result2$results)
     
     
     # paul's test
@@ -32,7 +33,7 @@ test_that('ermineJ basic usage',{
                            stats="precisionRecall", 
                            genesOut=T,
                            logTrans=T)
-    testthat::expect_is(lmebtr.enrich,'data.frame')
+    testthat::expect_is(lmebtr.enrich,'list')
     
 })
 

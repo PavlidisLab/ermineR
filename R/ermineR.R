@@ -286,7 +286,7 @@ ermineR = function(annotation,
     
     # system2(shQuote(ermineExec),
     #         args = unlist(arguments))
-    cat(paste(shQuote(ermineExec),paste(unlist(arguments),collapse = ' ')))
+    call = paste(shQuote(ermineExec),paste(unlist(arguments),collapse = ' '))
     # system(paste(shQuote(ermineExec),paste(unlist(arguments),collapse = ' ')), ignore.stderr = TRUE)
     response = system2(ermineExec,args = arguments, stdout = TRUE, stderr = TRUE)
     
@@ -295,6 +295,8 @@ ermineR = function(annotation,
     }
     
     if(return){
-        return(readErmineJOutput(output))
+        out = readErmineJOutput(output)
+        out$details$call = call
+        return(out)
     }
 }
