@@ -4,7 +4,7 @@
 \alias{ermineR}
 \title{Run ermineJ analysis}
 \usage{
-ermineR(annotation, scores = NULL, scoreColumn = 2, threshold = 0.001,
+ermineR(annotation, scores = NULL, scoreColumn = 1, threshold = 0.001,
   expression = NULL, bigIsBetter = FALSE, customGeneSets = NULL,
   filterNonSpecific = TRUE, geneReplicates = c("mean", "best"),
   genesOut = FALSE, logTrans = FALSE, pAdjust = c("FDR",
@@ -24,10 +24,15 @@ Pavlidis Lab. If this file isn't a valid annotation file, the function will fail
 If providing a custom annotation file, see
 \url{erminej.msl.ubc.ca/help/input-files/gene-annotations/}}
 
-\item{scores}{A file path or a data.frame. See \url{http://erminej.msl.ubc.ca/help/input-files/gene-scores/}
-for information about format for this file. (for test = ORA, GSR and ROC)}
+\item{scores}{A data.frame. Rownames have to be gene identifiers, followed by
+any number of columns. The column used for scoring is chosen by \code{scoreColumn}.
+See \url{http://erminej.msl.ubc.ca/help/input-files/gene-scores/}
+for information abot how to specify scores. (for test = ORA, GSR and ROC)}
 
-\item{scoreColumn}{Integer. Which column of the \code{scores} includes the scores  (for test = ORA, GSR and ROC)}
+\item{scoreColumn}{Integer or character. Which column of the \code{scores} data.frame
+to use as scores. Defaults to first column of \code{scores}. See
+\url{http://erminej.msl.ubc.ca/help/input-files/gene-scores/} for details.
+(for test = ORA, GSR and ROC)}
 
 \item{threshold}{Double. Score threshold (test = ORA only)}
 

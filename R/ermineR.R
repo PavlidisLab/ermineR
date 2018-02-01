@@ -1,6 +1,14 @@
-
+# #' Universal inputs
+# #' 
+# #' @keywords internal
+# #' 
+# #' @name universalInputs
+# NULL
 # config file isnt supported
 # different annotation styles aren't supported
+
+
+
 
 #' Run ermineJ analysis
 #'
@@ -12,9 +20,14 @@
 #' Pavlidis Lab. If this file isn't a valid annotation file, the function will fail.
 #' If providing a custom annotation file, see
 #' \url{erminej.msl.ubc.ca/help/input-files/gene-annotations/}
-#' @param scores A file path or a data.frame. See \url{http://erminej.msl.ubc.ca/help/input-files/gene-scores/}
-#' for information about format for this file. (for test = ORA, GSR and ROC)
-#' @param scoreColumn Integer. Which column of the \code{scores} includes the scores  (for test = ORA, GSR and ROC)
+#' @param scores A data.frame. Rownames have to be gene identifiers, followed by
+#' any number of columns. The column used for scoring is chosen by \code{scoreColumn}.
+#' See \url{http://erminej.msl.ubc.ca/help/input-files/gene-scores/}
+#' for information abot how to specify scores. (for test = ORA, GSR and ROC)
+#' @param scoreColumn Integer or character. Which column of the \code{scores} data.frame
+#' to use as scores. Defaults to first column of \code{scores}. See
+#' \url{http://erminej.msl.ubc.ca/help/input-files/gene-scores/} for details.
+#' (for test = ORA, GSR and ROC)
 #' @param threshold Double. Score threshold (test = ORA only)
 #' @param expression A file path or a data frame. Expression data. (test = CORR only)
 #' Necesary correlation anaylsis. See http://erminej.msl.ubc.ca/help/input-files/gene-expression-profiles/
@@ -57,7 +70,7 @@
 #' @examples
 ermineR = function(annotation, 
                    scores = NULL, 
-                   scoreColumn = 2, 
+                   scoreColumn = 1, 
                    threshold = 0.001,
                    expression =NULL,
                    bigIsBetter = FALSE, 
@@ -87,6 +100,12 @@ ermineR = function(annotation,
     ermineJHome = system.file("ermineJ-3.0.3",package = 'ermineR')
     Sys.setenv(ERMINEJ_HOME = ermineJHome)
     
+    if('rJava' %in% installed.packages() & Sys.getenv('JAVA_HOME') == ''){
+        rJava::.jinit()
+        javaHome = rJava::.jcall('java/lang/System', 'S', 'getProperty', 'java.home')
+        Sys.setenv(JAVA_HOME=javaHome)
+    }
+    
     arguments = list()
     
     # get the annotation data.  -------------
@@ -111,7 +130,7 @@ ermineR = function(annotation,
     
     # get gene set descriptions -------------
     if(geneSetDescription == 'Latest_GO'){
-        temp = tempfile(fileext = 'xml.gz')
+        temp = tempfile(fileext = '.xml.gz')
         download.file('http://archive.geneontology.org/latest-termdb/go_daily-termdb.rdf-xml.gz',
                       destfile = temp)
         geneSetDescription = temp
@@ -124,23 +143,33 @@ ermineR = function(annotation,
     assertthat::is.string(geneSetDescription) # geneSetDescription is mandatory
     arguments$geneSetDescription = paste('--classFile',shQuote(geneSetDescription))
     
-    # get scores -------------
-    if ('data.frame' %in% class(scores)){
-        temp = tempfile()
-        scores %>% readr::write_tsv(temp)
-        scores = temp
-    } # otherwise it is a character that leads to a score file
-    
+    # get scores and score columns-------------
     if(test %in% c('ORA','GSR','ROC')){
         if(is.null(scores)){
             stop(test,' method requries a score list.')
         }
-        arguments$scores = paste('--scoreFile',shQuote(scores))
-    } else if(test == 'CORR' & !is.null(scores)){
+        assertthat::assert_that('data.frame' %in% class(scores))
+        temp = tempfile()
+        scores %>% write.table(temp,sep='\t',quote=FALSE)
+        arguments$scores = paste('--scoreFile',shQuote(temp))
+        
+        # score columns. accept integer or string. If string, convert into integer
+        # always add 1 because gemma starts counting from 2
+        assertthat::assert_that(
+            assertthat::is.number(scoreColumn) | 
+                assertthat::is.string(scoreColumn))
+        
+        if(assertthat::is.string(scoreColumn)){
+            scoreColumn = which(names(scores) %in% scoreColumn)
+        }
+        scoreColumn = scoreColumn +1
+        arguments$scoreColumn = paste('--scoreCol',scoreColumn)
+    } else if(test == "CORR" & !is.null(scores)){
         warning('You have provided gene scores to use with correlation analysis.',
                 ' This is not possible. Gene scores will be ignored. Please refer',
                 ' to ermineJ documentation.')
     }
+    
     
     # get expression data -------------
     if('data.frame' %in% class(expression)){
@@ -247,9 +276,6 @@ ermineR = function(annotation,
         }
     } # no warning because there's a default
     
-    assertthat::is.number(scoreColumn)
-    arguments$scoreColumn = paste('--scoreCol',scoreColumn)
-    
     
     # make the sh call ---------------
     if(Sys.info()['sysname'] =='Windows'){
@@ -260,7 +286,7 @@ ermineR = function(annotation,
     
     # system2(shQuote(ermineExec),
     #         args = unlist(arguments))
-    
+    cat(paste(shQuote(ermineExec),paste(unlist(arguments),collapse = ' ')))
     system(paste(shQuote(ermineExec),paste(unlist(arguments),collapse = ' ')), ignore.stderr = TRUE)
 
     if(return){
