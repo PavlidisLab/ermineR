@@ -287,8 +287,13 @@ ermineR = function(annotation,
     # system2(shQuote(ermineExec),
     #         args = unlist(arguments))
     cat(paste(shQuote(ermineExec),paste(unlist(arguments),collapse = ' ')))
-    system(paste(shQuote(ermineExec),paste(unlist(arguments),collapse = ' ')), ignore.stderr = TRUE)
-
+    # system(paste(shQuote(ermineExec),paste(unlist(arguments),collapse = ' ')), ignore.stderr = TRUE)
+    response = system2(ermineExec,args = arguments, stdout = TRUE, stderr = TRUE)
+    
+    if(grepl(pattern = "JAVA_HOME is not defined correctly",x = response[1])){
+        stop('JAVA_HOME is not defined correctly. Install rJava or use Sys.setenv() to set JAVA_HOME')
+    }
+    
     if(return){
         return(readErmineJOutput(output))
     }

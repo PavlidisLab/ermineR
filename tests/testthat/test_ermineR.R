@@ -35,3 +35,20 @@ test_that('ermineJ basic usage',{
     testthat::expect_is(lmebtr.enrich,'data.frame')
     
 })
+
+
+test_that('bad java home error',{
+    oldJavaHome = Sys.getenv('JAVA_HOME')
+    Sys.setenv(JAVA_HOME = 'bahHumbug')
+    
+    annotation = 'Generic_human.txt'
+    scores <-read.table("scoreFile.txt", header=T, row.names = 1)
+    
+    expect_error(ermineR(annotation = 'Generic_human.txt',
+                      scoreColumn = 1,
+                      scores = scores,
+                      output = 'out',
+                      genesOut = TRUE,
+                      return = TRUE),
+                 'JAVA_HOME is not defined correctly')
+})
