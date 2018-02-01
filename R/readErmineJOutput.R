@@ -11,7 +11,7 @@ readErmineJOutput = function(output){
     frame = suppressMessages(suppressWarnings(
         readr::read_tsv(output,skip = dataStart-1,col_names=TRUE)
         ))
-    frame = out[1:(nrow(out)-1),2:ncol(out)]
+    frame = frame[1:(nrow(frame)-1),2:ncol(frame)]
     
     settingsStart = fileHead %>% grep(x = .,pattern = 'Settings')
     settingsEnd = fileHead %>%  grep(x = .,pattern = '#!----')
@@ -21,7 +21,7 @@ readErmineJOutput = function(output){
     details %<>% strsplit('=')
     names(details) = details %>% purrr::map_chr(1) %>% trimws()
     details %<>% purrr::map(2) %>% purrr::map(trimws)
-    suppressWarnings({doublables = details %>% map(as.double)})
+    suppressWarnings({doublables = details %>% purrr::map(as.double)})
     details[!is.na(doublables)] = doublables[!is.na(doublables)]
     
     return(list(results = frame,

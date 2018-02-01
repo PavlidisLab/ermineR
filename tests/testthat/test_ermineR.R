@@ -52,4 +52,5 @@ test_that('bad java home error',{
                       genesOut = TRUE,
                       return = TRUE),
                  'JAVA_HOME is not defined correctly')
+    Sys.setenv(JAVA_HOME = oldJavaHome)
 })
