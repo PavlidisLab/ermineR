@@ -171,14 +171,14 @@ ermineR = function(annotation,
     }
     
     
-    # get expression data -------------
-    if('data.frame' %in% class(expression)){
-        temp = tempfile()
-        expression %>% readr::write_tsv(temp)
-        expression = temp
-    }
-    
+    # get expression data ------------
     if(test=='CORR'){
+        if('data.frame' %in% class(expression)){
+            temp = tempfile()
+            expression %>% readr::write_tsv(temp)
+            expression = temp
+        }
+        
         if(is.null(expression)){
             stop('CORR method requires expression data')
         }
