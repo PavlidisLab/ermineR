@@ -15,6 +15,7 @@
 #' @param scores A file path or a data.frame. See \url{http://erminej.msl.ubc.ca/help/input-files/gene-scores/}
 #' for information about format for this file. (for test = ORA, GSR and ROC)
 #' @param scoreColumn Integer. Which column of the \code{scores} includes the scores  (for test = ORA, GSR and ROC)
+#' @param threshold Double. Score threshold (test = ORA only)
 #' @param expression A file path or a data frame. Expression data. (test = CORR only)
 #' Necesary correlation anaylsis. See http://erminej.msl.ubc.ca/help/input-files/gene-expression-profiles/
 #' for data format
@@ -57,6 +58,7 @@
 ermineR = function(annotation, 
                    scores = NULL, 
                    scoreColumn = 2, 
+                   threshold = 0.001,
                    expression =NULL,
                    bigIsBetter = FALSE, 
                    customGeneSets = NULL,
@@ -175,6 +177,11 @@ ermineR = function(annotation,
     }
     
     # other variables -----
+    if(test == 'ORA'){
+        assertthat::is.number(threshold)
+        arguments$threshold = paste('--threshold', threshold)
+    }
+    
     if(bigIsBetter){
         arguments$bigIsBetter = '-b'
     }
