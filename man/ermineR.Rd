@@ -4,14 +4,15 @@
 \alias{ermineR}
 \title{Run ermineJ analysis}
 \usage{
-ermineR(annotation, scores = NULL, scoreColumn = 2, expression = NULL,
-  bigIsBetter = FALSE, customGeneSets = NULL, filterNonSpecific = TRUE,
-  geneReplicates = c("mean", "best"), genesOut = FALSE, logTrans = FALSE,
-  pAdjust = c("FDR", "Westfall-Young"), test = c("ORA", "GSR", "CORR",
-  "ROC"), iterations = NULL, stats = c("mean", "quantile",
-  "meanAboveQuantile", "precisionRecall"), quantile = 50,
-  geneSetDescription = "Latest_GO", multifunctionalityCorrection = TRUE,
-  output = NULL, return = TRUE, minClassSize = 10, maxClassSize = 100)
+ermineR(annotation, scores = NULL, scoreColumn = 2, threshold = 0.001,
+  expression = NULL, bigIsBetter = FALSE, customGeneSets = NULL,
+  filterNonSpecific = TRUE, geneReplicates = c("mean", "best"),
+  genesOut = FALSE, logTrans = FALSE, pAdjust = c("FDR",
+  "Westfall-Young"), test = c("ORA", "GSR", "CORR", "ROC"),
+  iterations = NULL, stats = c("mean", "quantile", "meanAboveQuantile",
+  "precisionRecall"), quantile = 50, geneSetDescription = "Latest_GO",
+  multifunctionalityCorrection = TRUE, output = NULL, return = TRUE,
+  minClassSize = 10, maxClassSize = 100)
 }
 \arguments{
 \item{annotation}{Annotation. A file path, a data.frame or a platform short 
@@ -27,6 +28,8 @@ If providing a custom annotation file, see
 for information about format for this file. (for test = ORA, GSR and ROC)}
 
 \item{scoreColumn}{Integer. Which column of the \code{scores} includes the scores  (for test = ORA, GSR and ROC)}
+
+\item{threshold}{Double. Score threshold (test = ORA only)}
 
 \item{expression}{A file path or a data frame. Expression data. (test = CORR only)
 Necesary correlation anaylsis. See http://erminej.msl.ubc.ca/help/input-files/gene-expression-profiles/
@@ -50,7 +53,7 @@ symbols are accepted.}
 \item{genesOut}{Logical.  Should output include gene symbols for all gene sets}
 
 \item{logTrans}{Logical. Should the data be log transformed. Recommended for 
-p values. \code{TRUE} by default}
+p values. \code{FALSE} by default}
 
 \item{pAdjust}{Which multiple test correction method to use. Can be "FDR" or
 'Westfall-Young' (slower).}

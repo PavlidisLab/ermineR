@@ -32,7 +32,7 @@
 #'  (due to multiple probes per gene)
 #' @param genesOut Logical.  Should output include gene symbols for all gene sets 
 #' @param logTrans Logical. Should the data be log transformed. Recommended for 
-#' p values. \code{TRUE} by default
+#' p values. \code{FALSE} by default
 #' @param pAdjust Which multiple test correction method to use. Can be "FDR" or
 #' 'Westfall-Young' (slower).
 #' @param test Method for computing gene set significance
