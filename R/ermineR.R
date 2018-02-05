@@ -100,9 +100,15 @@ ermineR = function(annotation,
     ermineJHome = system.file("ermineJ-3.0.3",package = 'ermineR')
     Sys.setenv(ERMINEJ_HOME = ermineJHome)
     
-    if('rJava' %in% installed.packages() & Sys.getenv('JAVA_HOME') == ''){
-        rJava::.jinit()
-        javaHome = rJava::.jcall('java/lang/System', 'S', 'getProperty', 'java.home')
+    if(Sys.getenv('JAVA_HOME') == ''){
+        if(grepl('^darwin',R.version$os)){ # detect macs
+            javaHome = system2('/usr/libexec/java_home',stdout = TRUE)
+        } else if('rJava' %in% installed.packages()){
+            rJava::.jinit()
+            javaHome = rJava::.jcall('java/lang/System', 'S', 'getProperty', 'java.home')
+        } else{
+            stop('JAVA_HOME cannot be detected. Please ')
+        }
         Sys.setenv(JAVA_HOME=javaHome)
     }
     
