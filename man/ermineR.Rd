@@ -50,8 +50,6 @@ See \url{http://erminej.msl.ubc.ca/help/input-files/gene-sets/}
 for information about format for this file. If you are providing a list, only gene
 symbols are accepted.}
 
-\item{filterNonSpecific}{Logical. Filter out non-specific probes}
-
 \item{geneReplicates}{What to do when genes have multiple scores in input file
 (due to multiple probes per gene)}
 
@@ -87,6 +85,9 @@ for multifunctionality.}
 \item{minClassSize}{minimum class size}
 
 \item{maxClassSize}{maximum class size}
+}
+\value{
+A list
 }
 \description{
 Run ermineJ analysis

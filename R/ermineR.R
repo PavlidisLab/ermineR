@@ -9,38 +9,19 @@
 
 
 
-
 #' Run ermineJ analysis
-#'
-#' @param annotation Annotation. A file path, a data.frame or a platform short 
-#' name (eg. GPL127). If given a platform short name it will be downloaded
-#' from annotation repository of Pavlidis Lab (\url{www.chibi.ubc.ca/microannots/}). 
-#' Note that if there is a file or folder with the same name as the platform 
-#' name in the directory, that file will be read instead of getting a copy from 
-#' Pavlidis Lab. If this file isn't a valid annotation file, the function will fail.
-#' If providing a custom annotation file, see
-#' \url{erminej.msl.ubc.ca/help/input-files/gene-annotations/}
-#' @param scores A data.frame. Rownames have to be gene identifiers, followed by
-#' any number of columns. The column used for scoring is chosen by \code{scoreColumn}.
-#' See \url{http://erminej.msl.ubc.ca/help/input-files/gene-scores/}
-#' for information abot how to specify scores. (for test = ORA, GSR and ROC)
-#' @param scoreColumn Integer or character. Which column of the \code{scores} data.frame
-#' to use as scores. Defaults to first column of \code{scores}. See
-#' \url{http://erminej.msl.ubc.ca/help/input-files/gene-scores/} for details.
-#' (for test = ORA, GSR and ROC)
-#' @param threshold Double. Score threshold (test = ORA only)
+#' @inheritParams annotation
+#' @inheritParams scores
+#' @inheritParams threshold
 #' @param expression A file path or a data frame. Expression data. (test = CORR only)
 #' Necesary correlation anaylsis. See http://erminej.msl.ubc.ca/help/input-files/gene-expression-profiles/
 #' for data format
-#' @param bigIsBetter Logical. If TRUE large scores are considered to be higher.
-#' \code{FALSE} by default (as in p values).
 #' @param customGeneSets Directory path or a named list of character strings.
 #' Use this option to create your own gene sets. If you provide directory you can
 #' specify probes or gene symbols to include in your gene sets. 
 #' See \url{http://erminej.msl.ubc.ca/help/input-files/gene-sets/}
 #' for information about format for this file. If you are providing a list, only gene
 #' symbols are accepted.
-#' @param filterNonSpecific Logical. Filter out non-specific probes
 #' @param geneReplicates  What to do when genes have multiple scores in input file
 #'  (due to multiple probes per gene)
 #' @param genesOut Logical.  Should output include gene symbols for all gene sets 
@@ -64,7 +45,7 @@
 #' @param minClassSize minimum class size
 #' @param maxClassSize maximum class size
 #'
-#' @return
+#' @return A list
 #' @export
 #'
 #' @examples
@@ -221,11 +202,8 @@ ermineR = function(annotation,
         arguments$bigIsBetter = '-b'
     }
     
-    if(filterNonSpecific){
-        arguments$filterNonSpecific = '--filterNonSpecific'
-    }
     
-    arguments$geneReplicates = toupper(geneReplicates)
+    arguments$geneReplicates = paste('--reps',toupper(geneReplicates))
     
     if(!is.null(iterations)){
         if(test %in% c('GSR','CORR')){
