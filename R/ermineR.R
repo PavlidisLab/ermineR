@@ -115,7 +115,7 @@ ermineR = function(annotation,
         
         # if all fails
         if(javaHome == ''){
-            stop('JAVA_HOME cannot be detected. Please ')
+            stop('JAVA_HOME cannot be detected. Please make sure java is installed')
         }
         Sys.setenv(JAVA_HOME=javaHome)
     }
