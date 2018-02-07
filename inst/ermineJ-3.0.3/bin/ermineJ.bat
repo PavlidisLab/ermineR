@@ -73,7 +73,7 @@ goto endInit
 if "%ERMINEJ_OPTS%"=="" SET ERMINEJ_OPTS="-Xmx3g"
 SET ERMINEJ_JAVA_EXE="%JAVA_HOME%\bin\java.exe"
 
-if exist "%ERMINEJ_JAVA_EXE%"  goto run
+if exist %ERMINEJ_JAVA_EXE%  goto run
 echo.
 echo ERROR: ERMINEJ_JAVA_EXE is set to an invalid path.
 echo ERMINEJ_JAVA_EXE = %ERMINEJ_JAVA_EXE%
