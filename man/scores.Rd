@@ -16,8 +16,14 @@ to use as scores. Defaults to first column of \code{scores}. See
 
 \item{bigIsBetter}{Logical. If TRUE large scores are considered to be higher.
 \code{FALSE} by default (as in p values).}
+
+\item{logTrans}{Logical. Should the data be log transformed. Recommended for 
+p values. \code{FALSE} by default}
 }
 \description{
 scores
 }
+\keyword{GSR}
+\keyword{ORA}
+\keyword{ROC}
 \keyword{internal}

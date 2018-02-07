@@ -13,37 +13,13 @@
 #' @inheritParams annotation
 #' @inheritParams scores
 #' @inheritParams threshold
-#' @param expression A file path or a data frame. Expression data. (test = CORR only)
-#' Necesary correlation anaylsis. See http://erminej.msl.ubc.ca/help/input-files/gene-expression-profiles/
-#' for data format
-#' @param customGeneSets Directory path or a named list of character strings.
-#' Use this option to create your own gene sets. If you provide directory you can
-#' specify probes or gene symbols to include in your gene sets. 
-#' See \url{http://erminej.msl.ubc.ca/help/input-files/gene-sets/}
-#' for information about format for this file. If you are providing a list, only gene
-#' symbols are accepted.
-#' @param geneReplicates  What to do when genes have multiple scores in input file
-#'  (due to multiple probes per gene)
-#' @param genesOut Logical.  Should output include gene symbols for all gene sets 
-#' @param logTrans Logical. Should the data be log transformed. Recommended for 
-#' p values. \code{FALSE} by default
-#' @param pAdjust Which multiple test correction method to use. Can be "FDR" or
-#' 'Westfall-Young' (slower).
+#' @inheritParams expression
+#' @inheritParams generalStats
 #' @param test Method for computing gene set significance
-#' @param iterations Number of iterations (test = GSR and CORR methods only)
-#' @param stats Method for computing raw class statistics (test = GSR only)
-#' @param quantile Integer. Quantile to use. (stats = meanAboveQuantile only)
-#' @param geneSetDescription "Latest_GO", a file path that leads to a GO XML file
-#' or a URL that leads to a go ontology file that ends with rdf-xml.gz. Note that
-#' this is a mandatory argument. It defaults to Latest_GO but that option won't
-#' work if you don't have a working internet connection. See \url{http://erminej.msl.ubc.ca/help/input-files/gene-set-descriptions/}
-#' for details
-#' @param multifunctionalityCorrection Logical. Should the resutls be corrected 
-#' for multifunctionality.
-#' @param output Output file name. 
-#' @param return If results should be returned. Set to FALSE if you only want a file
-#' @param minClassSize minimum class size
-#' @param maxClassSize maximum class size
+#' @inheritParams iterations 
+#' @inheritParams GSRstats
+#' @inheritParams geneSetOpts
+#' @inheritParams returnOpts
 #'
 #' @return A list
 #' @export
