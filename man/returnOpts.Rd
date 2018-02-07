@@ -2,7 +2,11 @@
 % Please edit documentation in R/commonArguments.R
 \name{returnOpts}
 \alias{returnOpts}
+\alias{returnOptions}
 \title{returnOptions}
+\usage{
+returnOptions(genesOut = FALSE, output = NULL, return = TRUE)
+}
 \arguments{
 \item{genesOut}{Logical.  Should output include gene symbols for all gene sets}
 

@@ -3,6 +3,9 @@
 \name{annotation}
 \alias{annotation}
 \title{annotation}
+\usage{
+annotation(annotation)
+}
 \arguments{
 \item{annotation}{Annotation. A file path, a data.frame or a platform short 
 name (eg. GPL127). If given a platform short name it will be downloaded

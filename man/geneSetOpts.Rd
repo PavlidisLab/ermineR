@@ -3,6 +3,10 @@
 \name{geneSetOpts}
 \alias{geneSetOpts}
 \title{geneSetOpts}
+\usage{
+geneSetOpts(geneSetDescription = "Latest_GO", customGeneSets = NULL,
+  minClassSize = 10, maxClassSize = 100)
+}
 \arguments{
 \item{geneSetDescription}{"Latest_GO", a file path that leads to a GO XML file
 or a URL that leads to a go ontology file that ends with rdf-xml.gz. Note that

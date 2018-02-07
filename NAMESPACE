@@ -2,8 +2,12 @@
 
 export("%<>%")
 export("%>%")
+export(corr)
 export(ermineR)
 export(getGemmaAnnot)
+export(gsr)
+export(ora)
 export(readErmineJOutput)
+export(roc)
 importFrom(magrittr,"%<>%")
 importFrom(magrittr,"%>%")

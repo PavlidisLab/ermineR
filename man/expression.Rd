@@ -3,6 +3,9 @@
 \name{expression}
 \alias{expression}
 \title{expression}
+\usage{
+expression(expression)
+}
 \arguments{
 \item{expression}{A file path or a data frame. Expression data. (test = CORR only)
 Necesary correlation anaylsis. See http://erminej.msl.ubc.ca/help/input-files/gene-expression-profiles/

@@ -5,7 +5,7 @@ test_that('ermineJ basic usage',{
     scores <-read.table("scoreFile.txt", header=T, row.names = 1)
     
     result1 = ermineR(annotation = 'Generic_human.txt',
-                     scoreColumn = 1,
+                     scoreColumn = 2,
                      scores = scores,
                      output = 'out',
                      genesOut = TRUE,
@@ -15,7 +15,7 @@ test_that('ermineJ basic usage',{
     
     # check column names and integers give the same results
     result2 = ermineR(annotation = 'Generic_human.txt',
-                       scoreColumn = 'Astrocyte',
+                       scoreColumn = 'Endothelial',
                        scores = scores,
                        output = 'out',
                        genesOut = TRUE,
@@ -35,6 +35,63 @@ test_that('ermineJ basic usage',{
                            logTrans=T)
     testthat::expect_is(lmebtr.enrich,'list')
     
+    
+    # lilah's test
+    annots = read.table('AnnotationsCommonGenes.txt')
+    annots = unique(annots)
+    
+    annots %>% readr::write_tsv('newAnnots.tsv')
+    
+    scores =  read.table('SCZcombine.txt',header=TRUE) %>% {rownames(.) = .[,1];.}
+    AnnoFile = 'newAnnots.tsv'
+    SCZtest = ermineR(annotation = AnnoFile,
+            scores = scores,
+            scoreColumn = 'FC_mod0',
+            test = 'GSR')
+    
+})
+
+test_that('test wrappers',{
+    scores <-read.table("scoreFile.txt", header=T, row.names = 1)
+    
+    oraOut = ora(annotation = 'Generic_human.txt',
+                 scores = scores,
+                 scoreColumn = 2,
+                 threshold = 0.001)
+    
+    testthat::expect_is(oraOut,'list')
+    testthat::expect_is(oraOut$results,'data.frame')
+    testthat::expect_equal(oraOut$details$classScoreMethod, 'ORA')
+    
+    gsrOut = gsr(annotation = 'Generic_human.txt',
+                 scores = scores,
+                 scoreColumn = 2,
+                 iterations = 24,
+                 bigIsBetter = FALSE,
+                 logTrans = FALSE,
+                 stats = 'quantile')
+    testthat::expect_is(gsrOut,'list')
+    testthat::expect_is(gsrOut$results,'data.frame')
+    testthat::expect_equal(gsrOut$details$classScoreMethod, 'GSR')
+    testthat::expect_equal(gsrOut$details$iterations, 24)
+    
+    
+    corrOut = corr(expression = 'expression.tsv',
+                   annotation = 'GPL96_noParents.an.txt.gz',
+                   iterations = 22)
+    testthat::expect_is(corrOut,'list')
+    testthat::expect_is(corrOut$results,'data.frame')
+    testthat::expect_equal(corrOut$details$classScoreMethod, 'CORR')
+    # testthat::expect_equal(corrOut$details$iterations, 22)
+    
+    rocOut = roc(annotation = 'Generic_human.txt',
+                 scores = scores,
+                 scoreColumn = 2,
+                 bigIsBetter = TRUE,
+                 multifunctionalityCorrection = FALSE) # doesn't seem to work for now
+    testthat::expect_is(rocOut,'list')
+    testthat::expect_is(rocOut$results,'data.frame')
+    testthat::expect_equal(rocOut$details$classScoreMethod, 'ROC')
 })
 
 

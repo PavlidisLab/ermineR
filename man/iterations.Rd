@@ -3,6 +3,9 @@
 \name{iterations}
 \alias{iterations}
 \title{iterations}
+\usage{
+iterations(iterations)
+}
 \arguments{
 \item{iterations}{Number of iterations (test = GSR and CORR methods only)}
 }

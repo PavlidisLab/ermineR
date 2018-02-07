@@ -1,20 +1,3 @@
-#' annotation
-#' 
-#' @keywords internal universal
-#' 
-#' @name annotation
-#' 
-#' @param annotation Annotation. A file path, a data.frame or a platform short 
-#' name (eg. GPL127). If given a platform short name it will be downloaded
-#' from annotation repository of Pavlidis Lab (\url{www.chibi.ubc.ca/microannots/}). 
-#' Note that if there is a file or folder with the same name as the platform 
-#' name in the directory, that file will be read instead of getting a copy from 
-#' Pavlidis Lab. If this file isn't a valid annotation file, the function will fail.
-#' If providing a custom annotation file, see
-#' \url{erminej.msl.ubc.ca/help/input-files/gene-annotations/}
-#' 
-NULL
-
 
 #' scores
 #' 
@@ -35,7 +18,28 @@ NULL
 #' @param logTrans Logical. Should the data be log transformed. Recommended for 
 #' p values. \code{FALSE} by default
 #' 
-NULL
+scores = function(scores,
+                  scoreColumn = 1,
+                  bigIsBetter = FALSE,
+                  logTrans = FALSE){}
+
+#' annotation
+#' 
+#' @keywords internal universal
+#' 
+#' @name annotation
+#' 
+#' @param annotation Annotation. A file path, a data.frame or a platform short 
+#' name (eg. GPL127). If given a platform short name it will be downloaded
+#' from annotation repository of Pavlidis Lab (\url{www.chibi.ubc.ca/microannots/}). 
+#' Note that if there is a file or folder with the same name as the platform 
+#' name in the directory, that file will be read instead of getting a copy from 
+#' Pavlidis Lab. If this file isn't a valid annotation file, the function will fail.
+#' If providing a custom annotation file, see
+#' \url{erminej.msl.ubc.ca/help/input-files/gene-annotations/}
+#' 
+annotation = function(annotation){}
+
 
 #' threshold
 #' 
@@ -45,19 +49,59 @@ NULL
 #' 
 #' @param threshold Double. Score threshold (test = ORA only)
 #'
-NULL
+threshold = function(threshold = 0.001){}
 
-#' returnOptions
+
+
+#' GSRstats
+#' 
+#' @keywords internal GSR
+#' 
+#' @name GSRstats
+#' 
+#' @param stats Method for computing raw class statistics (test = GSR only)
+#' @param quantile Integer. Quantile to use. (stats = meanAboveQuantile only)
+GSRstats = function(stats =  c('mean','quantile','meanAboveQuantile','precisionRecall'),
+                    quantile = 50){}
+
+#' expression
+#' 
+#' @keywords internal CORR
+#' 
+#' @name expression
+#' 
+#' @param expression A file path or a data frame. Expression data. (test = CORR only)
+#' Necesary correlation anaylsis. See http://erminej.msl.ubc.ca/help/input-files/gene-expression-profiles/
+#' for data format
+#' 
+expression = function(expression){}
+
+#' iterations
+#' 
+#' @keywords internal GSR CORR
+#' 
+#' @name iterations
+#' 
+#' @param iterations Number of iterations (test = GSR and CORR methods only)
+#' 
+iterations = function(iterations){}
+
+#' generalStats
 #' 
 #' @keywords internal universal
 #' 
-#' @name returnOpts
+#' @name generalStats
 #' 
-#' @param genesOut Logical.  Should output include gene symbols for all gene sets 
-#' @param output Output file name. 
-#' @param return If results should be returned. Set to FALSE if you only want a file
+#' @param geneReplicates  What to do when genes have multiple scores in input file
+#'  (due to multiple probes per gene)
+#' @param pAdjust Which multiple test correction method to use. Can be "FDR" or
+#' 'Westfall-Young' (slower).
+#' @param multifunctionalityCorrection Logical. Should the resutls be corrected 
+#' for multifunctionality.
 #' 
-NULL
+generalStats = function(geneReplicates = c('mean','best'),
+                        pAdjust = c('FDR','Westfall-Young'),
+                        multifunctionalityCorrection = TRUE){}
 
 
 #' geneSetOpts
@@ -79,54 +123,21 @@ NULL
 #' symbols are accepted.
 #' @param minClassSize minimum class size
 #' @param maxClassSize maximum class size
-NULL
+geneSetOpts = function(geneSetDescription = 'Latest_GO',
+                       customGeneSets = NULL,
+                       minClassSize = 10,
+                       maxClassSize = 100){}
 
-
-#' GSRstats
-#' 
-#' @keywords internal GSR
-#' 
-#' @name GSRstats
-#' 
-#' @param stats Method for computing raw class statistics (test = GSR only)
-#' @param quantile Integer. Quantile to use. (stats = meanAboveQuantile only)
-
-NULL
-
-#' generalStats
+#' returnOptions
 #' 
 #' @keywords internal universal
 #' 
-#' @name generalStats
+#' @name returnOpts
 #' 
-#' @param geneReplicates  What to do when genes have multiple scores in input file
-#'  (due to multiple probes per gene)
-#' @param pAdjust Which multiple test correction method to use. Can be "FDR" or
-#' 'Westfall-Young' (slower).
-#' @param multifunctionalityCorrection Logical. Should the resutls be corrected 
-#' for multifunctionality.
+#' @param genesOut Logical.  Should output include gene symbols for all gene sets 
+#' @param output Output file name. 
+#' @param return If results should be returned. Set to FALSE if you only want a file
 #' 
-NULL
-
-#' expression
-#' 
-#' @keywords internal CORR
-#' 
-#' @name expression
-#' 
-#' @param expression A file path or a data frame. Expression data. (test = CORR only)
-#' Necesary correlation anaylsis. See http://erminej.msl.ubc.ca/help/input-files/gene-expression-profiles/
-#' for data format
-#' 
-#' 
-NULL
-
-#' iterations
-#' 
-#' @keywords internal GSR CORR
-#' 
-#' @name iterations
-#' 
-#' @param iterations Number of iterations (test = GSR and CORR methods only)
-#' 
-NULL
+returnOptions = function(genesOut =FALSE,
+                         output = NULL,
+                         return = TRUE){}

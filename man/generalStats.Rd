@@ -3,6 +3,10 @@
 \name{generalStats}
 \alias{generalStats}
 \title{generalStats}
+\usage{
+generalStats(geneReplicates = c("mean", "best"), pAdjust = c("FDR",
+  "Westfall-Young"), multifunctionalityCorrection = TRUE)
+}
 \arguments{
 \item{geneReplicates}{What to do when genes have multiple scores in input file
 (due to multiple probes per gene)}

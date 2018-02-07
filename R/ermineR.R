@@ -46,7 +46,7 @@ ermineR = function(annotation,
                    output = NULL, 
                    return = TRUE,
                    minClassSize = 10, 
-                   maxClassSize =100){ 
+                   maxClassSize =100){
     test = match.arg(test)
     pAdjust = match.arg(pAdjust)
     geneReplicates = match.arg(geneReplicates)
@@ -172,7 +172,7 @@ ermineR = function(annotation,
         if(is.null(expression)){
             stop('CORR method requires expression data')
         }
-        arguments(expression) = paste('--rawData',shQuote(expression))
+        arguments$expression = paste('--rawData',shQuote(expression))
     } else if(test %in% c('ORA','GSR','ROC') & !is.null(expression)){
         warning('You have provided expression data to use with ',test,' method.',
                 ' This is not possible. Gene scores will be ignored. Please refer',
@@ -211,7 +211,7 @@ ermineR = function(annotation,
     if(!is.null(iterations)){
         if(test %in% c('GSR','CORR')){
             assertthat::is.number(iterations)
-            arguments$iterations = paste('--iters', iters)
+            arguments$iterations = paste('--iters', iterations)
         } else{
             warning('You have provided an iteration count for ',test,' anaylsis. ',
                     'This is not possible. Iterations will be ignored. Please',
@@ -230,7 +230,7 @@ ermineR = function(annotation,
                                'Westfall-Young' = '--mtc WESTFALLYOUNG')
     
     
-    arguments$test = paste('--test', test)
+    arguments$test  = paste('--test', test)
     
     if(!multifunctionalityCorrection){
         arguments$multifunctionalityCorrection = '-nomf'

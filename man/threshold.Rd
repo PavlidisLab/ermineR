@@ -3,6 +3,9 @@
 \name{threshold}
 \alias{threshold}
 \title{threshold}
+\usage{
+threshold(threshold = 0.001)
+}
 \arguments{
 \item{threshold}{Double. Score threshold (test = ORA only)}
 }
