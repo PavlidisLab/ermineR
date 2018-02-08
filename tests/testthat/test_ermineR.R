@@ -23,6 +23,7 @@ test_that('ermineJ basic usage',{
     
     testthat::expect_identical(result1$results,result2$results)
     
+
     
     # paul's test
     scores<-read.table("chd8.pvals.txt", header=T, row.names = 1)
@@ -35,6 +36,21 @@ test_that('ermineJ basic usage',{
                            logTrans=T)
     testthat::expect_is(lmebtr.enrich,'list')
     
+})
+
+test_that('geting annotations from gemma',{
+    scores <-read.table("scoreFile.txt", header=T, row.names = 1)
+    
+    
+    # try to get annotation from gemma
+    result = ermineR(annotation = 'Generic_human',
+                      scoreColumn = 'Endothelial',
+                      scores = scores,
+                      output = 'out',
+                      genesOut = TRUE,
+                      return = TRUE)
+    testthat::expect_is(result,'list')
+    testthat::expect_is(result$results,'data.frame')    
 })
 
 test_that('test wrappers',{
