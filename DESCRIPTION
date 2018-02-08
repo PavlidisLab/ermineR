@@ -10,8 +10,9 @@ Imports:
     assertthat,
     glue,
     purrr,
-    fs
-License: Apache License 2.0
+    fs,
+    utils
+License: Apache License 2.0 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Suggests: 

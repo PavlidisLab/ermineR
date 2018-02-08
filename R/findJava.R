@@ -35,7 +35,7 @@ findJava = function(){
         }
     }
     # if OS specific methods fail, 
-    if(javaHome =='' & 'rJava' %in% installed.packages()){
+    if(javaHome =='' & 'rJava' %in% utils::installed.packages()){
         rJava::.jinit()
         javaHome = rJava::.jcall('java/lang/System', 'S', 'getProperty', 'java.home')
         if(Sys.info()[1] == 'Windows'){

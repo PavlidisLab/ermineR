@@ -87,8 +87,8 @@ ermineR = function(annotation,
     # get gene set descriptions -------------
     if(geneSetDescription == 'Latest_GO'){
         temp = tempfile(fileext = '.xml.gz')
-        download.file('http://archive.geneontology.org/latest-termdb/go_daily-termdb.rdf-xml.gz',
-                      destfile = temp,quiet= TRUE)
+        utils::download.file('http://archive.geneontology.org/latest-termdb/go_daily-termdb.rdf-xml.gz',
+                             destfile = temp,quiet= TRUE)
         geneSetDescription = temp
     }else if(!file.exists(geneSetDescription)){
         message('Attempting to download gene set description from link')
@@ -106,7 +106,7 @@ ermineR = function(annotation,
         }
         assertthat::assert_that('data.frame' %in% class(scores))
         temp = tempfile()
-        scores %>% write.table(temp,sep='\t',quote=FALSE)
+        scores %>% utils::write.table(temp,sep='\t',quote=FALSE)
         arguments$scores = paste('--scoreFile',shQuote(temp))
         
         # score columns. accept integer or string. If string, convert into integer

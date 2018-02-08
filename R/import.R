@@ -6,3 +6,6 @@ magrittr::`%>%`
 #' @importFrom magrittr %<>%
 #' @export
 magrittr::`%<>%`
+
+
+globalVariables(".")
