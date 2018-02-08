@@ -35,20 +35,6 @@ test_that('ermineJ basic usage',{
                            logTrans=T)
     testthat::expect_is(lmebtr.enrich,'list')
     
-    
-    # lilah's test
-    annots = read.table('AnnotationsCommonGenes.txt')
-    annots = unique(annots)
-    
-    annots %>% readr::write_tsv('newAnnots.tsv')
-    
-    scores =  read.table('SCZcombine.txt',header=TRUE) %>% {rownames(.) = .[,1];.}
-    AnnoFile = 'newAnnots.tsv'
-    SCZtest = ermineR(annotation = AnnoFile,
-            scores = scores,
-            scoreColumn = 'FC_mod0',
-            test = 'GSR')
-    
 })
 
 test_that('test wrappers',{
