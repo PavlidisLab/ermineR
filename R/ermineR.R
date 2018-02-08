@@ -257,7 +257,7 @@ ermineR = function(annotation,
     }
     
     if(!any(grepl(pattern ='^Done!$',response))){
-        stop('Something went wrong. Blame the dev')
+        stop('Something went wrong. Blame the dev\n',paste(response,collapse= '\n'))
     }
     
     # degub version
