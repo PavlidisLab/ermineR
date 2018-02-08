@@ -5,21 +5,21 @@ test_that('ermineJ basic usage',{
     scores <-read.table("scoreFile.txt", header=T, row.names = 1)
     
     result1 = ermineR(annotation = 'Generic_human.txt',
-                     scoreColumn = 2,
-                     scores = scores,
-                     output = 'out',
-                     genesOut = TRUE,
-                     return = TRUE)
+                      scoreColumn = 2,
+                      scores = scores,
+                      output = 'out',
+                      genesOut = TRUE,
+                      return = TRUE)
     testthat::expect_is(result1,'list')
     testthat::expect_is(result1$results,'data.frame')
     
     # check column names and integers give the same results
     result2 = ermineR(annotation = 'Generic_human.txt',
-                       scoreColumn = 'Endothelial',
-                       scores = scores,
-                       output = 'out',
-                       genesOut = TRUE,
-                       return = TRUE)
+                      scoreColumn = 'Endothelial',
+                      scores = scores,
+                      output = 'out',
+                      genesOut = TRUE,
+                      return = TRUE)
     
     testthat::expect_identical(result1$results,result2$results)
     
@@ -89,11 +89,29 @@ test_that('bad java home error',{
     scores <-read.table("scoreFile.txt", header=T, row.names = 1)
     
     expect_error(ermineR(annotation = 'Generic_human.txt',
-                      scoreColumn = 1,
-                      scores = scores,
-                      output = 'out',
-                      genesOut = TRUE,
-                      return = TRUE),
+                         scoreColumn = 1,
+                         scores = scores,
+                         output = 'out',
+                         genesOut = TRUE,
+                         return = TRUE),
                  'JAVA_HOME is not defined correctly')
     Sys.setenv(JAVA_HOME = oldJavaHome)
 })
+
+test_that('successful java detection',{
+    oldJavaHome = Sys.getenv('JAVA_HOME')
+    Sys.setenv(JAVA_HOME = '')
+    
+    annotation = 'Generic_human.txt'
+    scores <-read.table("scoreFile.txt", header=T, row.names = 1)
+    
+    result = ermineR(annotation = 'Generic_human.txt',
+                     scoreColumn = 1,
+                     scores = scores,
+                     output = 'out',
+                     genesOut = TRUE,
+                     return = TRUE)
+    testthat::expect_is(result,'list')
+    Sys.setenv(JAVA_HOME = oldJavaHome)
+})
+
