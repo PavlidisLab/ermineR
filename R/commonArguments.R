@@ -96,12 +96,9 @@ iterations = function(iterations){}
 #'  (due to multiple probes per gene)
 #' @param pAdjust Which multiple test correction method to use. Can be "FDR" or
 #' 'Westfall-Young' (slower).
-#' @param multifunctionalityCorrection Logical. Should the resutls be corrected 
-#' for multifunctionality.
 #' 
 generalStats = function(geneReplicates = c('mean','best'),
-                        pAdjust = c('FDR','Westfall-Young'),
-                        multifunctionalityCorrection = TRUE){}
+                        pAdjust = c('FDR','Westfall-Young')){}
 
 
 #' geneSetOpts

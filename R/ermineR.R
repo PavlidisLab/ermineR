@@ -42,7 +42,6 @@ ermineR = function(annotation,
                    stats = c('mean','quantile','meanAboveQuantile','precisionRecall'),
                    quantile= 50,
                    geneSetDescription = 'Latest_GO', 
-                   multifunctionalityCorrection = TRUE, 
                    output = NULL, 
                    return = TRUE,
                    minClassSize = 10, 
@@ -198,10 +197,7 @@ ermineR = function(annotation,
     
     
     arguments$test  = paste('--test', test)
-    
-    if(!multifunctionalityCorrection){
-        arguments$multifunctionalityCorrection = '-nomf'
-    }
+
     
     if(!is.null(output)){
         assertthat::is.string(output)
