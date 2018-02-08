@@ -73,8 +73,7 @@ test_that('test wrappers',{
     rocOut = roc(annotation = 'Generic_human.txt',
                  scores = scores,
                  scoreColumn = 2,
-                 bigIsBetter = TRUE,
-                 multifunctionalityCorrection = FALSE) # doesn't seem to work for now
+                 bigIsBetter = TRUE)
     testthat::expect_is(rocOut,'list')
     testthat::expect_is(rocOut$results,'data.frame')
     testthat::expect_equal(rocOut$details$classScoreMethod, 'ROC')
