@@ -48,4 +48,5 @@ findJava = function(){
         stop('JAVA_HOME is not defined correctly. Install rJava or use Sys.setenv() to set JAVA_HOME')
     }
     Sys.setenv(JAVA_HOME=javaHome)
+    return(javaHome)
 }
