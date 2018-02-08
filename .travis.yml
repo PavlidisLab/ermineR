@@ -6,3 +6,6 @@ after_success:
     - Rscript -e 'covr::codecov()'
 warnings_are_errors: false
 dist: trusty
+os:
+  - linux
+  - osx
