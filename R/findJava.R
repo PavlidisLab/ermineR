@@ -28,7 +28,7 @@ findJava = function(){
                 javaLink = fs::link_path(javaLink)
             }
         }
-        if(grepl('bin/java.exe$',javaLink)){
+        if(grepl('bin/java.exe$',javaLink) & !grepl('Program Files (x86)',javaLink)){ # doesn't work with 32 bit java
             javaHome = gsub('/bin/java.exe$','',javaLink) %>% gsub('/', '\\\\',.)
         } else{
             javaHome = ''
@@ -45,7 +45,9 @@ findJava = function(){
     
     # if all fails
     if(javaHome == ''){
-        stop('JAVA_HOME is not defined correctly. Install rJava or use Sys.setenv() to set JAVA_HOME')
+        stop('JAVA_HOME is not defined correctly. Install rJava and make sure',
+             ' it can be loaded or use Sys.setenv() to set JAVA_HOME. Note',
+             ' that ermineJ requires 64 bit java')
     }
     Sys.setenv(JAVA_HOME=javaHome)
     return(javaHome)
