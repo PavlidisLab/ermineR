@@ -47,6 +47,7 @@ ermineR = function(annotation,
                    return = TRUE,
                    minClassSize = 10, 
                    maxClassSize =100){
+    
     test = match.arg(test)
     pAdjust = match.arg(pAdjust)
     geneReplicates = match.arg(geneReplicates)
@@ -58,43 +59,9 @@ ermineR = function(annotation,
     
     # find that java home at all costs
     if(Sys.getenv('JAVA_HOME') == ''){
-        javaHome = ''
-        if(grepl('^darwin',R.version$os)){ # detect macs
-            javaHome = system2('/usr/libexec/java_home',stdout = TRUE)
+        findJava()
         }
-        if(grepl('linux',R.version$os)){
-            # if java executable is in path, find it
-            javaLink = system2('which', 'java',stdout = TRUE,stderr = TRUE)
-            if(length(javaLink) != 0){
-                symLink = Sys.readlink(javaLink)
-                javaLink = symLink
-                while(symLink != ''){
-                    javaLink = symLink
-                    symLink = Sys.readlink(javaLink)
-                }
-                if(grepl('jre/bin/java$',javaLink)){
-                    javaHome = gsub('/jre/bin/java$','',javaLink)
-                } else{
-                    # if you are in an unexpected place do not set java home. hope rJava works
-                    javaHome = ''
-                }
-            } else{
-                javaHome = ''
-            }
-        }
-        
-        # if OS specific methods fail, 
-        if(javaHome =='' & 'rJava' %in% installed.packages()){
-            rJava::.jinit()
-            javaHome = rJava::.jcall('java/lang/System', 'S', 'getProperty', 'java.home')
-        }
-        
-        # if all fails
-        if(javaHome == ''){
-            stop('JAVA_HOME cannot be detected. Please make sure java is installed')
-        }
-        Sys.setenv(JAVA_HOME=javaHome)
-    }
+    
     
     arguments = list()
     
@@ -122,7 +89,7 @@ ermineR = function(annotation,
     if(geneSetDescription == 'Latest_GO'){
         temp = tempfile(fileext = '.xml.gz')
         download.file('http://archive.geneontology.org/latest-termdb/go_daily-termdb.rdf-xml.gz',
-                      destfile = temp)
+                      destfile = temp,quiet= TRUE)
         geneSetDescription = temp
     }else if(!file.exists(geneSetDescription)){
         message('Attempting to download gene set description from link')
@@ -276,7 +243,11 @@ ermineR = function(annotation,
     call = paste(shQuote(ermineExec),paste(unlist(arguments),collapse = ' '))
     # system(paste(shQuote(ermineExec),paste(unlist(arguments),collapse = ' ')), ignore.stderr = TRUE)
     response = system2(ermineExec,args = arguments, stdout = TRUE, stderr = TRUE)
-    if(grepl(pattern = "JAVA_HOME is not defined correctly",x = response[1])){
+    
+    badJavaHome = "JAVA_HOME is not defined correctly|JAVA_HOME is set to an invalid directory"
+    
+    
+    if(any(grepl(pattern = badJavaHome ,x = response))){
         stop('JAVA_HOME is not defined correctly. Install rJava or use Sys.setenv() to set JAVA_HOME')
     } else if(grepl(pattern = 'No usable gene scores found.',x = response) %>% any){
         stop('No usable gene scores found. Please check you have ',
@@ -284,6 +255,16 @@ ermineR = function(annotation,
              'plain text format and that it corresponds to the gene ',
              'annotation file you selected.')
     }
+    
+    if(!any(grepl(pattern ='^Done!$',response))){
+        stop('Something went wrong. Blame the dev')
+    }
+    
+    # degub version
+    # if(!any(grepl(pattern ='^Done!$',response))){
+    #     warning('Something went wrong and I have no idea what. Returning response')
+    #     return(response)
+    # }
     
     if(return){
         out = readErmineJOutput(output)
