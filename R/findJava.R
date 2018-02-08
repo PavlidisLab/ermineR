@@ -28,7 +28,7 @@ findJava = function(){
                 javaLink = fs::link_path(javaLink)
             }
         }
-        if(grepl('bin/java.exe$',javaLink) & !grepl('Program Files (x86)',javaLink)){ # doesn't work with 32 bit java
+        if(grepl('bin/java.exe$',javaLink) & !grepl('Program Files \\(x86\\)',javaLink)){ # doesn't work with 32 bit java
             javaHome = gsub('/bin/java.exe$','',javaLink) %>% gsub('/', '\\\\',.)
         } else{
             javaHome = ''
