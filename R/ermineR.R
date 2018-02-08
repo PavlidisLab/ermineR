@@ -250,6 +250,8 @@ ermineR = function(annotation,
              'selected the right column, that the file has the correct ',
              'plain text format and that it corresponds to the gene ',
              'annotation file you selected.')
+    } else if(any(grepl(pattern = 'Could not reserve enough space for', x = response))){
+        stop("Java could not reserve space. You may be running 32 bit Java. 32 bit java is bad java.")
     }
     
     if(!any(grepl(pattern ='^Done!$',response))){

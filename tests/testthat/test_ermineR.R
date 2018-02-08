@@ -98,19 +98,21 @@ test_that('bad java home error',{
 })
 
 test_that('successful java detection',{
-    oldJavaHome = Sys.getenv('JAVA_HOME')
-    Sys.setenv(JAVA_HOME = '')
-    
-    annotation = 'Generic_human.txt'
-    scores <-read.table("scoreFile.txt", header=T, row.names = 1)
-    
-    result = ermineR(annotation = 'Generic_human.txt',
-                     scoreColumn = 1,
-                     scores = scores,
-                     output = 'out',
-                     genesOut = TRUE,
-                     return = TRUE)
-    testthat::expect_is(result,'list')
-    Sys.setenv(JAVA_HOME = oldJavaHome)
+    if(Sys.getenv('APPVEYOR') != ''){ # appveyor version finds 32bit java for some reason check later
+        oldJavaHome = Sys.getenv('JAVA_HOME')
+        Sys.setenv(JAVA_HOME = '')
+        
+        annotation = 'Generic_human.txt'
+        scores <-read.table("scoreFile.txt", header=T, row.names = 1)
+        
+        result = ermineR(annotation = 'Generic_human.txt',
+                         scoreColumn = 1,
+                         scores = scores,
+                         output = 'out',
+                         genesOut = TRUE,
+                         return = TRUE)
+        testthat::expect_is(result,'list')
+        Sys.setenv(JAVA_HOME = oldJavaHome)
+    }
 })
 
