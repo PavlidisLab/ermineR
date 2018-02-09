@@ -64,7 +64,7 @@ gsr = function(scores,
 #' 
 #' @inheritParams scores
 #' @inheritParams annotation
-#' @inheritParams iteration
+#' @inheritParams iterations
 #' @inheritParams generalStats
 #' @inheritParams geneSetOpts
 #' @inheritParams returnOpts

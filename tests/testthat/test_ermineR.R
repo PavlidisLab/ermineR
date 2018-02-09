@@ -77,8 +77,19 @@ test_that('test wrappers',{
     testthat::expect_is(gsrOut,'list')
     testthat::expect_is(gsrOut$results,'data.frame')
     testthat::expect_equal(gsrOut$details$classScoreMethod, 'GSR')
+    testthat::expect_equal(gsrOut$details$rawScoreMethod, 'QUANTILE')
     testthat::expect_equal(gsrOut$details$iterations, 24)
     
+    precRecallOut = precRecall(annotation = 'Generic_human.txt',
+                               scores = scores,
+                               scoreColumn = 2,
+                               iterations = 24,
+                               bigIsBetter = FALSE,
+                               logTrans = FALSE)
+    testthat::expect_is(precRecallOut,'list')
+    testthat::expect_is(precRecallOut$results,'data.frame')
+    testthat::expect_equal(precRecallOut$details$classScoreMethod, 'GSR')
+    testthat::expect_equal(precRecallOut$details$rawScoreMethod, 'PRECISIONRECALL')
     
     corrOut = corr(expression = 'expression.tsv',
                    annotation = 'GPL96_noParents.an.txt.gz',
