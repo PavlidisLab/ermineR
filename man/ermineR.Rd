@@ -84,5 +84,7 @@ for details}
 A list
 }
 \description{
-Run ermineJ analysis
+The monolith function that wraps the emrineJ cli. It is recommended to use
+the wrapper functions (\code{\link{ora}}, \code{\link{gsr}},
+\code{\link{corr}}, \code{\link{roc}}).
 }

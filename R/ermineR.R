@@ -10,6 +10,11 @@
 
 
 #' Run ermineJ analysis
+#' 
+#' The monolith function that wraps the emrineJ cli. It is recommended to use
+#' the wrapper functions (\code{\link{ora}}, \code{\link{gsr}},
+#' \code{\link{corr}}, \code{\link{roc}}).
+#' 
 #' @inheritParams annotation
 #' @inheritParams scores
 #' @inheritParams threshold
@@ -24,7 +29,6 @@
 #' @return A list
 #' @export
 #'
-#' @examples
 ermineR = function(annotation, 
                    scores = NULL, 
                    scoreColumn = 1, 

@@ -33,6 +33,12 @@ test_that('ermineJ basic usage',{
                            logTrans=T)
     testthat::expect_is(lmebtr.enrich,'list')
     
+    # test getGoGenes 
+    
+    goGenes = lmebtr.enrich %>% getGoGenes('GO:0019369')
+    goGenesByName = lmebtr.enrich %>% getGoGenes('arachidonic acid metabolic process')
+    testthat::expect_identical(goGenes, goGenesByName)
+    
 })
 
 test_that('geting annotations from gemma',{
