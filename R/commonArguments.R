@@ -131,10 +131,8 @@ geneSetOpts = function(geneSetDescription = 'Latest_GO',
 #' 
 #' @name returnOpts
 #' 
-#' @param genesOut Logical.  Should output include gene symbols for all gene sets 
 #' @param output Output file name. 
 #' @param return If results should be returned. Set to FALSE if you only want a file
 #' 
-returnOptions = function(genesOut =FALSE,
-                         output = NULL,
+returnOptions = function(output = NULL,
                          return = TRUE){}

@@ -7,11 +7,10 @@
 ermineR(annotation, scores = NULL, scoreColumn = 1, threshold = 0.001,
   expression = NULL, bigIsBetter = FALSE, customGeneSets = NULL,
   filterNonSpecific = TRUE, geneReplicates = c("mean", "best"),
-  genesOut = FALSE, logTrans = FALSE, pAdjust = c("FDR",
-  "Westfall-Young"), test = c("ORA", "GSR", "CORR", "ROC"),
-  iterations = NULL, stats = c("mean", "quantile", "meanAboveQuantile",
-  "precisionRecall"), quantile = 50, geneSetDescription = "Latest_GO",
-  multifunctionalityCorrection = TRUE, output = NULL, return = TRUE,
+  logTrans = FALSE, pAdjust = c("FDR", "Westfall-Young"), test = c("ORA",
+  "GSR", "CORR", "ROC"), iterations = NULL, stats = c("mean", "quantile",
+  "meanAboveQuantile", "precisionRecall"), quantile = 50,
+  geneSetDescription = "Latest_GO", output = NULL, return = TRUE,
   minClassSize = 10, maxClassSize = 100)
 }
 \arguments{
@@ -53,8 +52,6 @@ symbols are accepted.}
 \item{geneReplicates}{What to do when genes have multiple scores in input file
 (due to multiple probes per gene)}
 
-\item{genesOut}{Logical.  Should output include gene symbols for all gene sets}
-
 \item{logTrans}{Logical. Should the data be log transformed. Recommended for 
 p values. \code{FALSE} by default}
 
@@ -74,9 +71,6 @@ or a URL that leads to a go ontology file that ends with rdf-xml.gz. Note that
 this is a mandatory argument. It defaults to Latest_GO but that option won't
 work if you don't have a working internet connection. See \url{http://erminej.msl.ubc.ca/help/input-files/gene-set-descriptions/}
 for details}
-
-\item{multifunctionalityCorrection}{Logical. Should the resutls be corrected 
-for multifunctionality.}
 
 \item{output}{Output file name.}
 

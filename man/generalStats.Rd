@@ -5,7 +5,7 @@
 \title{generalStats}
 \usage{
 generalStats(geneReplicates = c("mean", "best"), pAdjust = c("FDR",
-  "Westfall-Young"), multifunctionalityCorrection = TRUE)
+  "Westfall-Young"))
 }
 \arguments{
 \item{geneReplicates}{What to do when genes have multiple scores in input file
@@ -13,9 +13,6 @@ generalStats(geneReplicates = c("mean", "best"), pAdjust = c("FDR",
 
 \item{pAdjust}{Which multiple test correction method to use. Can be "FDR" or
 'Westfall-Young' (slower).}
-
-\item{multifunctionalityCorrection}{Logical. Should the resutls be corrected 
-for multifunctionality.}
 }
 \description{
 generalStats

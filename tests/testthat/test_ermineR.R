@@ -8,7 +8,6 @@ test_that('ermineJ basic usage',{
                       scoreColumn = 2,
                       scores = scores,
                       output = 'out',
-                      genesOut = TRUE,
                       return = TRUE)
     testthat::expect_is(result1,'list')
     testthat::expect_is(result1$results,'data.frame')
@@ -18,7 +17,6 @@ test_that('ermineJ basic usage',{
                       scoreColumn = 'Endothelial',
                       scores = scores,
                       output = 'out',
-                      genesOut = TRUE,
                       return = TRUE)
     
     testthat::expect_identical(result1$results,result2$results)
@@ -31,8 +29,7 @@ test_that('ermineJ basic usage',{
                            scores=scores,
                            scoreColumn = 6, 
                            test="GSR", 
-                           stats="precisionRecall", 
-                           genesOut=T,
+                           stats="precisionRecall",
                            logTrans=T)
     testthat::expect_is(lmebtr.enrich,'list')
     
@@ -47,7 +44,6 @@ test_that('geting annotations from gemma',{
                       scoreColumn = 'Endothelial',
                       scores = scores,
                       output = 'out',
-                      genesOut = TRUE,
                       return = TRUE)
     testthat::expect_is(result,'list')
     testthat::expect_is(result$results,'data.frame')    
@@ -107,7 +103,6 @@ test_that('bad java home error',{
                          scoreColumn = 1,
                          scores = scores,
                          output = 'out',
-                         genesOut = TRUE,
                          return = TRUE),
                  'JAVA_HOME is not defined correctly')
     Sys.setenv(JAVA_HOME = oldJavaHome)
@@ -128,7 +123,6 @@ test_that('successful java detection',{
                      scoreColumn = 1,
                      scores = scores,
                      output = 'out',
-                     genesOut = TRUE,
                      return = TRUE)
     testthat::expect_is(result,'list')
     Sys.setenv(JAVA_HOME = oldJavaHome)

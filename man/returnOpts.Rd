@@ -5,11 +5,9 @@
 \alias{returnOptions}
 \title{returnOptions}
 \usage{
-returnOptions(genesOut = FALSE, output = NULL, return = TRUE)
+returnOptions(output = NULL, return = TRUE)
 }
 \arguments{
-\item{genesOut}{Logical.  Should output include gene symbols for all gene sets}
-
 \item{output}{Output file name.}
 
 \item{return}{If results should be returned. Set to FALSE if you only want a file}

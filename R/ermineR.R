@@ -33,8 +33,7 @@ ermineR = function(annotation,
                    bigIsBetter = FALSE, 
                    customGeneSets = NULL,
                    filterNonSpecific = TRUE, 
-                   geneReplicates = c('mean','best'),
-                   genesOut = FALSE, 
+                   geneReplicates = c('mean','best'), 
                    logTrans = FALSE, 
                    pAdjust = c('FDR','Westfall-Young'),
                    test = c('ORA','GSR','CORR','ROC'), 
@@ -46,7 +45,6 @@ ermineR = function(annotation,
                    return = TRUE,
                    minClassSize = 10, 
                    maxClassSize =100){
-    
     test = match.arg(test)
     pAdjust = match.arg(pAdjust)
     geneReplicates = match.arg(geneReplicates)
@@ -185,6 +183,7 @@ ermineR = function(annotation,
         }
     }
     
+    genesOut = TRUE
     if(genesOut){
         arguments$genesOut='--genesOut'
     }

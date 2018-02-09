@@ -19,7 +19,6 @@ ora = function(scores,
                customGeneSets = NULL,
                minClassSize = 10,
                maxClassSize = 100,
-               genesOut = FALSE,
                output = NULL,
                return = TRUE){
     args = as.list(match.call())[-1]
@@ -53,13 +52,15 @@ gsr = function(scores,
                customGeneSets = NULL,
                minClassSize = 10,
                maxClassSize = 100,
-               genesOut =FALSE,
                output = NULL,
                return = TRUE){
     args = as.list(match.call())[-1]
     args = c(args,list(test = 'GSR'))
     do.call(ermineR, args,envir = new.env())
 }
+
+
+
 
 
 #' Run CORR
@@ -81,7 +82,6 @@ corr = function(expression,
                 customGeneSets = NULL,
                 minClassSize = 10,
                 maxClassSize = 100,
-                genesOut =FALSE,
                 output = NULL,
                 return = TRUE){
     args = as.list(match.call())[-1]
@@ -109,7 +109,6 @@ roc = function(scores,
                customGeneSets = NULL,
                minClassSize = 10,
                maxClassSize = 100,
-               genesOut =FALSE,
                output = NULL,
                return = TRUE){
     

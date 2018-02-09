@@ -5,9 +5,8 @@
 \title{Run CORR}
 \usage{
 corr(expression, annotation, iterations, geneReplicates = c("mean", "best"),
-  pAdjust = c("FDR", "Westfall-Young"), multifunctionalityCorrection = TRUE,
-  geneSetDescription = "Latest_GO", customGeneSets = NULL,
-  minClassSize = 10, maxClassSize = 100, genesOut = FALSE,
+  pAdjust = c("FDR", "Westfall-Young"), geneSetDescription = "Latest_GO",
+  customGeneSets = NULL, minClassSize = 10, maxClassSize = 100,
   output = NULL, return = TRUE)
 }
 \arguments{
@@ -32,9 +31,6 @@ If providing a custom annotation file, see
 \item{pAdjust}{Which multiple test correction method to use. Can be "FDR" or
 'Westfall-Young' (slower).}
 
-\item{multifunctionalityCorrection}{Logical. Should the resutls be corrected 
-for multifunctionality.}
-
 \item{geneSetDescription}{"Latest_GO", a file path that leads to a GO XML file
 or a URL that leads to a go ontology file that ends with rdf-xml.gz. Note that
 this is a mandatory argument. It defaults to Latest_GO but that option won't
@@ -51,8 +47,6 @@ symbols are accepted.}
 \item{minClassSize}{minimum class size}
 
 \item{maxClassSize}{maximum class size}
-
-\item{genesOut}{Logical.  Should output include gene symbols for all gene sets}
 
 \item{output}{Output file name.}
 
