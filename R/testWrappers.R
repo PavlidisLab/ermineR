@@ -60,7 +60,32 @@ gsr = function(scores,
 }
 
 
-
+#' Run Precision-recall
+#' 
+#' @inheritParams scores
+#' @inheritParams annotation
+#' @inheritParams iteration
+#' @inheritParams generalStats
+#' @inheritParams geneSetOpts
+#' @inheritParams returnOpts
+precRecall = function(scores,
+                      scoreColumn = 1,
+                      bigIsBetter = FALSE,
+                      logTrans = FALSE,
+                      annotation,
+                      iterations,
+                      geneReplicates = c('mean','best'),
+                      pAdjust = c('FDR','Westfall-Young'),
+                      geneSetDescription = 'Latest_GO',
+                      customGeneSets = NULL,
+                      minClassSize = 10,
+                      maxClassSize = 100,
+                      output = NULL,
+                      return = TRUE){
+    args = as.list(match.call())[-1]
+    args = c(args,list(test = 'GSR',stats ='precisionRecall'))
+    do.call(ermineR, args,envir = new.env())
+}
 
 
 #' Run CORR
