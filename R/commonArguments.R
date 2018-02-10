@@ -23,6 +23,19 @@ scores = function(scores,
                   bigIsBetter = FALSE,
                   logTrans = FALSE){}
 
+#' hitlist
+#' 
+#' @keywords internal ORA
+#' 
+#' @name hitlis
+#' 
+#' @param hitlist A vector of gene identifiers. ORA method accepts hitlists
+#' instead of scores. If a hitlist is provided, logTrans, thresholds and 
+#' bigIsBetter options are ignored.
+hitlist = function(hitlist = NULL){
+    
+}
+
 #' annotation
 #' 
 #' @keywords internal universal

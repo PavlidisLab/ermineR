@@ -31,6 +31,7 @@
 #'
 ermineR = function(annotation, 
                    scores = NULL, 
+                   hitlist = NULL,
                    scoreColumn = 1, 
                    threshold = 0.001,
                    expression =NULL,
@@ -103,6 +104,30 @@ ermineR = function(annotation,
     
     # get scores and score columns-------------
     if(test %in% c('ORA','GSR','ROC')){
+        # get hitlist if provided instead of scores
+        if(test == 'ORA' & is.null(scores) & !is.null(hitlist)){
+            logTrans = FALSE
+            bigIsBetter = FALSE
+            threshold = 0.5
+            scoreColumn = 1
+            annoFile = readr::read_tsv(annotation,comment = '#')
+            annoFile[1,]
+            
+            allGenes = annoFile[,1] %>% unique
+            
+            scores = data.frame(scores = rep(1,length(allGenes)))
+            rownames(scores) =allGenes 
+            
+            scores[hitlist,] = 0
+            
+            # annotation is created before here.
+            
+        } else if(test =='ORA' & is.null(scores) & is.null(hitlist)){
+            stop("ORA method requires scores or hitlist")
+        } else if(!is.null(scores) & !is.null(hitlist)){
+            stop("You can't provide both scores and a hitlist")
+        }
+        
         if(is.null(scores)){
             stop(test,' method requries a score list.')
         }
