@@ -5,7 +5,7 @@
 \title{generalStats}
 \usage{
 generalStats(geneReplicates = c("mean", "best"), pAdjust = c("FDR",
-  "Westfall-Young"))
+  "Bonferroni"))
 }
 \arguments{
 \item{geneReplicates}{What to do when genes have multiple scores in input file

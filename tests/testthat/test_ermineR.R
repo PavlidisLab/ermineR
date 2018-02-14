@@ -1,5 +1,8 @@
 context('ermineJ usage')
 
+# utils::download.file('http://archive.geneontology.org/latest-termdb/go_daily-termdb.rdf-xml.gz',destfile = 'GO.xml.gz',quiet= TRUE)
+
+
 test_that('ermineJ basic usage',{
     annotation = 'Generic_human.txt'
     scores <-read.table("scoreFile.txt", header=T, row.names = 1)
@@ -8,7 +11,8 @@ test_that('ermineJ basic usage',{
                       scoreColumn = 2,
                       scores = scores,
                       output = 'out',
-                      return = TRUE)
+                      return = TRUE,
+                      geneSetDescription = 'GO.xml.gz')
     testthat::expect_is(result1,'list')
     testthat::expect_is(result1$results,'data.frame')
     
@@ -17,7 +21,8 @@ test_that('ermineJ basic usage',{
                       scoreColumn = 'Endothelial',
                       scores = scores,
                       output = 'out',
-                      return = TRUE)
+                      return = TRUE,
+                      geneSetDescription = 'GO.xml.gz')
     
     testthat::expect_identical(result1$results,result2$results)
     
@@ -30,13 +35,14 @@ test_that('ermineJ basic usage',{
                            scoreColumn = 6, 
                            test="GSR", 
                            stats="precisionRecall",
-                           logTrans=T)
+                           logTrans=T,
+                           geneSetDescription = 'GO.xml.gz')
     testthat::expect_is(lmebtr.enrich,'list')
     
     # test getGoGenes 
     
-    goGenes = lmebtr.enrich %>% getGoGenes('GO:0019369')
-    goGenesByName = lmebtr.enrich %>% getGoGenes('arachidonic acid metabolic process')
+    goGenes = lmebtr.enrich %>% getGoGenes('GO:0035097')
+    goGenesByName = lmebtr.enrich %>% getGoGenes('histone methyltransferase complex')
     testthat::expect_identical(goGenes, goGenesByName)
     
 })
@@ -50,7 +56,8 @@ test_that('geting annotations from gemma',{
                       scoreColumn = 'Endothelial',
                       scores = scores,
                       output = 'out',
-                      return = TRUE)
+                      return = TRUE,
+                     geneSetDescription = 'GO.xml.gz')
     testthat::expect_is(result,'list')
     testthat::expect_is(result$results,'data.frame')    
 })
@@ -61,7 +68,8 @@ test_that('test wrappers',{
     oraOut = ora(annotation = 'Generic_human.txt',
                  scores = scores,
                  scoreColumn = 2,
-                 threshold = 0.001)
+                 threshold = 0.001,
+                 geneSetDescription = 'GO.xml.gz')
     
     testthat::expect_is(oraOut,'list')
     testthat::expect_is(oraOut$results,'data.frame')
@@ -73,7 +81,8 @@ test_that('test wrappers',{
                  iterations = 24,
                  bigIsBetter = FALSE,
                  logTrans = FALSE,
-                 stats = 'quantile')
+                 stats = 'quantile',
+                 geneSetDescription = 'GO.xml.gz')
     testthat::expect_is(gsrOut,'list')
     testthat::expect_is(gsrOut$results,'data.frame')
     testthat::expect_equal(gsrOut$details$classScoreMethod, 'GSR')
@@ -85,7 +94,8 @@ test_that('test wrappers',{
                                scoreColumn = 2,
                                iterations = 24,
                                bigIsBetter = FALSE,
-                               logTrans = FALSE)
+                               logTrans = FALSE,
+                               geneSetDescription = 'GO.xml.gz')
     testthat::expect_is(precRecallOut,'list')
     testthat::expect_is(precRecallOut$results,'data.frame')
     testthat::expect_equal(precRecallOut$details$classScoreMethod, 'GSR')
@@ -93,7 +103,8 @@ test_that('test wrappers',{
     
     corrOut = corr(expression = 'expression.tsv',
                    annotation = 'GPL96_noParents.an.txt.gz',
-                   iterations = 22)
+                   iterations = 22,
+                   geneSetDescription = 'GO.xml.gz')
     testthat::expect_is(corrOut,'list')
     testthat::expect_is(corrOut$results,'data.frame')
     testthat::expect_equal(corrOut$details$classScoreMethod, 'CORR')
@@ -102,7 +113,8 @@ test_that('test wrappers',{
     rocOut = roc(annotation = 'Generic_human.txt',
                  scores = scores,
                  scoreColumn = 2,
-                 bigIsBetter = TRUE)
+                 bigIsBetter = TRUE,
+                 geneSetDescription = 'GO.xml.gz')
     testthat::expect_is(rocOut,'list')
     testthat::expect_is(rocOut$results,'data.frame')
     testthat::expect_equal(rocOut$details$classScoreMethod, 'ROC')
@@ -120,7 +132,8 @@ test_that('bad java home error',{
                          scoreColumn = 1,
                          scores = scores,
                          output = 'out',
-                         return = TRUE),
+                         return = TRUE,
+                         geneSetDescription = 'GO.xml.gz'),
                  'JAVA_HOME is not defined correctly')
     Sys.setenv(JAVA_HOME = oldJavaHome)
 })
@@ -140,8 +153,29 @@ test_that('successful java detection',{
                      scoreColumn = 1,
                      scores = scores,
                      output = 'out',
-                     return = TRUE)
+                     return = TRUE,
+                     geneSetDescription = 'GO.xml.gz')
     testthat::expect_is(result,'list')
     Sys.setenv(JAVA_HOME = oldJavaHome)
 })
 
+test_that('setting seed',{
+    scores<-read.table("chd8.pvals.txt", header=T, row.names = 1)
+    set.seed(1)
+    lmebtr.enrich<-ermineR(annotation = "Generic_mouse", 
+                           scores=scores,
+                           scoreColumn = 6, 
+                           test="GSR", 
+                           stats="precisionRecall",
+                           logTrans=T,
+                           geneSetDescription = 'GO.xml.gz')
+    set.seed(1)
+    lmebtr.enrich2<-ermineR(annotation = "Generic_mouse", 
+                           scores=scores,
+                           scoreColumn = 6, 
+                           test="GSR", 
+                           stats="precisionRecall",
+                           logTrans=T,
+                           geneSetDescription = 'GO.xml.gz')
+    testthat::expect_identical(lmebtr.enrich$results,lmebtr.enrich2$results)
+})

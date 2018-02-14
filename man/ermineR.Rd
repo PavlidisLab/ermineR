@@ -4,14 +4,15 @@
 \alias{ermineR}
 \title{Run ermineJ analysis}
 \usage{
-ermineR(annotation, scores = NULL, scoreColumn = 1, threshold = 0.001,
-  expression = NULL, bigIsBetter = FALSE, customGeneSets = NULL,
-  filterNonSpecific = TRUE, geneReplicates = c("mean", "best"),
-  logTrans = FALSE, pAdjust = c("FDR", "Westfall-Young"), test = c("ORA",
-  "GSR", "CORR", "ROC"), iterations = NULL, stats = c("mean", "quantile",
+ermineR(annotation, aspects = c("Molecular Function", "Cellular Component",
+  "Biological Process"), scores = NULL, scoreColumn = 1,
+  threshold = 0.001, expression = NULL, bigIsBetter = FALSE,
+  customGeneSets = NULL, geneReplicates = c("mean", "best"),
+  logTrans = FALSE, pAdjust = c("FDR", "FWE"), test = c("ORA", "GSR",
+  "CORR", "ROC"), iterations = NULL, stats = c("mean", "quantile",
   "meanAboveQuantile", "precisionRecall"), quantile = 50,
   geneSetDescription = "Latest_GO", output = NULL, return = TRUE,
-  minClassSize = 10, maxClassSize = 100)
+  minClassSize = 20, maxClassSize = 200)
 }
 \arguments{
 \item{annotation}{Annotation. A file path, a data.frame or a platform short 
@@ -22,6 +23,8 @@ name in the directory, that file will be read instead of getting a copy from
 Pavlidis Lab. If this file isn't a valid annotation file, the function will fail.
 If providing a custom annotation file, see
 \url{erminej.msl.ubc.ca/help/input-files/gene-annotations/}}
+
+\item{aspects}{Character vector. Which Go aspects to include in the analysis}
 
 \item{scores}{A data.frame. Rownames have to be gene identifiers, followed by
 any number of columns. The column used for scoring is chosen by \code{scoreColumn}.

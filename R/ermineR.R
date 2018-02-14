@@ -30,16 +30,16 @@
 #' @export
 #'
 ermineR = function(annotation, 
+                   aspects = c('Molecular Function','Cellular Component', 'Biological Process'),
                    scores = NULL, 
                    scoreColumn = 1, 
                    threshold = 0.001,
                    expression =NULL,
                    bigIsBetter = FALSE, 
                    customGeneSets = NULL,
-                   filterNonSpecific = TRUE, 
                    geneReplicates = c('mean','best'), 
                    logTrans = FALSE, 
-                   pAdjust = c('FDR','Westfall-Young'),
+                   pAdjust = c('FDR','FWE'),
                    test = c('ORA','GSR','CORR','ROC'), 
                    iterations = NULL, 
                    stats = c('mean','quantile','meanAboveQuantile','precisionRecall'),
@@ -47,15 +47,15 @@ ermineR = function(annotation,
                    geneSetDescription = 'Latest_GO', 
                    output = NULL, 
                    return = TRUE,
-                   minClassSize = 10, 
-                   maxClassSize =100){
+                   minClassSize = 20, 
+                   maxClassSize =200){
     test = match.arg(test)
     pAdjust = match.arg(pAdjust)
     geneReplicates = match.arg(geneReplicates)
     stats = match.arg(stats)
     
     # set ermineJ home so users won't have to
-    ermineJHome = system.file("ermineJ-3.0.3",package = 'ermineR')
+    ermineJHome = system.file("ermineJ-3.1",package = 'ermineR')
     Sys.setenv(ERMINEJ_HOME = ermineJHome)
     
     # find that java home at all costs
@@ -164,6 +164,16 @@ ermineR = function(annotation,
     }
     
     # other variables -----
+    aspects = c('Molecular Function','Cellular Component', 'Biological Process')
+    
+    arguments$aspects = aspects %>% sapply(function(x){
+        switch(x,
+               'Molecular Function' = 'M',
+               'Cellular Component' = 'C',
+               'Biological Process' = 'B')
+    }) %>% paste(collapse='') %>% paste('-aspects',.)
+    
+    
     if(test == 'ORA'){
         assertthat::is.number(threshold)
         arguments$threshold = paste('--threshold', threshold)
@@ -195,8 +205,8 @@ ermineR = function(annotation,
         arguments$logTrans = '--logTrans'
     }
     arguments$pAdjust = switch(pAdjust,
-                               FDR = '--mtc BENJAMINIHOCHBERG',
-                               'Westfall-Young' = '--mtc WESTFALLYOUNG')
+                               FDR = '--mtc FDR',
+                               FWE = '--mtc FWE')
     
     
     arguments$test  = paste('--test', test)
@@ -229,6 +239,8 @@ ermineR = function(annotation,
         }
     } # no warning because there's a default
     
+    # set seed here
+    arguments$seed = paste('-seed',runif(1)*10^16)
     
     # make the sh call ---------------
     if(Sys.info()['sysname'] =='Windows'){

@@ -37,8 +37,10 @@ scores = function(scores,
 #' Pavlidis Lab. If this file isn't a valid annotation file, the function will fail.
 #' If providing a custom annotation file, see
 #' \url{erminej.msl.ubc.ca/help/input-files/gene-annotations/}
+#' @param aspects Character vector. Which Go aspects to include in the analysis
 #' 
-annotation = function(annotation){}
+annotation = function(annotation,
+                      aspects = c('Molecular Function','Cellular Component', 'Biological Process')){}
 
 
 #' threshold
@@ -98,7 +100,7 @@ iterations = function(iterations){}
 #' 'Westfall-Young' (slower).
 #' 
 generalStats = function(geneReplicates = c('mean','best'),
-                        pAdjust = c('FDR','Westfall-Young')){}
+                        pAdjust = c('FDR','Bonferroni')){}
 
 
 #' geneSetOpts
@@ -122,8 +124,8 @@ generalStats = function(geneReplicates = c('mean','best'),
 #' @param maxClassSize maximum class size
 geneSetOpts = function(geneSetDescription = 'Latest_GO',
                        customGeneSets = NULL,
-                       minClassSize = 10,
-                       maxClassSize = 100){}
+                       minClassSize = 20,
+                       maxClassSize = 200){}
 
 #' returnOptions
 #' 
