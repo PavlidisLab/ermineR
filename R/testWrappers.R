@@ -7,7 +7,8 @@
 #' @inheritParams geneSetOpts
 #' @inheritParams returnOpts
 #' @export
-ora = function(scores,
+ora = function(scores = NULL,
+               hitlist = NULL,
                scoreColumn = 1,
                bigIsBetter = FALSE,
                logTrans = FALSE,
