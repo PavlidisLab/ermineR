@@ -29,7 +29,7 @@
 #' @return A list
 #' @export
 #'
-ermineR = function(annotation, 
+ermineR = function(annotation = NULL, 
                    aspects = c('Molecular Function','Cellular Component', 'Biological Process'),
                    scores = NULL, 
                    hitlist = NULL,
@@ -110,9 +110,8 @@ ermineR = function(annotation,
             bigIsBetter = FALSE
             threshold = 0.5
             scoreColumn = 1
-            annoFile = readr::read_tsv(annotation,comment = '#')
-            annoFile[1,]
-            
+            annoFile = read.table(annotation, header=T,sep='\t', quote="", stringsAsFactors = F)
+
             allGenes = annoFile[,1] %>% unique
             
             scores = data.frame(scores = rep(1,length(allGenes)))

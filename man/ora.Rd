@@ -4,10 +4,10 @@
 \alias{ora}
 \title{Run ORA}
 \usage{
-ora(scores, scoreColumn = 1, bigIsBetter = FALSE, logTrans = FALSE,
-  annotation, aspects = c("Molecular Function", "Cellular Component",
-  "Biological Process"), threshold = 0.001, geneReplicates = c("mean",
-  "best"), pAdjust = c("FDR", "Bonferroni"),
+ora(scores = NULL, hitlist = NULL, scoreColumn = 1, bigIsBetter = FALSE,
+  logTrans = FALSE, annotation, aspects = c("Molecular Function",
+  "Cellular Component", "Biological Process"), threshold = 0.001,
+  geneReplicates = c("mean", "best"), pAdjust = c("FDR", "Bonferroni"),
   geneSetDescription = "Latest_GO", customGeneSets = NULL,
   minClassSize = 20, maxClassSize = 200, output = NULL, return = TRUE)
 }
