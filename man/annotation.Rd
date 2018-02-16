@@ -4,7 +4,8 @@
 \alias{annotation}
 \title{annotation}
 \usage{
-annotation(annotation)
+annotation(annotation, aspects = c("Molecular Function", "Cellular Component",
+  "Biological Process"))
 }
 \arguments{
 \item{annotation}{Annotation. A file path, a data.frame or a platform short 
@@ -15,6 +16,8 @@ name in the directory, that file will be read instead of getting a copy from
 Pavlidis Lab. If this file isn't a valid annotation file, the function will fail.
 If providing a custom annotation file, see
 \url{erminej.msl.ubc.ca/help/input-files/gene-annotations/}}
+
+\item{aspects}{Character vector. Which Go aspects to include in the analysis}
 }
 \description{
 annotation

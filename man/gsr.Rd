@@ -5,11 +5,12 @@
 \title{Run GSR}
 \usage{
 gsr(scores, scoreColumn = 1, bigIsBetter = FALSE, logTrans = FALSE,
-  annotation, iterations, stats = c("mean", "quantile", "meanAboveQuantile",
-  "precisionRecall"), quantile = 50, geneReplicates = c("mean", "best"),
-  pAdjust = c("FDR", "Westfall-Young"), geneSetDescription = "Latest_GO",
-  customGeneSets = NULL, minClassSize = 10, maxClassSize = 100,
-  output = NULL, return = TRUE)
+  annotation, aspects = c("Molecular Function", "Cellular Component",
+  "Biological Process"), iterations, stats = c("mean", "quantile",
+  "meanAboveQuantile", "precisionRecall"), quantile = 50,
+  geneReplicates = c("mean", "best"), pAdjust = c("FDR", "Bonferroni"),
+  geneSetDescription = "Latest_GO", customGeneSets = NULL,
+  minClassSize = 20, maxClassSize = 200, output = NULL, return = TRUE)
 }
 \arguments{
 \item{scores}{A data.frame. Rownames have to be gene identifiers, followed by
@@ -36,6 +37,8 @@ name in the directory, that file will be read instead of getting a copy from
 Pavlidis Lab. If this file isn't a valid annotation file, the function will fail.
 If providing a custom annotation file, see
 \url{erminej.msl.ubc.ca/help/input-files/gene-annotations/}}
+
+\item{aspects}{Character vector. Which Go aspects to include in the analysis}
 
 \item{iterations}{Number of iterations (test = GSR and CORR methods only)}
 

@@ -5,7 +5,7 @@
 \title{geneSetOpts}
 \usage{
 geneSetOpts(geneSetDescription = "Latest_GO", customGeneSets = NULL,
-  minClassSize = 10, maxClassSize = 100)
+  minClassSize = 20, maxClassSize = 200)
 }
 \arguments{
 \item{geneSetDescription}{"Latest_GO", a file path that leads to a GO XML file

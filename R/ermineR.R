@@ -29,7 +29,8 @@
 #' @return A list
 #' @export
 #'
-ermineR = function(annotation, 
+ermineR = function(annotation = NULL, 
+                   aspects = c('Molecular Function','Cellular Component', 'Biological Process'),
                    scores = NULL, 
                    hitlist = NULL,
                    scoreColumn = 1, 
@@ -37,10 +38,9 @@ ermineR = function(annotation,
                    expression =NULL,
                    bigIsBetter = FALSE, 
                    customGeneSets = NULL,
-                   filterNonSpecific = TRUE, 
                    geneReplicates = c('mean','best'), 
                    logTrans = FALSE, 
-                   pAdjust = c('FDR','Westfall-Young'),
+                   pAdjust = c('FDR','FWE'),
                    test = c('ORA','GSR','CORR','ROC'), 
                    iterations = NULL, 
                    stats = c('mean','quantile','meanAboveQuantile','precisionRecall'),
@@ -48,15 +48,15 @@ ermineR = function(annotation,
                    geneSetDescription = 'Latest_GO', 
                    output = NULL, 
                    return = TRUE,
-                   minClassSize = 10, 
-                   maxClassSize =100){
+                   minClassSize = 20, 
+                   maxClassSize =200){
     test = match.arg(test)
     pAdjust = match.arg(pAdjust)
     geneReplicates = match.arg(geneReplicates)
     stats = match.arg(stats)
     
     # set ermineJ home so users won't have to
-    ermineJHome = system.file("ermineJ-3.0.3",package = 'ermineR')
+    ermineJHome = system.file("ermineJ-3.1",package = 'ermineR')
     Sys.setenv(ERMINEJ_HOME = ermineJHome)
     
     # find that java home at all costs
@@ -110,9 +110,8 @@ ermineR = function(annotation,
             bigIsBetter = FALSE
             threshold = 0.5
             scoreColumn = 1
-            annoFile = readr::read_tsv(annotation,comment = '#')
-            annoFile[1,]
-            
+            annoFile = read.table(annotation, header=T,sep='\t', quote="", stringsAsFactors = F)
+
             allGenes = annoFile[,1] %>% unique
             
             scores = data.frame(scores = rep(1,length(allGenes)))
@@ -189,6 +188,16 @@ ermineR = function(annotation,
     }
     
     # other variables -----
+    aspects = c('Molecular Function','Cellular Component', 'Biological Process')
+    
+    arguments$aspects = aspects %>% sapply(function(x){
+        switch(x,
+               'Molecular Function' = 'M',
+               'Cellular Component' = 'C',
+               'Biological Process' = 'B')
+    }) %>% paste(collapse='') %>% paste('-aspects',.)
+    
+    
     if(test == 'ORA'){
         assertthat::is.number(threshold)
         arguments$threshold = paste('--threshold', threshold)
@@ -220,8 +229,8 @@ ermineR = function(annotation,
         arguments$logTrans = '--logTrans'
     }
     arguments$pAdjust = switch(pAdjust,
-                               FDR = '--mtc BENJAMINIHOCHBERG',
-                               'Westfall-Young' = '--mtc WESTFALLYOUNG')
+                               FDR = '--mtc FDR',
+                               FWE = '--mtc FWE')
     
     
     arguments$test  = paste('--test', test)
@@ -254,6 +263,8 @@ ermineR = function(annotation,
         }
     } # no warning because there's a default
     
+    # set seed here
+    arguments$seed = paste('-seed',runif(1)*10^16)
     
     # make the sh call ---------------
     if(Sys.info()['sysname'] =='Windows'){

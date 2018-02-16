@@ -4,11 +4,12 @@
 \alias{ora}
 \title{Run ORA}
 \usage{
-ora(scores, scoreColumn = 1, bigIsBetter = FALSE, logTrans = FALSE,
-  annotation, threshold = 0.001, geneReplicates = c("mean", "best"),
-  pAdjust = c("FDR", "Westfall-Young"), geneSetDescription = "Latest_GO",
-  customGeneSets = NULL, minClassSize = 10, maxClassSize = 100,
-  output = NULL, return = TRUE)
+ora(scores = NULL, hitlist = NULL, scoreColumn = 1, bigIsBetter = FALSE,
+  logTrans = FALSE, annotation, aspects = c("Molecular Function",
+  "Cellular Component", "Biological Process"), threshold = 0.001,
+  geneReplicates = c("mean", "best"), pAdjust = c("FDR", "Bonferroni"),
+  geneSetDescription = "Latest_GO", customGeneSets = NULL,
+  minClassSize = 20, maxClassSize = 200, output = NULL, return = TRUE)
 }
 \arguments{
 \item{scores}{A data.frame. Rownames have to be gene identifiers, followed by
@@ -35,6 +36,8 @@ name in the directory, that file will be read instead of getting a copy from
 Pavlidis Lab. If this file isn't a valid annotation file, the function will fail.
 If providing a custom annotation file, see
 \url{erminej.msl.ubc.ca/help/input-files/gene-annotations/}}
+
+\item{aspects}{Character vector. Which Go aspects to include in the analysis}
 
 \item{threshold}{Double. Score threshold (test = ORA only)}
 
