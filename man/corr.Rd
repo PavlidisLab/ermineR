@@ -2,7 +2,7 @@
 % Please edit documentation in R/testWrappers.R
 \name{corr}
 \alias{corr}
-\title{Run CORR}
+\title{CORR}
 \usage{
 corr(expression, annotation, aspects = c("Molecular Function",
   "Cellular Component", "Biological Process"), iterations,
@@ -56,5 +56,32 @@ symbols are accepted.}
 \item{return}{If results should be returned. Set to FALSE if you only want a file}
 }
 \description{
-Run CORR
+This method examines the gene expression profiles themselves,
+  not the gene scores for each gene (which is how the other methods like ORA
+  work). A score is computed for a gene set based on how correlated the
+  expression profiles are.
+  
+  This can be thought of as a measure of how well the genes in the set
+  cluster together, but they need not all be in the same cluster. Thus a gene
+  set that contains two coherent clusters that encompass most of the genes in
+  the set will tend to get a good score (though not as good as a gene set
+  that is just one big cluster).
+  
+  If you are interested in gene clustering, as opposed to simply looking at
+  differntial expression, this method is appropriate. If you feel limited by
+  the choice of distance metrics in ermineJ, ORA would be an alternative, but
+  you have to define distinct clusters of genes to do that.
+  
+  One alternative use of correlation scoring is as a control for
+  gene-score-based analysis. Correlated gene sets can cause spurious high
+  scores, especially if the differential expression in your study is weak. To
+  use this approach, you could first use gene-score-based analysis (e.g.,
+  gene score resampling and then analyze the data using correlation analysis.
+  If any of your gene sets have high scores in both analyses, you should look
+  at the data to see if the correlation is not associated with the
+  differential expression. This is a simple (but ad hoc) alternative to using
+  resampling over the samples to do the gene-score-based analysis.
+  
+  Method overview taken from: 
+  \url{http://erminej.msl.ubc.ca/help/tutorials/running-an-analysis-correlation/}
 }

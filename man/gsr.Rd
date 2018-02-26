@@ -2,7 +2,7 @@
 % Please edit documentation in R/testWrappers.R
 \name{gsr}
 \alias{gsr}
-\title{Run GSR}
+\title{GSR}
 \usage{
 gsr(scores, scoreColumn = 1, bigIsBetter = FALSE, logTrans = FALSE,
   annotation, aspects = c("Molecular Function", "Cellular Component",
@@ -74,5 +74,32 @@ symbols are accepted.}
 \item{return}{If results should be returned. Set to FALSE if you only want a file}
 }
 \description{
-Run GSR
+The goal of this method is the same as for \code{\link{ora}}: to
+  provide a p value for each gene set. The key difference lies in that ORA
+  requires that you select a threshold for “gene selection”, whereas GSR does
+  not.
+  
+  GSR uses all the gene scores for the genes in a gene set to produce a
+  score. This means that genes that do not meet a statistical threshold for
+  selection can contribute to the score. In addition, more information
+  contained in the gene scores is preserved than in ORA, because ORA is
+  essentially rank-based, whereas GSR uses the gene scores themselves. (The
+  precision-recall method is even more close to the ORA method).
+  
+  Note: In ErmineJ, The precision-recall method is implemented as a type of 
+  GSR, where the score for the class is the average precision.
+  
+  In practice, ORA and GSR can yield similar results; however, we have found 
+  that GSR tends to be more robust than ORA (because there is no threshold to
+  set) and can give interesting results in situations where ORA doesn’t work 
+  as well (when no genes meet the predetermined selection threshold).
+  
+  GSR is appropriate when you have reasonably good trust in the values of
+  your gene scores, as opposed to the ranking. Its key advantage over ORA is
+  that you do not have to set a threshold gene score. If you trust the
+  ranking of gene scores more, the precision-recall or ROC methods might be
+  useful.
+  
+  Method overview taken from: 
+  \url{http://erminej.msl.ubc.ca/help/tutorials/running-an-analysis-resampling/}
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/testWrappers.R
 \name{precRecall}
 \alias{precRecall}
-\title{Run Precision-recall}
+\title{Precision-recall}
 \usage{
 precRecall(scores, scoreColumn = 1, bigIsBetter = FALSE, logTrans = FALSE,
   annotation, aspects = c("Molecular Function", "Cellular Component",
@@ -69,5 +69,26 @@ symbols are accepted.}
 \item{return}{If results should be returned. Set to FALSE if you only want a file}
 }
 \description{
-Run Precision-recall
+Precision-recall curves are a standard way to analyze the
+  quality of a classifier, as are \code{\link{roc}} curves. The difference
+  between ROC and Precision-recall (PR) is that PR is mostly concerned with
+  what is happening at the top of the ranking, while ROC looks at the whole
+  ranking. The precision-recall method in ErmineJ is similar in intent to the
+  method popularized in “GSEA“, but uses standard precision-recall (GSEA
+  originally used Kolmogorov-Smirnov statistics, but was changed to use a
+  modified K-S statistic that makes it more precision-recall-like).
+  
+  Like the ROC method, the PRC method uses only the ranks of the gene scores.
+  That is, all it cares about is the ordering of items obtained by your gene 
+  scores (e.g., t-test or fold-change), but doesn’t use the information about
+  the relative values of the scores.
+  
+  PR-scoring is rather like the ORA method in that it is concerned with what
+  is going on at the “top” of your list, but unlike ORA it does not use a 
+  threhold. Thus PR-scoring would be appropriate whenever you consider the
+  ORA method appropriate. The PR method requires a resampling step, so it is
+  slower to run than ORA.
+  
+  Method overview taken from: 
+  \url{http://erminej.msl.ubc.ca/help/tutorials/tutorial-precision-recall-scoring/}
 }

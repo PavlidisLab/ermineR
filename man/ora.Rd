@@ -2,7 +2,7 @@
 % Please edit documentation in R/testWrappers.R
 \name{ora}
 \alias{ora}
-\title{Run ORA}
+\title{ORA}
 \usage{
 ora(scores = NULL, hitlist = NULL, scoreColumn = 1, bigIsBetter = FALSE,
   logTrans = FALSE, annotation, aspects = c("Molecular Function",
@@ -69,5 +69,25 @@ symbols are accepted.}
 \item{return}{If results should be returned. Set to FALSE if you only want a file}
 }
 \description{
-Run ORA
+Over-representation analysis (ORA) examines the genes that meet
+  a selection criterion and determines if there are gene sets which are
+  statistically over-represented in that list. This method differs from other
+  methods provided by ErmineJ in that you must set a gene score threshold for
+  gene selection, or define a “hit list” of genes.
+  
+  Because ORA requires that you set a distinction between “good” and “bad” 
+  genes, ORA is most appropriate when you are very confident about the 
+  threshold. This is because changing the threshold can change the results, 
+  sometimes dramatically. If you are examining genes which naturally fall
+  into two categories (“on chromosome 2” and “not on chromosome 2”), then ORA
+  is the logical choice. Otherwise, in our opinion the other methods are more
+  appropriate.
+  
+  Technical comment: The probabilities produced by ErmineJ ORA are computed 
+  using the hypergeometric distribution, but falls back to using the binomial
+  approximation as needed.
+  
+  
+  Method overview taken from:
+  \url{http://erminej.msl.ubc.ca/help/tutorials/running-an-analysis-ora}
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/testWrappers.R
 \name{roc}
 \alias{roc}
-\title{Run ROC}
+\title{ROC}
 \usage{
 roc(scores, scoreColumn = 1, bigIsBetter = FALSE, logTrans = FALSE,
   annotation, aspects = c("Molecular Function", "Cellular Component",
@@ -67,5 +67,42 @@ symbols are accepted.}
 \item{return}{If results should be returned. Set to FALSE if you only want a file}
 }
 \description{
-Run ROC
+The receiver operator characteristic (ROC) method is a fast, non-parametric
+alternative to the ORA and resampling methods for generating gene set scores
+from gene scores.
+}
+\details{
+The ROC is a well-known method for evaluating rankings of items, in this case
+genes. The ranking in this case comes from the gene scores. A gene set will
+get a good ROC if many genes in the gene set are near the top of the list.
+
+The score measured for each gene set is the area under the ROC curve, a value
+between 0 and 1. If the genes in the gene set are randomly distributed in the
+ranking, you would expect a value near 0.5. Values near 1 indicate the genes
+in the gene set are near the top of the list, while values near 0 indicate
+the genes in the gene set are near the bottom of the list. In principle both
+values near 0 and near 1 are statistically significant, but p-values reported
+by ermineJ are based on the assumption that only the top of the list is of
+interest (e.g., we’re not considering “under-representation analysis”).
+
+Unlike the other methods in ermineJ other than the PRC method, the ROC uses
+only the ranks of the gene scores. That is, all it cares about is the
+ordering of items obtained by your gene scores (e.g., t-test or fold-change),
+but doesn’t use the information about the relative values of the scores.
+
+P-values for this analysis are computed using algorithms described in Breslin
+et al., 2004*. For more information on the ROC, you could do worse than
+reading the Wikipedia page
+\url{http://en.wikipedia.org/wiki/Receiver_operator_characteristic}.
+
+Like other non-parametric techniques, using ranks costs some statistical
+power, but also makes fewer assumptions. Specifically, if you think the
+ordering of items in your data is more accurate than the actual p-values
+themselves, the ROC might be appropriate. The PRC method is similar in that
+it uses ranks, but puts more emphasis on genes in the set which are ranked
+very near the top. In contrast the ROC method looks at overall trends in the
+rankings.
+
+Method overview taken from: 
+\url{http://erminej.msl.ubc.ca/help/tutorials/running-an-analysis-correlation/}
 }
