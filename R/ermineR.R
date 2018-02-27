@@ -188,13 +188,18 @@ ermineR = function(annotation = NULL,
     }
     
     # other variables -----
-    assertthat::assert_that(all(aspects %in%  c('Molecular Function','Cellular Component', 'Biological Process')))
+    assertthat::assert_that(all(aspects %in%  c('Molecular Function','Cellular Component', 'Biological Process',
+                                                'C','B','M')))
     
     arguments$aspects = aspects %>% sapply(function(x){
-        switch(x,
+        out = switch(x,
                'Molecular Function' = 'M',
                'Cellular Component' = 'C',
                'Biological Process' = 'B')
+        if(is.null(out)){
+            out = x
+        }
+        return(out)
     }) %>% paste(collapse='') %>% paste('-aspects',.)
     
     

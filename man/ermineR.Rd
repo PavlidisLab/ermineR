@@ -24,7 +24,8 @@ Pavlidis Lab. If this file isn't a valid annotation file, the function will fail
 If providing a custom annotation file, see
 \url{erminej.msl.ubc.ca/help/input-files/gene-annotations/}}
 
-\item{aspects}{Character vector. Which Go aspects to include in the analysis}
+\item{aspects}{Character vector. Which Go aspects to include in the analysis.
+Can be in long form (eg. 'Molecular Function') or short form (eg. \code{c('M','C','B')})}
 
 \item{scores}{A data.frame. Rownames have to be gene identifiers, followed by
 any number of columns. The column used for scoring is chosen by \code{scoreColumn}.

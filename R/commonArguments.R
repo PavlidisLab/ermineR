@@ -50,7 +50,8 @@ hitlist = function(hitlist = NULL){
 #' Pavlidis Lab. If this file isn't a valid annotation file, the function will fail.
 #' If providing a custom annotation file, see
 #' \url{erminej.msl.ubc.ca/help/input-files/gene-annotations/}
-#' @param aspects Character vector. Which Go aspects to include in the analysis
+#' @param aspects Character vector. Which Go aspects to include in the analysis.
+#' Can be in long form (eg. 'Molecular Function') or short form (eg. \code{c('M','C','B')})
 #' 
 annotation = function(annotation,
                       aspects = c('Molecular Function','Cellular Component', 'Biological Process')){}
