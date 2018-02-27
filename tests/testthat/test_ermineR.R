@@ -3,6 +3,7 @@ context('ermineJ usage')
 # utils::download.file('http://archive.geneontology.org/latest-termdb/go_daily-termdb.rdf-xml.gz',destfile = 'GO.xml.gz',quiet= TRUE)
 
 test_that('ermineJ basic usage',{
+    print('ermineJ basic usage')
     annotation = 'Generic_human.txt'
     scores <-read.table("scoreFile.txt", header=T, row.names = 1)
     
@@ -47,6 +48,8 @@ test_that('ermineJ basic usage',{
 })
 
 test_that('geting annotations from gemma',{
+    print('geting annotations from gemma')
+    
     scores <-read.table("scoreFile.txt", header=T, row.names = 1)
     
     
@@ -62,6 +65,7 @@ test_that('geting annotations from gemma',{
 })
 
 test_that('test wrappers',{
+    print('test wrappers')
     scores <-read.table("scoreFile.txt", header=T, row.names = 1)
     
     oraOut = ora(annotation = 'Generic_human.txt',
@@ -121,6 +125,7 @@ test_that('test wrappers',{
 
 
 test_that('bad java home error',{
+    print('bad java home error')
     oldJavaHome = Sys.getenv('JAVA_HOME')
     Sys.setenv(JAVA_HOME = 'bahHumbug')
     
@@ -138,6 +143,8 @@ test_that('bad java home error',{
 })
 
 test_that('successful java detection',{
+    print('successful java detection')
+    
     oldJavaHome = Sys.getenv('JAVA_HOME')
     Sys.setenv(JAVA_HOME = '')
     
@@ -159,6 +166,7 @@ test_that('successful java detection',{
 })
 
 test_that('setting seed',{
+    print('setting seed')
     scores<-read.table("chd8.pvals.txt", header=T, row.names = 1)
     set.seed(1)
     lmebtr.enrich<-ermineR(annotation = "Generic_mouse", 
@@ -199,6 +207,8 @@ hitlist = c("AAMP", "AFG3L2", "AHSP", "AIP", "AIPL1", "APCS", "BBS12",
             "TOR1A", "TRAP1", "TTC1", "TUBB4B", "UGGT1", "ZFYVE21")
     
 test_that('test hitlist input',{
+    print('test hitlist input')
+    
     oraOut = ora(annotation = 'Generic_human.txt',
                  hitlist = hitlist,
                  geneSetDescription = 'GO.xml.gz')
@@ -207,7 +217,7 @@ test_that('test hitlist input',{
 })
 
 test_that('goToday, latest go and go at date test',{
-    
+    print('goToday, latest go and go at date test')
     goToday('todayGo',overwrite = TRUE)
     oraOut = ora(annotation = 'Generic_human.txt',
                  hitlist = hitlist,
@@ -229,6 +239,9 @@ test_that('goToday, latest go and go at date test',{
 })
 
 test_that('data.frame annotation',{
+    
+    print('data.frame annotation')
+    
     annotations = read.table('Generic_human.txt', sep='\t', header = TRUE,
                              quote="", stringsAsFactors = F)
     
