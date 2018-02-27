@@ -23,6 +23,7 @@
 #'   \url{http://erminej.msl.ubc.ca/help/tutorials/running-an-analysis-ora}
 #'   
 #' @inheritParams scores
+#' @inheritParams hitlist
 #' @inheritParams annotation
 #' @inheritParams threshold
 #' @inheritParams generalStats

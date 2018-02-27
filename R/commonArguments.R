@@ -27,7 +27,7 @@ scores = function(scores,
 #' 
 #' @keywords internal ORA
 #' 
-#' @name hitlis
+#' @name hitlist
 #' 
 #' @param hitlist A vector of gene identifiers. ORA method accepts hitlists
 #' instead of scores. If a hitlist is provided, logTrans, thresholds and 

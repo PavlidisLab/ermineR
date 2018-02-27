@@ -17,6 +17,10 @@ any number of columns. The column used for scoring is chosen by \code{scoreColum
 See \url{http://erminej.msl.ubc.ca/help/input-files/gene-scores/}
 for information abot how to specify scores. (for test = ORA, GSR and ROC)}
 
+\item{hitlist}{A vector of gene identifiers. ORA method accepts hitlists
+instead of scores. If a hitlist is provided, logTrans, thresholds and 
+bigIsBetter options are ignored.}
+
 \item{scoreColumn}{Integer or character. Which column of the \code{scores} data.frame
 to use as scores. Defaults to first column of \code{scores}. See
 \url{http://erminej.msl.ubc.ca/help/input-files/gene-scores/} for details.
