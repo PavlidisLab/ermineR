@@ -48,7 +48,8 @@ ora = function(scores = NULL,
                return = TRUE){
     args = as.list(match.call())[-1]
     args = c(args,list(test = 'ORA'))
-    do.call(ermineR, args,envir = new.env())
+    do.call(ermineR, args,envir = parent.frame())
+
 }
 
 
