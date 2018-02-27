@@ -16,8 +16,6 @@ findJava = function(){
         }
         if(grepl('jre/bin/java$',javaLink)){
             javaHome = gsub('/jre/bin/java$','',javaLink)
-        } else{
-            javaHome = ''
         }
     }
     
@@ -30,8 +28,6 @@ findJava = function(){
         }
         if(grepl('bin/java.exe$',javaLink) & !grepl('Program Files \\(x86\\)',javaLink)){ # doesn't work with 32 bit java
             javaHome = gsub('/bin/java.exe$','',javaLink) %>% gsub('/', '\\\\',.)
-        } else{
-            javaHome = ''
         }
     }
     # if OS specific methods fail, 
