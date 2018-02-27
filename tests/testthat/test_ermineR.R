@@ -234,6 +234,6 @@ test_that('data.frame annotation',{
     
     oraOut = ora(annotation = annotations,
                  hitlist = hitlist,
-                 geneSetDescription = 'todayGo')
+                 geneSetDescription = 'GO.xml.gz')
     testthat::expect_true(oraOut$results$Pval[oraOut$results$ID == 'GO:0051082']<0.05)
 })
