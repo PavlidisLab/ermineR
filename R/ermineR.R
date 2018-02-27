@@ -188,7 +188,7 @@ ermineR = function(annotation = NULL,
     }
     
     # other variables -----
-    aspects = c('Molecular Function','Cellular Component', 'Biological Process')
+    assertthat::assert_that(all(aspects %in%  c('Molecular Function','Cellular Component', 'Biological Process')))
     
     arguments$aspects = aspects %>% sapply(function(x){
         switch(x,
