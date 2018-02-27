@@ -206,7 +206,7 @@ test_that('test hitlist input',{
     testthat::expect_true(oraOut$results$Pval[oraOut$results$ID == 'GO:0051082']<0.05)
 })
 
-test_that('goToday and latest go test',{
+test_that('goToday, latest go and go at date test',{
     
     goToday('todayGo',overwrite = TRUE)
     oraOut = ora(annotation = 'Generic_human.txt',
@@ -219,6 +219,12 @@ test_that('goToday and latest go test',{
                   hitlist = hitlist,
                   geneSetDescription = 'Latest_GO')
     testthat::expect_identical(oraOut$results,oraOut2$results)
+    
+    validDates = getGoDates()
+    
+    # get latest date
+    goAtDate('todayGo2',validDates[1],overwrite = TRUE)
+    testthat::expect_equal(unname(tools::md5sum('todayGo')),unname(tools::md5sum('todayGo2')))
     
 })
 
