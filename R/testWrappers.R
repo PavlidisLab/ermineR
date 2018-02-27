@@ -148,6 +148,8 @@ gsr = function(scores,
 #' @inheritParams generalStats
 #' @inheritParams geneSetOpts
 #' @inheritParams returnOpts
+#' 
+#' @export
 precRecall = function(scores,
                       scoreColumn = 1,
                       bigIsBetter = FALSE,
