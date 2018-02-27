@@ -1,5 +1,6 @@
 language: r
 sudo: true
+cache: packages
 r_github_packages:
     - r-lib/covr
     - r-lib/fs
