@@ -11,11 +11,13 @@
 #'
 #' @examples
 goToday = function(path,overwrite = FALSE){
+    if(exists(path) & !overwrite){
+        stop('File exists, not downloading')
+    }
     utils::download.file('http://archive.geneontology.org/latest-termdb/go_daily-termdb.rdf-xml.gz',
                          destfile = paste0(path,'.gz'),quiet= TRUE)
     R.utils::gunzip(paste0(path,'.gz'),overwrite = overwrite)    
 }
-
 
 #' getGoDates
 #' 
@@ -23,14 +25,17 @@ goToday = function(path,overwrite = FALSE){
 #' \code{\link{goAtDate}}
 #' @export
 getGoDates = function(){
+    # check the links to use. for soime reason archive link is faster
     files = 
-        RCurl::getURL('http://archive.geneontology.org/termdb/',dirlistonly = TRUE,ftp.use.epsv=TRUE)
+        RCurl::getURL('ftp://ftp.geneontology.org/pub/go/godatabase/archive/termdb/',dirlistonly = TRUE,ftp.use.epsv=TRUE)
     
-    dates = files %>% strsplit('a href') %>% {.[[1]]} %>% {.[grepl(x = .,pattern = '[0-9]+?-[0-9]+?-[0-9]+(?=/)',perl = TRUE)]} %>% 
-        stringr::str_extract( '[0-9]+?-[0-9]+?-[0-9]+(?=/)')
+    # dates = files %>% strsplit('a href') %>% {.[[1]]} %>% {.[grepl(x = .,pattern = '[0-9]+?-[0-9]+?-[0-9]+(?=/)',perl = TRUE)]} %>% 
+    #     stringr::str_extract( '[0-9]+?-[0-9]+?-[0-9]+(?=/)')
+    dates %<>% strsplit('\n') %>%  {.[grepl(pattern = '[0-9]+?-[0-9]+?-[0-9]+', .)]}
     
     rev(dates)
 }
+
 
 #' goAtDate
 #' 
@@ -44,6 +49,9 @@ getGoDates = function(){
 #' @return
 #' @export
 goAtDate = function(path, date, overwrite = FALSE){
+    if(exists(path)){
+        stop('File exists. Not overwriting')
+    }
     utils::download.file(
         glue::glue('http://archive.geneontology.org/termdb/{date}/go_daily-termdb.rdf-xml.gz'),
                          destfile = paste0(path,'.gz'),quiet= TRUE)
