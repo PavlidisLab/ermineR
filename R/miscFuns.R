@@ -15,12 +15,8 @@ getGemmaAnnot = function(chipName,chipFile,annotType = c('bioProcess','noParents
     download.file(paste0('http://chibi.ubc.ca/microannots/',chipName,annotType,'.an.txt.gz'),
                   paste0(chipFile,'.gz'))
     
-    out = system(paste0('gunzip -f ', chipFile,'.gz'))
-    if(out==0){
-        return(TRUE)
-    } else{
-        return(FALSE)
-    }
+    R.utils::gunzip(paste0(chipFile,'.gz'), overwrite = TRUE)
+    
 }
 
 #' Get genes for a term
