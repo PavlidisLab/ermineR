@@ -31,9 +31,9 @@ getGoDates = function(){
     
     # dates = files %>% strsplit('a href') %>% {.[[1]]} %>% {.[grepl(x = .,pattern = '[0-9]+?-[0-9]+?-[0-9]+(?=/)',perl = TRUE)]} %>% 
     #     stringr::str_extract( '[0-9]+?-[0-9]+?-[0-9]+(?=/)')
-    dates %<>% strsplit('\n') %>%  {.[grepl(pattern = '[0-9]+?-[0-9]+?-[0-9]+', .)]}
+    files %<>% strsplit('\n') %>% {.[[1]]} %>% {.[grepl(pattern = '[0-9]+?-[0-9]+?-[0-9]+', .)]}
     
-    rev(dates)
+    rev(files)
 }
 
 
