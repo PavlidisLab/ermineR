@@ -1,90 +1,113 @@
 context('wrappers')
 
+set.seed(1)
 
 test_that('test wrappers',{
-    print('test wrappers')
-    scores <-read.table("scoreFile.txt", header=T, row.names = 1)
+    scores <-read.table("testFiles/pValues", header=T, row.names = 1)
+    scoresBig <-read.table("testFiles/pValuesBig", header=T, row.names = 1)
     
-    oraOut = ora(annotation = 'Generic_human.txt',
+    oraOut = ora(annotation = 'testFiles/chip',
                  scores = scores,
-                 scoreColumn = 2,
+                 scoreColumn = 1,
                  threshold = 0.001,
-                 geneSetDescription = 'GO.xml.gz')
+                 geneSetDescription = 'testFiles/Go.xml')
     
     testthat::expect_is(oraOut,'list')
     testthat::expect_is(oraOut$results,'data.frame')
     testthat::expect_equal(oraOut$details$classScoreMethod, 'ORA')
+    testthat::expect_true(oraOut$results$Pval[oraOut$results$ID == 'GO:0051082']<0.05)
     
-    gsrOut = gsr(annotation = 'Generic_human.txt',
+    oraOutBig = ora(annotation = 'testFiles/chip',
+                 scores = scoresBig,
+                 bigIsBetter = TRUE,
+                 scoreColumn = 1,
+                 threshold = 0.999,
+                 geneSetDescription = 'testFiles/Go.xml')
+    testthat::expect_true(oraOutBig$results$Pval[oraOutBig$results$ID == 'GO:0051082']<0.05)
+    
+    gsrOut = gsr(annotation = 'testFiles/chip',
                  scores = scores,
-                 scoreColumn = 2,
+                 scoreColumn = 1,
                  iterations = 24,
                  bigIsBetter = FALSE,
                  logTrans = FALSE,
                  stats = 'quantile',
-                 geneSetDescription = 'GO.xml.gz')
+                 geneSetDescription = 'testFiles/Go.xml')
+    
+    
     testthat::expect_is(gsrOut,'list')
     testthat::expect_is(gsrOut$results,'data.frame')
     testthat::expect_equal(gsrOut$details$classScoreMethod, 'GSR')
     testthat::expect_equal(gsrOut$details$rawScoreMethod, 'QUANTILE')
     testthat::expect_equal(gsrOut$details$iterations, 24)
+    testthat::expect_true(gsrOut$results$Pval[gsrOut$results$ID == 'GO:0051082']<0.05)
     
-    precRecallOut = precRecall(annotation = 'Generic_human.txt',
-                               scores = scores,
-                               scoreColumn = 2,
+    
+    # gsrOutBig = gsr(annotation = 'testFiles/chip',
+    #              scores = scoresBig,
+    #              scoreColumn = 1,
+    #              iterations = 21,
+    #              bigIsBetter = TRUE,
+    #              logTrans = FALSE,
+    #              stats = 'quantile',
+    #              geneSetDescription = 'testFiles/Go.xml')
+    # testthat::expect_true(gsrOutBig$results$Pval[gsrOutBig$results$ID == 'GO:0051082']<0.05)
+    
+    # change this after bugfix
+    precRecallOut = precRecall(annotation = 'testFiles/chip',
+                               scores = scoresBig,
+                               scoreColumn = 1,
                                iterations = 24,
-                               bigIsBetter = FALSE,
+                               bigIsBetter = TRUE,
                                logTrans = FALSE,
-                               geneSetDescription = 'GO.xml.gz')
+                               geneSetDescription = 'testFiles/Go.xml')
     testthat::expect_is(precRecallOut,'list')
     testthat::expect_is(precRecallOut$results,'data.frame')
     testthat::expect_equal(precRecallOut$details$classScoreMethod, 'GSR')
     testthat::expect_equal(precRecallOut$details$rawScoreMethod, 'PRECISIONRECALL')
+    testthat::expect_true(precRecallOut$results$Pval[precRecallOut$results$ID == 'GO:0051082']<0.05)
     
-    corrOut = corr(expression = 'expression.tsv',
-                   annotation = 'GPL96_noParents.an.txt.gz',
+    
+    rocOut = roc(annotation = 'testFiles/chip',
+                 scores = scores,
+                 scoreColumn = 1,
+                 bigIsBetter = FALSE,
+                 geneSetDescription = 'testFiles/Go.xml')
+    testthat::expect_is(rocOut,'list')
+    testthat::expect_is(rocOut$results,'data.frame')
+    testthat::expect_equal(rocOut$details$classScoreMethod, 'ROC')
+    testthat::expect_true(rocOut$results$Pval[rocOut$results$ID == 'GO:0051082']<0.05)
+    
+    rocOutBig = roc(annotation = 'testFiles/chip',
+                 scores = scoresBig,
+                 scoreColumn = 1,
+                 bigIsBetter = TRUE,
+                 geneSetDescription = 'testFiles/Go.xml')
+    testthat::expect_true(rocOutBig$results$Pval[rocOutBig$results$ID == 'GO:0051082']<0.05)
+    
+    corrOut = corr(expression = 'testFiles/expression.tsv',
+                   annotation = 'testFiles/GPL96_noParents.an.txt.gz',
                    iterations = 22,
-                   geneSetDescription = 'GO.xml.gz')
+                   geneSetDescription = 'testFiles/Go.xml')
+    
+    # corrOut = corr(expression = 'testFiles/expression',
+    #                annotation = 'testFiles/chip',
+    #                iterations = 22,
+    #                geneSetDescription = 'testFiles/Go.xml')
+    
     testthat::expect_is(corrOut,'list')
     testthat::expect_is(corrOut$results,'data.frame')
     testthat::expect_equal(corrOut$details$classScoreMethod, 'CORR')
     # testthat::expect_equal(corrOut$details$iterations, 22)
-    
-    rocOut = roc(annotation = 'Generic_human.txt',
-                 scores = scores,
-                 scoreColumn = 2,
-                 bigIsBetter = TRUE,
-                 geneSetDescription = 'GO.xml.gz')
-    testthat::expect_is(rocOut,'list')
-    testthat::expect_is(rocOut$results,'data.frame')
-    testthat::expect_equal(rocOut$details$classScoreMethod, 'ROC')
 })
 
-# genes for GO:0051082
-hitlist = c("AAMP", "AFG3L2", "AHSP", "AIP", "AIPL1", "APCS", "BBS12", 
-            "CALR", "CALR3", "CANX", "CCDC115", "CCT2", "CCT3", "CCT4", "CCT5", 
-            "CCT6A", "CCT6B", "CCT7", "CCT8", "CCT8L1P", "CCT8L2", "CDC37", 
-            "CDC37L1", "CHAF1A", "CHAF1B", "CLGN", "CLN3", "CLPX", "CRYAA", 
-            "CRYAB", "DNAJA1", "DNAJA2", "DNAJA3", "DNAJA4", "DNAJB1", "DNAJB11", 
-            "DNAJB13", "DNAJB2", "DNAJB4", "DNAJB5", "DNAJB6", "DNAJB8", 
-            "DNAJC4", "DZIP3", "ERLEC1", "ERO1B", "FYCO1", "GRPEL1", "GRPEL2", 
-            "GRXCR2", "HEATR3", "HSP90AA1", "HSP90AA2P", "HSP90AA4P", "HSP90AA5P", 
-            "HSP90AB1", "HSP90AB2P", "HSP90AB3P", "HSP90AB4P", "HSP90B1", 
-            "HSP90B2P", "HSPA1A", "HSPA1B", "HSPA1L", "HSPA2", "HSPA5", "HSPA6", 
-            "HSPA8", "HSPA9", "HSPB6", "HSPD1", "HSPE1", "HTRA2", "LMAN1", 
-            "MDN1", "MKKS", "NAP1L4", "NDUFAF1", "NPM1", "NUDC", "NUDCD2", 
-            "NUDCD3", "PDRG1", "PET100", "PFDN1", "PFDN2", "PFDN4", "PFDN5", 
-            "PFDN6", "PIKFYVE", "PPIA", "PPIB", "PTGES3", "RP2", "RUVBL2", 
-            "SCAP", "SCG5", "SERPINH1", "SHQ1", "SIL1", "SPG7", "SRSF10", 
-            "SRSF12", "ST13", "SYVN1", "TAPBP", "TCP1", "TMEM67", "TOMM20", 
-            "TOR1A", "TRAP1", "TTC1", "TUBB4B", "UGGT1", "ZFYVE21")
-
 test_that('test hitlist input',{
-    print('test hitlist input')
+
+    hitlist = readLines('testFiles/hitlist')
     
-    oraOut = ora(annotation = 'Generic_human.txt',
+    oraOut = ora(annotation = 'testFiles/chip',
                  hitlist = hitlist,
-                 geneSetDescription = 'GO.xml.gz')
+                 geneSetDescription = 'testFiles/Go.xml')
     
     testthat::expect_true(oraOut$results$Pval[oraOut$results$ID == 'GO:0051082']<0.05)
 })
