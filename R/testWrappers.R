@@ -112,7 +112,7 @@ gsr = function(scores,
                return = TRUE){
     args = as.list(match.call())[-1]
     args = c(args,list(test = 'GSR'))
-    do.call(ermineR, args,envir = new.env())
+    do.call(ermineR, args,envir = parent.frame())
 }
 
 
@@ -167,7 +167,7 @@ precRecall = function(scores,
                       return = TRUE){
     args = as.list(match.call())[-1]
     args = c(args,list(test = 'GSR',stats ='precisionRecall'))
-    do.call(ermineR, args,envir = new.env())
+    do.call(ermineR, args,envir = parent.frame())
 }
 
 
@@ -225,7 +225,7 @@ corr = function(expression,
                 return = TRUE){
     args = as.list(match.call())[-1]
     args = c(args,list(test = 'CORR'))
-    do.call(ermineR, args,envir = new.env())
+    do.call(ermineR, args,envir = parent.frame())
 }
 
 #' ROC
@@ -292,5 +292,5 @@ roc = function(scores,
     
     args = as.list(match.call())[-1]
     args = c(args,list(test = 'ROC'))
-    do.call(ermineR, args,envir = new.env())
+    do.call(ermineR, args,envir = parent.frame())
 }
