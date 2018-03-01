@@ -55,10 +55,10 @@ test_that('test wrappers',{
     
     # change this after bugfix
     precRecallOut = precRecall(annotation = 'testFiles/chip',
-                               scores = scoresBig,
+                               scores = scores,
                                scoreColumn = 1,
                                iterations = 24,
-                               bigIsBetter = TRUE,
+                               bigIsBetter = FALSE,
                                logTrans = FALSE,
                                geneSetDescription = 'testFiles/Go.xml')
     testthat::expect_is(precRecallOut,'list')
@@ -67,6 +67,15 @@ test_that('test wrappers',{
     testthat::expect_equal(precRecallOut$details$rawScoreMethod, 'PRECISIONRECALL')
     testthat::expect_true(precRecallOut$results$Pval[precRecallOut$results$ID == 'GO:0051082']<0.05)
     
+    
+    precRecallOutBig = precRecall(annotation = 'testFiles/chip',
+                                  scores = scoresBig,
+                                  scoreColumn = 1,
+                                  iterations = 24,
+                                  bigIsBetter = TRUE,
+                                  logTrans = FALSE,
+                                  geneSetDescription = 'testFiles/Go.xml')
+    testthat::expect_true(precRecallOutBig$results$Pval[precRecallOutBig$results$ID == 'GO:0051082']<0.05)
     
     rocOut = roc(annotation = 'testFiles/chip',
                  scores = scores,
