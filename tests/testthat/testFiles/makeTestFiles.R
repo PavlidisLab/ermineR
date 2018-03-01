@@ -31,12 +31,9 @@ pValues = data.frame(gene = c(annot$ProbeName[annot$GeneSymbols %in% randomGenes
                                 runif(length(annot %>% filter(GeneSymbols %in% hitlistGenes) %$% ProbeName),
                                       min = 0.0001, max = 0.001)))
 
-pValuesBig = data.frame(gene = c(annot$ProbeName[annot$GeneSymbols %in% randomGenes],
-                              annot$ProbeName[annot$GeneSymbols %in% hitlistGenes]),
-                     pvalue = c(runif(length(annot %>% filter(GeneSymbols %in% randomGenes) %$% ProbeName),
-                                      min = 0 ,max = 0.9999),
-                                runif(length(annot %>% filter(GeneSymbols %in% hitlistGenes) %$% ProbeName),
-                                      min = 0.9999, max = 1)))
+
+pValuesBig = pValues
+pValuesBig$pvalue = 1-pValuesBig$pvalue
 
 write.table(pValues, file =  here('tests/testthat/testFiles/pValues'),quote = FALSE, sep = '\t', row.names = FALSE)
 write.table(pValuesBig, file =  here('tests/testthat/testFiles/pValuesBig'),quote = FALSE, sep = '\t', row.names = FALSE)
