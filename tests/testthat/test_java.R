@@ -13,6 +13,7 @@ test_that('successful java detection',{
     annotation = 'testFiles/chip'
     scores <-read.table("testFiles/pValues", header=T, row.names = 1)
     
+    Sys.setenv(JAVA_HOME = '')
     result = ermineR(annotation = annotation,
                      scoreColumn = 1,
                      scores = scores,
