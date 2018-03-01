@@ -96,7 +96,8 @@ ermineR = function(annotation = NULL,
     }else if(!file.exists(geneSetDescription)){
         message('Attempting to download gene set description from link')
         temp = tempfile(fileext = 'xml.gz')
-        download.file(url = geneSetDescription,destfile = temp)
+        download.file(url = geneSetDescription,destfile = temp,quiet= TRUE)
+        geneSetDescription = temp
     } # and else, geneSetDescription is a local file
     
     assertthat::is.string(geneSetDescription) # geneSetDescription is mandatory
