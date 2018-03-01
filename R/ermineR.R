@@ -56,7 +56,7 @@ ermineR = function(annotation = NULL,
     stats = match.arg(stats)
     
     # set ermineJ home so users won't have to
-    ermineJHome = system.file("ermineJ-3.1",package = 'ermineR')
+    ermineJHome = system.file("ermineJ-3.1.1",package = 'ermineR')
     Sys.setenv(ERMINEJ_HOME = ermineJHome)
     
     # find that java home at all costs
