@@ -43,12 +43,12 @@ hitlist = pValues %>% filter(pvalue <= 0.001) %$% gene
 write.table(hitlist,file = here('tests/testthat/testFiles/hitlist'),quote =FALSE, row.names = FALSE,col.names = FALSE)
 
 # expression file this doesn't work for now
+sampleSize = 10
+randomDat = runif(length(annot$ProbeName[annot$GeneSymbols %in% randomGenes])*sampleSize,0,16) %>% matrix(ncol = sampleSize)
 
-randomDat = runif(length(annot$ProbeName[annot$GeneSymbols %in% randomGenes])*10,0,16) %>% matrix(ncol = 10)
-
-correlatedDat = rep(runif(10,0,16),length(annot %>% filter(GeneSymbols %in% hitlistGenes) %$% ProbeName)) %>% 
+correlatedDat = rep(runif(sampleSize,0,16),length(annot %>% filter(GeneSymbols %in% hitlistGenes) %$% ProbeName)) %>% 
     {. + runif(length(.),0,1)} %>% 
-    matrix(ncol = 10,byrow = TRUE)
+    matrix(ncol = sampleSize,byrow = TRUE)
 
 
 expression = rbind(randomDat, correlatedDat)
