@@ -28,6 +28,9 @@ To use a specific version of GO, make sure to set `geneSetDescription` argument 
 #### Use ORA with a hitlist
 
 ``` r
+library(dplyr)
+
+
 # genes for GO:0051082
 hitlist = c("AAMP", "AFG3L2", "AHSP", "AIP", "AIPL1", "APCS", "BBS12", 
             "CALR", "CALR3", "CANX", "CCDC115", "CCT2", "CCT3", "CCT4", "CCT5", 
@@ -49,20 +52,17 @@ hitlist = c("AAMP", "AFG3L2", "AHSP", "AIP", "AIPL1", "APCS", "BBS12",
 oraOut = ora(annotation = 'Generic_human',
              hitlist = hitlist)
 
-head(oraOut$results)
+head(oraOut$results) %>% knitr::kable()
 ```
 
-    ## # A tibble: 6 x 12
-    ##   Name         ID    NumProbes NumGenes RawScore      Pval CorrectedPvalue
-    ##   <chr>        <chr>     <int>    <int>    <dbl>     <dbl>           <dbl>
-    ## 1 unfolded pr… GO:0…       115      115     115. 2.29e-303       9.50e-300
-    ## 2 protein bin… GO:0…        29       29      25. 7.47e- 53       1.55e- 49
-    ## 3 chaperone-m… GO:0…        59       59      28. 1.67e- 47       2.31e- 44
-    ## 4 'de novo' p… GO:0…        35       35      22. 3.72e- 41       3.86e- 38
-    ## 5 chaperone b… GO:0…        85       85      22. 2.51e- 30       2.08e- 27
-    ## 6 response to… GO:0…       173      173      22. 4.95e- 23       3.42e- 20
-    ## # ... with 5 more variables: MFPvalue <dbl>, CorrectedMFPvalue <dbl>,
-    ## #   Multifunctionality <dbl>, `Same as` <chr>, GeneMembers <chr>
+| Name                                        | ID           |  NumProbes|  NumGenes|  RawScore|  Pval|  CorrectedPvalue|  MFPvalue|  CorrectedMFPvalue|  Multifunctionality| Same as | GeneMembers                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+|:--------------------------------------------|:-------------|----------:|---------:|---------:|-----:|----------------:|---------:|------------------:|-------------------:|:--------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| unfolded protein binding                    | <GO:0051082> |        115|       115|       115|     0|                0|         0|                  0|               0.634| NA      | AAMP|AFG3L2|AHSP|AIP|AIPL1|APCS|BBS12|CALR|CALR3|CANX|CCDC115|CCT2|CCT3|CCT4|CCT5|CCT6A|CCT6B|CCT7|CCT8|CCT8L1P|CCT8L2|CDC37|CDC37L1|CHAF1A|CHAF1B|CLGN|CLN3|CLPX|CRYAA|CRYAB|DNAJA1|DNAJA2|DNAJA3|DNAJA4|DNAJB1|DNAJB11|DNAJB13|DNAJB2|DNAJB4|DNAJB5|DNAJB6|DNAJB8|DNAJC4|DZIP3|ERLEC1|ERO1B|FYCO1|GRPEL1|GRPEL2|GRXCR2|HEATR3|HSP90AA1|HSP90AA2P|HSP90AA4P|HSP90AA5P|HSP90AB1|HSP90AB2P|HSP90AB3P|HSP90AB4P|HSP90B1|HSP90B2P|HSPA1A|HSPA1B|HSPA1L|HSPA2|HSPA5|HSPA6|HSPA8|HSPA9|HSPB6|HSPD1|HSPE1|HTRA2|LMAN1|MDN1|MKKS|NAP1L4|NDUFAF1|NPM1|NUDC|NUDCD2|NUDCD3|PDRG1|PET100|PFDN1|PFDN2|PFDN4|PFDN5|PFDN6|PIKFYVE|PPIA|PPIB|PTGES3|RP2|RUVBL2|SCAP|SCG5|SERPINH1|SHQ1|SIL1|SPG7|SRSF10|SRSF12|ST13|SYVN1|TAPBP|TCP1|TMEM67|TOMM20|TOR1A|TRAP1|TTC1|TUBB4B|UGGT1|ZFYVE21|                                                                                                                                                                                                                                                                                                                                                        |
+| protein binding involved in protein folding | <GO:0044183> |         29|        29|        25|     0|                0|         0|                  0|               0.545| NA      | BBS12|CALR|CALR3|CCT2|CCT3|CCT4|CCT5|CCT6A|CCT6B|CCT7|CCT8|CCT8L1P|CCT8L2|CD74|CLGN|DNAJB8|FYCO1|HSPA1A|HSPA1B|HSPB1|HSPD1|MKKS|PDCL3|PFDN1|PFDN2|PIKFYVE|RIC3|TCP1|ZFYVE21|                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| chaperone-mediated protein folding          | <GO:0061077> |         59|        59|        28|     0|                0|         0|                  0|               0.681| NA      | BBS12|CALR|CANX|CCT2|CCT3|CCT4|CCT5|CCT6A|CCT6B|CCT7|CCT8|CCT8L1P|CCT8L2|CD74|CHORDC1|CLU|CRTAP|CSNK2A1|DNAJB1|DNAJB2|DNAJB8|DNAJC24|ERO1A|FKBP10|FKBP11|FKBP14|FKBP1A|FKBP1B|FKBP2|FKBP3|FKBP4|FKBP5|FKBP6|FKBP7|FKBP8|FKBP9|FYCO1|GAK|HSPA8|HSPB1|HSPB6|HSPD1|HSPE1|HSPH1|MKKS|P3H1|PDIA4|PEX19|PIKFYVE|PPIB|PPID|TCP1|TOR1A|TOR1B|TOR2A|TRAP1|UNC45A|UNC45B|ZFYVE21|                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| 'de novo' protein folding                   | <GO:0006458> |         35|        35|        22|     0|                0|         0|                  0|               0.683| NA      | BBS12|CCT2|CCT3|CCT4|CCT5|CCT6A|CCT6B|CCT7|CCT8|CCT8L1P|CCT8L2|CD74|CHCHD4|DNAJB1|DNAJC2|ENTPD5|ERO1A|FKBP1A|FKBP1B|FYCO1|GAK|HSPA14|HSPA8|HSPD1|HSPE1|HSPH1|MKKS|PIKFYVE|SELENOF|TCP1|TOR1A|TOR1B|TOR2A|UGGT1|ZFYVE21|                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| chaperone binding                           | <GO:0051087> |         85|        85|        22|     0|                0|         0|                  0|               0.740| NA      | AHSA1|AHSA2|ALB|AMFR|ATP1A1|ATP1A2|ATP1A3|ATP7A|BAG1|BAG2|BAG3|BAG4|BAG5|BAK1|BAX|BIRC2|BIRC5|CALR|CDC25A|CDC37|CDC37L1|CDKN1B|CLU|CP|CTSC|DNAJA1|DNAJA2|DNAJA4|DNAJB1|DNAJB2|DNAJB4|DNAJB5|DNAJB6|DNAJB7|DNAJB8|DNAJC1|DNAJC10|DNAJC3|DNLZ|ERP29|FGB|FNIP1|FNIP2|GAK|GET4|GNB5|GRPEL1|GRPEL2|HES1|HSCB|HSPA5|HSPB6|HSPD1|HSPE1|HYOU1|OGDH|PACRG|PARK2|PFDN4|PFDN6|PIH1D3|PRNP|RNF207|SACS|SDF2L1|SLC25A17|SOD1|ST13|STIP1|SYVN1|TBCA|TBCC|TBCD|TBCE|TERT|TIMM10|TIMM44|TIMM9|TP53|TSACC|TSC1|UBL4A|USP13|VWF|WRAP53|                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| response to topologically incorrect protein | <GO:0035966> |        173|       173|        22|     0|                0|         0|                  0|               0.909| NA      | AARS|ACADVL|ADD1|AMFR|ANKZF1|ARFGAP1|ASNA1|ASNS|ATF3|ATF4|ATF6|ATF6B|ATP6V0D1|ATXN3|BAG6|BAK1|BAX|BHLHA15|CALR|CASP12|CCL2|CCND1|CDK5RAP3|CHAC1|CLU|CREB3|CREB3L1|CREB3L2|CREB3L3|CREB3L4|CREBRF|CTDSP2|CTH|CUL3|CUL7|CXCL8|CXXC1|DAB2IP|DAXX|DCTN1|DDIT3|DDX11|DERL1|DERL2|DERL3|DNAJA1|DNAJB1|DNAJB11|DNAJB2|DNAJB4|DNAJB5|DNAJB9|DNAJC3|DNAJC4|DZIP3|EDEM1|EDEM2|EDEM3|EIF2AK2|EIF2AK3|EIF2S1|EP300|ERN1|ERO1A|ERP44|EXTL3|F12|FAF2|FBXO6|FGF21|FKBP14|GFPT1|GOSR2|GSK3A|HDAC6|HDGF|HERPUD1|HERPUD2|HSF1|HSP90AA1|HSP90AB1|HSP90B1|HSPA1L|HSPA2|HSPA4|HSPA4L|HSPA5|HSPA6|HSPA8|HSPB1|HSPB2|HSPB3|HSPB7|HSPD1|HSPE1|HSPH1|HYOU1|IFNG|IGFBP1|JKAMP|KDELR3|KLHDC3|KLHL15|LMNA|MANF|MBTPS1|MBTPS2|MFN2|MYDGF|NFE2L2|PACRG|PARK2|PARP16|PDIA5|PDIA6|PLA2G4B|POMT1|POMT2|PPP1R15A|PPP2R5B|PREB|PTPN1|RHBDD1|RNF121|RNF126|RNF175|RNF185|RNF5|SDF2|SDF2L1|SEC31A|SEC61A1|SEC61A2|SEC61B|SEC61G|SEC62|SEC63|SELENOS|SERP1|SERP2|SERPINH1|SHC1|SRPRA|SRPRB|SSR1|STC2|STT3B|STUB1|SULT1A3|SYVN1|TATDN2|TBL2|THBS1|THBS4|TLN1|TMBIM6|TMEM129|TOR1A|TOR1B|TPP1|TSPYL2|UBE2J2|UBE2W|UBXN4|UFD1L|VAPB|VCP|WFS1|WIPI1|XBP1|YIF1A|YOD1|ZBTB17| |
 
 #### Using your own GO annotations
 
@@ -70,7 +70,87 @@ If you want to use your own GO annotations instead of getting files provided by 
 
 ``` r
 library('org.Hs.eg.db') # get go terms from the bioconductor affy 
-library(dplyr)
+```
+
+    ## Loading required package: AnnotationDbi
+
+    ## Loading required package: stats4
+
+    ## Loading required package: BiocGenerics
+
+    ## Loading required package: parallel
+
+    ## 
+    ## Attaching package: 'BiocGenerics'
+
+    ## The following objects are masked from 'package:parallel':
+    ## 
+    ##     clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    ##     clusterExport, clusterMap, parApply, parCapply, parLapply,
+    ##     parLapplyLB, parRapply, parSapply, parSapplyLB
+
+    ## The following objects are masked from 'package:dplyr':
+    ## 
+    ##     combine, intersect, setdiff, union
+
+    ## The following object is masked from 'package:ermineR':
+    ## 
+    ##     annotation
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     IQR, mad, sd, var, xtabs
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     anyDuplicated, append, as.data.frame, cbind, colMeans,
+    ##     colnames, colSums, do.call, duplicated, eval, evalq, Filter,
+    ##     Find, get, grep, grepl, intersect, is.unsorted, lapply,
+    ##     lengths, Map, mapply, match, mget, order, paste, pmax,
+    ##     pmax.int, pmin, pmin.int, Position, rank, rbind, Reduce,
+    ##     rowMeans, rownames, rowSums, sapply, setdiff, sort, table,
+    ##     tapply, union, unique, unsplit, which, which.max, which.min
+
+    ## Loading required package: Biobase
+
+    ## Welcome to Bioconductor
+    ## 
+    ##     Vignettes contain introductory material; view with
+    ##     'browseVignettes()'. To cite Bioconductor, see
+    ##     'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+    ## Loading required package: IRanges
+
+    ## Loading required package: S4Vectors
+
+    ## 
+    ## Attaching package: 'S4Vectors'
+
+    ## The following objects are masked from 'package:dplyr':
+    ## 
+    ##     first, rename
+
+    ## The following object is masked from 'package:base':
+    ## 
+    ##     expand.grid
+
+    ## 
+    ## Attaching package: 'IRanges'
+
+    ## The following objects are masked from 'package:dplyr':
+    ## 
+    ##     collapse, desc, slice
+
+    ## 
+    ## Attaching package: 'AnnotationDbi'
+
+    ## The following object is masked from 'package:dplyr':
+    ## 
+    ##     select
+
+    ## 
+
+``` r
 goAnnots = as.list(org.Hs.egGO)
 goAnnots = goAnnots %>% lapply(names)
 goAnnots %>% head
@@ -133,19 +213,16 @@ mockHitlist %>% head
 oraOut = ora(annotation = annotation,
              hitlist = mockHitlist)
 
-head(oraOut$results)
+head(oraOut$results) %>% knitr::kable()
 ```
 
-    ## # A tibble: 6 x 12
-    ##   Name         ID    NumProbes NumGenes RawScore      Pval CorrectedPvalue
-    ##   <chr>        <chr>     <int>    <int>    <dbl>     <dbl>           <dbl>
-    ## 1 unfolded pr… GO:0…       113      113     113. 1.62e-300       7.02e-297
-    ## 2 protein bin… GO:0…        28       28      23. 3.93e- 48       8.51e- 45
-    ## 3 chaperone-m… GO:0…        60       60      26. 2.42e- 43       3.50e- 40
-    ## 4 'de novo' p… GO:0…        36       36      21. 9.45e- 39       1.02e- 35
-    ## 5 chaperone b… GO:0…        89       89      22. 2.58e- 30       2.23e- 27
-    ## 6 response to… GO:0…       182      182      25. 1.60e- 27       1.16e- 24
-    ## # ... with 5 more variables: MFPvalue <dbl>, CorrectedMFPvalue <dbl>,
-    ## #   Multifunctionality <dbl>, `Same as` <chr>, GeneMembers <chr>
+| Name                                        | ID           |  NumProbes|  NumGenes|  RawScore|  Pval|  CorrectedPvalue|  MFPvalue|  CorrectedMFPvalue|  Multifunctionality| Same as | GeneMembers                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+|:--------------------------------------------|:-------------|----------:|---------:|---------:|-----:|----------------:|---------:|------------------:|-------------------:|:--------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| unfolded protein binding                    | <GO:0051082> |        113|       113|       113|     0|                0|         0|                  0|               0.642| NA      | AAMP|AFG3L2|AHSP|AIP|AIPL1|APCS|BBS12|CALR|CALR3|CANX|CCDC115|CCT2|CCT3|CCT4|CCT5|CCT6A|CCT6B|CCT7|CCT8|CCT8L1P|CCT8L2|CDC37|CDC37L1|CHAF1A|CHAF1B|CLGN|CLN3|CLPX|CRYAA|CRYAB|DNAJA1|DNAJA2|DNAJA3|DNAJA4|DNAJB1|DNAJB11|DNAJB13|DNAJB2|DNAJB4|DNAJB5|DNAJB6|DNAJB8|DNAJC4|DZIP3|ERLEC1|ERO1B|FYCO1|GRPEL1|GRPEL2|HEATR3|HSP90AA1|HSP90AA2P|HSP90AA4P|HSP90AA5P|HSP90AB1|HSP90AB2P|HSP90AB3P|HSP90AB4P|HSP90B1|HSP90B2P|HSPA1A|HSPA1B|HSPA1L|HSPA2|HSPA5|HSPA6|HSPA8|HSPA9|HSPB6|HSPD1|HSPE1|HTRA2|LMAN1|MDN1|MKKS|NAP1L4|NDUFAF1|NPM1|NUDC|NUDCD2|NUDCD3|PDRG1|PET100|PFDN1|PFDN2|PFDN4|PFDN5|PFDN6|PPIA|PPIB|PTGES3|RP2|RUVBL2|SCAP|SCG5|SERPINH1|SHQ1|SIL1|SPG7|SRSF10|SRSF12|ST13|SYVN1|TAPBP|TCP1|TMEM67|TOMM20|TOR1A|TRAP1|TTC1|TUBB4B|UGGT1|UGGT2|                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| protein binding involved in protein folding | <GO:0044183> |         28|        28|        23|     0|                0|         0|                  0|               0.541| NA      | BBS12|CALR|CALR3|CCT2|CCT3|CCT4|CCT5|CCT6A|CCT6B|CCT7|CCT8|CCT8L1P|CCT8L2|CD74|CLGN|DFFA|DNAJB8|FYCO1|HSPA1A|HSPA1B|HSPB1|HSPD1|MKKS|PDCL3|PFDN1|PFDN2|RIC3|TCP1|                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| chaperone-mediated protein folding          | <GO:0061077> |         60|        60|        26|     0|                0|         0|                  0|               0.673| NA      | BBS12|CALR|CANX|CCT2|CCT3|CCT4|CCT5|CCT6A|CCT6B|CCT7|CCT8|CCT8L1P|CCT8L2|CD74|CHORDC1|CLU|CRTAP|CSNK2A1|DFFA|DNAJB1|DNAJB12|DNAJB14|DNAJB2|DNAJB8|DNAJC24|ERO1A|FKBP10|FKBP11|FKBP14|FKBP1A|FKBP1B|FKBP2|FKBP3|FKBP4|FKBP5|FKBP6|FKBP7|FKBP8|FKBP9|FYCO1|GAK|HSPA8|HSPB1|HSPB6|HSPD1|HSPE1|HSPH1|MKKS|P3H1|PDIA4|PEX19|PPIB|PPID|TCP1|TOR1A|TOR1B|TOR2A|TRAP1|UNC45A|UNC45B|                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| 'de novo' protein folding                   | <GO:0006458> |         36|        36|        21|     0|                0|         0|                  0|               0.661| NA      | BBS12|CCT2|CCT3|CCT4|CCT5|CCT6A|CCT6B|CCT7|CCT8|CCT8L1P|CCT8L2|CD74|CHCHD4|DNAJB1|DNAJB12|DNAJB14|DNAJC2|ENTPD5|ERO1A|FKBP1A|FKBP1B|FYCO1|GAK|HSPA14|HSPA8|HSPD1|HSPE1|HSPH1|MKKS|SELENOF|TCP1|TOR1A|TOR1B|TOR2A|UGGT1|UGGT2|                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| chaperone binding                           | <GO:0051087> |         89|        89|        22|     0|                0|         0|                  0|               0.765| NA      | AHSA1|AHSA2|ALB|AMFR|ATP1A1|ATP1A2|ATP1A3|ATP7A|BAG1|BAG2|BAG3|BAG4|BAG5|BAK1|BAX|BIRC2|BIRC5|CALR|CDC25A|CDC37|CDC37L1|CDKN1B|CLU|CP|CTSC|DNAJA1|DNAJA2|DNAJA4|DNAJB1|DNAJB2|DNAJB4|DNAJB5|DNAJB6|DNAJB7|DNAJB8|DNAJC1|DNAJC10|DNAJC3|DNLZ|ERP29|FGB|FN1|FNIP1|FNIP2|GAK|GET4|GNB5|GRPEL1|GRPEL2|HES1|HSCB|HSPA5|HSPB6|HSPD1|HSPE1|HYOU1|LRP2|OGDH|PACRG|PDPN|PFDN4|PFDN6|PIH1D3|PLG|PRKN|PRNP|RNF207|SACS|SDF2L1|SLC25A17|SOD1|ST13|STIP1|SYVN1|TBCA|TBCC|TBCD|TBCE|TERT|TIMM10|TIMM44|TIMM9|TP53|TSACC|TSC1|UBL4A|USP13|VWF|WRAP53|                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| response to topologically incorrect protein | <GO:0035966> |        182|       182|        25|     0|                0|         0|                  0|               0.909| NA      | ACADVL|ADD1|AMFR|ANKZF1|ARFGAP1|ASNA1|ASNS|ATF3|ATF4|ATF6|ATF6B|ATP6V0D1|ATXN3|ATXN3L|BAG6|BAK1|BAX|BHLHA15|CALR|CASP12|CCL2|CCND1|CDK5RAP3|CHAC1|CLU|CREB3|CREB3L1|CREB3L2|CREB3L3|CREB3L4|CREBRF|CTDSP2|CTH|CUL3|CUL7|CXCL8|CXXC1|DAB2IP|DAXX|DCTN1|DDIT3|DDX11|DERL1|DERL2|DERL3|DNAJA1|DNAJB1|DNAJB11|DNAJB12|DNAJB2|DNAJB4|DNAJB5|DNAJB9|DNAJC3|DNAJC4|DZIP3|EDEM1|EDEM2|EDEM3|EIF2AK2|EIF2AK3|EIF2S1|EP300|ERN1|ERO1A|ERP44|EXTL1|EXTL2|EXTL3|F12|FAF2|FBXO6|FGF21|FKBP14|GFPT1|GOSR2|GSK3A|HDAC6|HDGF|HERPUD1|HERPUD2|HSF1|HSP90AA1|HSP90AB1|HSP90B1|HSPA1A|HSPA1L|HSPA2|HSPA4|HSPA4L|HSPA5|HSPA6|HSPA8|HSPB1|HSPB2|HSPB3|HSPB7|HSPD1|HSPE1|HSPH1|HYOU1|IFNG|IGFBP1|JKAMP|KDELR3|KLHDC3|KLHL15|LMNA|MANF|MBTPS1|MBTPS2|MFN2|MMP24-AS1-EDEM2|MYDGF|NFE2L2|OPTN|PACRG|PARP16|PDIA5|PDIA6|PLA2G4B|POMT1|POMT2|PPP1R15A|PPP2R5B|PREB|PRKN|PTPN1|RHBDD1|RNF121|RNF126|RNF175|RNF185|RNF5|SDF2|SDF2L1|SEC31A|SEC61A1|SEC61A2|SEC61B|SEC61G|SEC62|SEC63|SELENOS|SERP1|SERP2|SERPINH1|SHC1|SRPRA|SRPRB|SSR1|STC2|STT3B|STUB1|SULT1A3|SYVN1|TATDN2|TBL2|THBS1|THBS4|TLN1|TM7SF3|TMBIM6|TMEM129|TOR1A|TOR1B|TPP1|TSPYL2|UBE2J2|UBE2W|UBXN4|UFD1|UGGT1|UGGT2|VAPB|VCP|WFS1|WIPI1|XBP1|YIF1A|YOD1|ZBTB17| |
 
 We can see <GO:0051082> is the top scoring hit as expected.

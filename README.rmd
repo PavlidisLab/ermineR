@@ -41,7 +41,10 @@ of all ermineR functions to the file path where you saved the go terms
 
 #### Use ORA with a hitlist
 
-```{r}
+```{r,message=FALSE}
+library(dplyr)
+
+
 # genes for GO:0051082
 hitlist = c("AAMP", "AFG3L2", "AHSP", "AIP", "AIPL1", "APCS", "BBS12", 
             "CALR", "CALR3", "CANX", "CCDC115", "CCT2", "CCT3", "CCT4", "CCT5", 
@@ -63,7 +66,7 @@ hitlist = c("AAMP", "AFG3L2", "AHSP", "AIP", "AIPL1", "APCS", "BBS12",
 oraOut = ora(annotation = 'Generic_human',
              hitlist = hitlist)
 
-head(oraOut$results)
+head(oraOut$results) %>% knitr::kable()
 ```
 
 #### Using your own GO annotations
@@ -72,9 +75,8 @@ If you want to use your own GO annotations instead of getting files provided by
 Pavlidis Lab, you can use `makeAnnotation` after turning your annotations into
 a list. See the example below
 
-```{r,message=FALSE}
+```{r}
 library('org.Hs.eg.db') # get go terms from the bioconductor affy 
-library(dplyr)
 goAnnots = as.list(org.Hs.egGO)
 goAnnots = goAnnots %>% lapply(names)
 goAnnots %>% head
@@ -126,7 +128,7 @@ mockHitlist %>% head
 oraOut = ora(annotation = annotation,
              hitlist = mockHitlist)
 
-head(oraOut$results)
+head(oraOut$results) %>% knitr::kable()
 ```
 
 We can see GO:0051082 is the top scoring hit as expected.
