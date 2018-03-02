@@ -19,9 +19,9 @@ randomGenes = randomGenes[!randomGenes %in% hitlist]
 hitlistGenes = hitlist[1:40]
 # hitlistGenes = hitlist
 
-
+annot =  read.table(here('tests/testthat/testFiles/chip'),sep ='\t', header = TRUE,stringsAsFactors = FALSE)
+annot %<>% filter(!grepl('\\|',GeneSymbols))
 annot %<>% filter(GeneSymbols %in% c(randomGenes, hitlistGenes))
-
 write.table(annot,file = here('tests/testthat/testFiles/chip'),quote = FALSE,sep = '\t',row.names = FALSE)
 
 pValues = data.frame(gene = c(annot$ProbeName[annot$GeneSymbols %in% randomGenes],
