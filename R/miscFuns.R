@@ -1,5 +1,5 @@
 #' @export
-getGemmaAnnot = function(chipName,chipFile,annotType = c('bioProcess','noParents','allParents'), 
+getGemmaAnnot = function(chipName,chipFile,annotType = c('noParents','bioProcess','allParents'), 
                          overwrite=FALSE){
     
     annotType = match.arg(annotType)

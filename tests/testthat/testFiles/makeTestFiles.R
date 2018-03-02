@@ -6,7 +6,7 @@ set.seed(1)
 
 # genes for GO:0051082
 
-getGemmaAnnot("GPL96", here('tests/testthat/testFiles/chip'),overwrite = TRUE)
+getGemmaAnnot("GPL96", here('tests/testthat/testFiles/chip'),annotType = 'noParents',overwrite = TRUE)
 getGemmaAnnot("GPL96", here('tests/testthat/testFiles/chipFull'),overwrite = TRUE,annotType = 'allParents')
 
 annot = read.table(here('tests/testthat/testFiles/chipFull'),sep ='\t', header = TRUE,stringsAsFactors = FALSE)
