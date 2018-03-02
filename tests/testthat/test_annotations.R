@@ -57,3 +57,21 @@ test_that('data.frame annotation',{
                  geneSetDescription = 'testFiles/Go.xml')
     testthat::expect_true(oraOut$results$Pval[oraOut$results$ID == 'GO:0051082']<0.05)
 })
+
+
+test_that('make annotation',{
+    hitlist = readLines('testFiles/hitlist')
+    annot =  read.table('testFiles/chip',sep ='\t', header = TRUE,stringsAsFactors = FALSE)
+    annotList = annot$GOTerms %>% strsplit('\\|')
+    names(annotList) = annot$ProbeName
+    genes = annot$GeneSymbols
+    names = annot$GeneNames
+    annotations = makeAnnotation(annotList,symbol = genes,name = names)
+    
+    oraOut = ora(annotation = annotations,
+                 hitlist = hitlist,
+                 geneSetDescription = 'testFiles/Go.xml')
+    
+    testthat::expect_true(oraOut$results$Pval[oraOut$results$ID == 'GO:0051082']<0.05)
+    
+})

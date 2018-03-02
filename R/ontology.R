@@ -57,3 +57,33 @@ goAtDate = function(path, date, overwrite = FALSE){
                          destfile = paste0(path,'.gz'),quiet= TRUE)
     R.utils::gunzip(paste0(path,'.gz'),overwrite = overwrite)  
 }
+
+
+#' makeAnnotation
+#' 
+#' Make an annotation object
+#' 
+#' @param annotationList A list of go terms for each gene identifier. Gene identifiers
+#' are the names of the list, each element of the list should have character vectors
+#' with go terms in
+#' @param symbol Option gene symbols. If not provided IDs from annotation list
+#' will be used
+#' @param name Optional gene name
+#' @inheritParams returnOpts
+#' @export
+makeAnnotation = function(annotationList,
+                          symbol = names(annotationList), 
+                          name = NULL,
+                          output = NULL,
+                          return = TRUE){
+    
+    IDs = names(annotationList)
+    goTerms  = annotationList %>% purrr::map_chr(paste,collapse = '|')
+    if(is.null(name)){
+        name = ' '
+    }
+    data.frame(IDs, GeneSymbols = symbol,GeneNames = name, 
+               GOTerms = goTerms, 
+               stringsAsFactors = FALSE)
+    
+}

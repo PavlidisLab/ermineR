@@ -65,3 +65,68 @@ oraOut = ora(annotation = 'Generic_human',
 
 head(oraOut$results)
 ```
+
+#### Using your own GO annotations
+
+If you want to use your own GO annotations instead of getting files provided by
+Pavlidis Lab, you can use `makeAnnotation` after turning your annotations into
+a list. See the example below
+
+```{r,message=FALSE}
+library('org.Hs.eg.db') # get go terms from the bioconductor affy 
+library(dplyr)
+goAnnots = as.list(org.Hs.egGO)
+goAnnots = goAnnots %>% lapply(names)
+goAnnots %>% head
+```
+
+The goAnnots object we created has go terms per entrez ID. Similar lists can be
+obtained from other species db packages in bioconductor and some array annotation
+packages. We will now use the `makeAnnotation` function to create our annotation
+file. This file will have the names of this list (entrez IDs) as gene identifiers
+so any score or hitlist file you provide should have the entrez IDs as well.
+
+`makeAnnotation` only needs the list with gene identifiers and go terms to work.
+But if you want to have a complete annotation file you can also provide gene symbols
+and gene names. Gene names have no effect on the analysis. Gene symbols matter if 
+you are [providing custom gene sets](http://erminej.msl.ubc.ca/help/input-files/gene-sets/) 
+and using "Option 2" or if same genes are represented by multiple gene 
+identifiers (eg. probes). Gene symbols will also be returned in the `GeneMembers`
+column of the output. If they are not provided, gene IDs will also be used as gene symbols
+
+Here we'll set them both for good measure.
+
+
+```{r}
+geneSymbols = as.list(org.Hs.egSYMBOL) %>% unlist
+geneName = as.list(org.Hs.egGENENAME) %>% unlist
+
+annotation = makeAnnotation(goAnnots,
+                            symbol = geneSymbols,
+                            name = geneName,
+                            output = NULL, # you can choose to save the annotation to a file
+                            return = TRUE) # if you only want to save it to a file, you don't need to return
+
+
+
+
+```
+
+Now that we have the annotation object, we can use it to run an analysis. We'll try
+to generate a hitlist only composed of genes annotated with GO:0051082. 
+
+```{r}
+mockHitlist = goAnnots %>% sapply(function(x){'GO:0051082' %in% x}) %>% 
+    {goAnnots[.]} %>% 
+    names
+
+mockHitlist %>% head
+
+
+oraOut = ora(annotation = annotation,
+             hitlist = mockHitlist)
+
+head(oraOut$results)
+```
+
+We can see GO:0051082 is the top scoring hit as expected.
