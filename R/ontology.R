@@ -1,7 +1,7 @@
 
 #' goToday
 #' 
-#' Downloads latest go ontology
+#' Downloads latest gene ontology term information (not gene annotations)
 #'
 #' @param path File path. Without gz extension
 #' @param overwrite If TRUE, overwrites existing file
@@ -21,7 +21,7 @@ goToday = function(path,overwrite = FALSE){
 
 #' getGoDates
 #' 
-#' Get all available go dates. Any date returned here can be used as an input of
+#' Get all dates for which a version of the GO is available. Any date returned here can be used as an input of
 #' \code{\link{goAtDate}}
 #' @export
 getGoDates = function(){
@@ -39,7 +39,7 @@ getGoDates = function(){
 
 #' goAtDate
 #' 
-#' Get Go terms from a particular date. Use \code{\link{getGoDates}} to see which
+#' Get GO terms from a particular date. Use \code{\link{getGoDates}} to see which
 #' dates are available
 #'
 #' @param path File path. Without gz extension

@@ -67,7 +67,6 @@ ora = function(scores = NULL,
 #'   essentially rank-based, whereas GSR uses the gene scores themselves. (The
 #'   precision-recall method is even more close to the ORA method).
 #'   
-#'   
 #'   In practice, ORA and GSR can yield similar results; however, we have found 
 #'   that GSR tends to be more robust than ORA (because there is no threshold to
 #'   set) and can give interesting results in situations where ORA doesn’t work 

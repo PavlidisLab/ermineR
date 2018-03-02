@@ -15,7 +15,7 @@
 #' (for test = ORA, GSR and ROC)
 #' @param bigIsBetter Logical. If TRUE large scores are considered to be higher.
 #' \code{FALSE} by default (as in p values).
-#' @param logTrans Logical. Should the data be log transformed. Recommended for 
+#' @param logTrans Logical. Should the data be -log10 transformed. Recommended for 
 #' p values. \code{FALSE} by default
 #' 
 scores = function(scores,
