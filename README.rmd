@@ -11,19 +11,17 @@ devtools::load_all()
 [![Build Status](https://travis-ci.org/PavlidisLab/ermineR.svg?branch=master)](https://travis-ci.org/PavlidisLab/ermineR) [![codecov](https://codecov.io/gh/PavlidisLab/ermineR/branch/master/graph/badge.svg)](https://codecov.io/gh/PavlidisLab/ermineR) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/PavlidisLab/ermineR?branch=master&svg=true)](https://ci.appveyor.com/project/PavlidisLab/ermineR)
 
 
-
 This is an R wrapper for Pavlidis Lab's [ermineJ](http://erminej.msl.ubc.ca/). A tool for gene set enrichment analysis with multifunctionality correction.
 
 ## Usage
 
 See documentation for `ora`, `roc`, `gsr`, `precRecall` and `corr` to see how to use them.
 
-Explanation of what each method does is explained 
-
+An explanation of what each method does is given. We recommend users start with the `precRecall` (for gene ranking-based enrichment analysis) or `ora` (for hit-list over-representation analysis). 
 
 ### Replicable go terms
 
-Go terms are updated frequently so results can differ between versions. The default
+GO terms are updated frequently so results can differ between versions. The default
 option of all ermineR functions is to get the latest GO version however this means
 you may get different results when you repeat the experiment later. If you want
 to use a specific version of GO, ermineR provides functions to deal with that.
@@ -34,8 +32,6 @@ to use a specific version of GO, ermineR provides functions to deal with that.
 
 To use a specific version of GO, make sure to set `geneSetDescription` argument
 of all ermineR functions to the file path where you saved the go terms
-
-
 
 ### Examples 
 
@@ -76,7 +72,7 @@ Pavlidis Lab, you can use `makeAnnotation` after turning your annotations into
 a list. See the example below
 
 ```{r, message = FALSE}
-library('org.Hs.eg.db') # get go terms from the bioconductor affy 
+library('org.Hs.eg.db') # get go terms from bioconductor 
 goAnnots = as.list(org.Hs.egGO)
 goAnnots = goAnnots %>% lapply(names)
 goAnnots %>% head

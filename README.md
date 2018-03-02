@@ -11,11 +11,11 @@ Usage
 
 See documentation for `ora`, `roc`, `gsr`, `precRecall` and `corr` to see how to use them.
 
-Explanation of what each method does is explained
+An explanation of what each method does is given. We recommend users start with the `precRecall` (for gene ranking-based enrichment analysis) or `ora` (for hit-list over-representation analysis).
 
 ### Replicable go terms
 
-Go terms are updated frequently so results can differ between versions. The default option of all ermineR functions is to get the latest GO version however this means you may get different results when you repeat the experiment later. If you want to use a specific version of GO, ermineR provides functions to deal with that.
+GO terms are updated frequently so results can differ between versions. The default option of all ermineR functions is to get the latest GO version however this means you may get different results when you repeat the experiment later. If you want to use a specific version of GO, ermineR provides functions to deal with that.
 
 -   `goToday`: Downloads the latest version of go to a path you provide
 -   `getGoDates`: Lists all dates where a go version is available, from the most recent to oldest
@@ -69,7 +69,7 @@ head(oraOut$results) %>% knitr::kable()
 If you want to use your own GO annotations instead of getting files provided by Pavlidis Lab, you can use `makeAnnotation` after turning your annotations into a list. See the example below
 
 ``` r
-library('org.Hs.eg.db') # get go terms from the bioconductor affy 
+library('org.Hs.eg.db') # get go terms from bioconductor 
 goAnnots = as.list(org.Hs.egGO)
 goAnnots = goAnnots %>% lapply(names)
 goAnnots %>% head
