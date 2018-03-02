@@ -67,8 +67,6 @@ ora = function(scores = NULL,
 #'   essentially rank-based, whereas GSR uses the gene scores themselves. (The
 #'   precision-recall method is even more close to the ORA method).
 #'   
-#'   Note: In ErmineJ, The precision-recall method is implemented as a type of 
-#'   GSR, where the score for the class is the average precision.
 #'   
 #'   In practice, ORA and GSR can yield similar results; however, we have found 
 #'   that GSR tends to be more robust than ORA (because there is no threshold to
@@ -87,7 +85,6 @@ ora = function(scores = NULL,
 #' @inheritParams scores
 #' @inheritParams annotation
 #' @inheritParams iterations
-#' @inheritParams GSRstats
 #' @inheritParams generalStats
 #' @inheritParams geneSetOpts
 #' @inheritParams returnOpts
@@ -100,8 +97,6 @@ gsr = function(scores,
                annotation,
                aspects = c('Molecular Function','Cellular Component', 'Biological Process'),
                iterations,
-               stats =  c('mean','quantile','meanAboveQuantile','precisionRecall'),
-               quantile = 50,
                geneReplicates = c('mean','best'),
                pAdjust = c('FDR','Bonferroni'),
                geneSetDescription = 'Latest_GO',
@@ -111,7 +106,7 @@ gsr = function(scores,
                output = NULL,
                return = TRUE){
     args = as.list(match.call())[-1]
-    args = c(args,list(test = 'GSR'))
+    args = c(args,list(test = 'GSR', stats = 'mean'))
     do.call(ermineR, args,envir = parent.frame())
 }
 

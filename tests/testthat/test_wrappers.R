@@ -31,29 +31,26 @@ test_that('test wrappers',{
                  iterations = 24,
                  bigIsBetter = FALSE,
                  logTrans = FALSE,
-                 stats = 'quantile',
                  geneSetDescription = 'testFiles/Go.xml')
     
     
     testthat::expect_is(gsrOut,'list')
     testthat::expect_is(gsrOut$results,'data.frame')
     testthat::expect_equal(gsrOut$details$classScoreMethod, 'GSR')
-    testthat::expect_equal(gsrOut$details$rawScoreMethod, 'QUANTILE')
+    testthat::expect_equal(gsrOut$details$rawScoreMethod, 'MEAN')
     testthat::expect_equal(gsrOut$details$iterations, 24)
     testthat::expect_true(gsrOut$results$Pval[gsrOut$results$ID == 'GO:0051082']<0.05)
     
     
-    # gsrOutBig = gsr(annotation = 'testFiles/chip',
-    #              scores = scoresBig,
-    #              scoreColumn = 1,
-    #              iterations = 21,
-    #              bigIsBetter = TRUE,
-    #              logTrans = FALSE,
-    #              stats = 'quantile',
-    #              geneSetDescription = 'testFiles/Go.xml')
-    # testthat::expect_true(gsrOutBig$results$Pval[gsrOutBig$results$ID == 'GO:0051082']<0.05)
+    gsrOutBig = gsr(annotation = 'testFiles/chip',
+                 scores = scoresBig,
+                 scoreColumn = 1,
+                 iterations = 21,
+                 bigIsBetter = TRUE,
+                 logTrans = FALSE,
+                 geneSetDescription = 'testFiles/Go.xml')
+    testthat::expect_true(gsrOutBig$results$Pval[gsrOutBig$results$ID == 'GO:0051082']<0.05)
     
-    # change this after bugfix
     precRecallOut = precRecall(annotation = 'testFiles/chip',
                                scores = scores,
                                scoreColumn = 1,

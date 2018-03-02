@@ -6,11 +6,10 @@
 \usage{
 gsr(scores, scoreColumn = 1, bigIsBetter = FALSE, logTrans = FALSE,
   annotation, aspects = c("Molecular Function", "Cellular Component",
-  "Biological Process"), iterations, stats = c("mean", "quantile",
-  "meanAboveQuantile", "precisionRecall"), quantile = 50,
-  geneReplicates = c("mean", "best"), pAdjust = c("FDR", "Bonferroni"),
-  geneSetDescription = "Latest_GO", customGeneSets = NULL,
-  minClassSize = 20, maxClassSize = 200, output = NULL, return = TRUE)
+  "Biological Process"), iterations, geneReplicates = c("mean", "best"),
+  pAdjust = c("FDR", "Bonferroni"), geneSetDescription = "Latest_GO",
+  customGeneSets = NULL, minClassSize = 20, maxClassSize = 200,
+  output = NULL, return = TRUE)
 }
 \arguments{
 \item{scores}{A data.frame. Rownames have to be gene identifiers, followed by
@@ -42,10 +41,6 @@ If providing a custom annotation file, see
 Can be in long form (eg. 'Molecular Function') or short form (eg. \code{c('M','C','B')})}
 
 \item{iterations}{Number of iterations (test = GSR and CORR methods only)}
-
-\item{stats}{Method for computing raw class statistics (test = GSR only)}
-
-\item{quantile}{Integer. Quantile to use. (stats = meanAboveQuantile only)}
 
 \item{geneReplicates}{What to do when genes have multiple scores in input file
 (due to multiple probes per gene)}
@@ -87,8 +82,6 @@ The goal of this method is the same as for \code{\link{ora}}: to
   essentially rank-based, whereas GSR uses the gene scores themselves. (The
   precision-recall method is even more close to the ORA method).
   
-  Note: In ErmineJ, The precision-recall method is implemented as a type of 
-  GSR, where the score for the class is the average precision.
   
   In practice, ORA and GSR can yield similar results; however, we have found 
   that GSR tends to be more robust than ORA (because there is no threshold to
