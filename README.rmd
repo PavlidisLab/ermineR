@@ -75,7 +75,7 @@ If you want to use your own GO annotations instead of getting files provided by
 Pavlidis Lab, you can use `makeAnnotation` after turning your annotations into
 a list. See the example below
 
-```{r}
+```{r, message = FALSE}
 library('org.Hs.eg.db') # get go terms from the bioconductor affy 
 goAnnots = as.list(org.Hs.egGO)
 goAnnots = goAnnots %>% lapply(names)
