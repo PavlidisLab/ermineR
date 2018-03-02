@@ -56,7 +56,7 @@ symbols are accepted.}
 \item{geneReplicates}{What to do when genes have multiple scores in input file
 (due to multiple probes per gene)}
 
-\item{logTrans}{Logical. Should the data be log transformed. Recommended for 
+\item{logTrans}{Logical. Should the data be -log10 transformed. Recommended for 
 p values. \code{FALSE} by default}
 
 \item{pAdjust}{Which multiple test correction method to use. Can be "FDR" or

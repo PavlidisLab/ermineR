@@ -7,6 +7,6 @@
 getGoDates()
 }
 \description{
-Get all available go dates. Any date returned here can be used as an input of
+Get all dates for which a version of the GO is available. Any date returned here can be used as an input of
 \code{\link{goAtDate}}
 }

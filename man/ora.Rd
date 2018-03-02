@@ -29,7 +29,7 @@ to use as scores. Defaults to first column of \code{scores}. See
 \item{bigIsBetter}{Logical. If TRUE large scores are considered to be higher.
 \code{FALSE} by default (as in p values).}
 
-\item{logTrans}{Logical. Should the data be log transformed. Recommended for 
+\item{logTrans}{Logical. Should the data be -log10 transformed. Recommended for 
 p values. \code{FALSE} by default}
 
 \item{annotation}{Annotation. A file path, a data.frame or a platform short 

@@ -14,6 +14,6 @@ goAtDate(path, date, overwrite = FALSE)
 \item{overwrite}{If TRUE, overwrites existing file}
 }
 \description{
-Get Go terms from a particular date. Use \code{\link{getGoDates}} to see which
+Get GO terms from a particular date. Use \code{\link{getGoDates}} to see which
 dates are available
 }

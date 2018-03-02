@@ -25,7 +25,7 @@ to use as scores. Defaults to first column of \code{scores}. See
 \item{bigIsBetter}{Logical. If TRUE large scores are considered to be higher.
 \code{FALSE} by default (as in p values).}
 
-\item{logTrans}{Logical. Should the data be log transformed. Recommended for 
+\item{logTrans}{Logical. Should the data be -log10 transformed. Recommended for 
 p values. \code{FALSE} by default}
 
 \item{annotation}{Annotation. A file path, a data.frame or a platform short 
@@ -81,7 +81,6 @@ The goal of this method is the same as for \code{\link{ora}}: to
   contained in the gene scores is preserved than in ORA, because ORA is
   essentially rank-based, whereas GSR uses the gene scores themselves. (The
   precision-recall method is even more close to the ORA method).
-  
   
   In practice, ORA and GSR can yield similar results; however, we have found 
   that GSR tends to be more robust than ORA (because there is no threshold to

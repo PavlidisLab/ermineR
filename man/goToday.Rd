@@ -12,5 +12,5 @@ goToday(path, overwrite = FALSE)
 \item{overwrite}{If TRUE, overwrites existing file}
 }
 \description{
-Downloads latest go ontology
+Downloads latest gene ontology term information (not gene annotations)
 }
