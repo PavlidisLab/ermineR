@@ -5,10 +5,11 @@
 #' 
 #' @name scores
 #' 
-#' @param scores A data.frame. Rownames have to be gene identifiers, followed by
-#' any number of columns. The column used for scoring is chosen by \code{scoreColumn}.
-#' See \url{http://erminej.msl.ubc.ca/help/input-files/gene-scores/}
-#' for information abot how to specify scores. (for test = ORA, GSR and ROC)
+#' @param scores A data.frame. Rownames have to be gene identifiers (eg. probes,
+#'   must be unique), followed by any number of columns. The column used for
+#'   scoring is chosen by \code{scoreColumn}. See
+#'   \url{http://erminej.msl.ubc.ca/help/input-files/gene-scores/} for
+#'   information abot how to specify scores. (for test = ORA, GSR and ROC)
 #' @param scoreColumn Integer or character. Which column of the \code{scores} data.frame
 #' to use as scores. Defaults to first column of \code{scores}. See
 #' \url{http://erminej.msl.ubc.ca/help/input-files/gene-scores/} for details.

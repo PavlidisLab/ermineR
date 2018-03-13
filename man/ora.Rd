@@ -12,10 +12,11 @@ ora(scores = NULL, hitlist = NULL, scoreColumn = 1, bigIsBetter = FALSE,
   minClassSize = 20, maxClassSize = 200, output = NULL, return = TRUE)
 }
 \arguments{
-\item{scores}{A data.frame. Rownames have to be gene identifiers, followed by
-any number of columns. The column used for scoring is chosen by \code{scoreColumn}.
-See \url{http://erminej.msl.ubc.ca/help/input-files/gene-scores/}
-for information abot how to specify scores. (for test = ORA, GSR and ROC)}
+\item{scores}{A data.frame. Rownames have to be gene identifiers (eg. probes,
+must be unique), followed by any number of columns. The column used for
+scoring is chosen by \code{scoreColumn}. See
+\url{http://erminej.msl.ubc.ca/help/input-files/gene-scores/} for
+information abot how to specify scores. (for test = ORA, GSR and ROC)}
 
 \item{hitlist}{A vector of gene identifiers. ORA method accepts hitlists
 instead of scores. If a hitlist is provided, logTrans, thresholds and 
