@@ -14,12 +14,12 @@ Imports:
     utils,
     R.utils,
     RCurl,
-    stringr,
-    rJava
+    stringr
 License: Apache License 2.0 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Suggests: 
+    rJava,
     testthat,
     tools
 RoxygenNote: 6.0.1
