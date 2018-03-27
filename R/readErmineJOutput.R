@@ -11,14 +11,13 @@ readErmineJOutput = function(output){
     frame = suppressMessages(suppressWarnings(
         readr::read_tsv(output,skip = dataStart-1,col_names=TRUE)
         ))
-    frame = frame[1:(nrow(frame)-1),2:ncol(frame)]
     
     if(!is.numeric(frame$Pval)){
         frame = suppressMessages(suppressWarnings(
             readr::read_tsv(output,skip = dataStart-1,col_names=TRUE, locale = readr::locale(decimal_mark = ','))
         ))
-        frame = frame[1:(nrow(frame)-1),2:ncol(frame)]
     }
+    frame = frame[1:(nrow(frame)-1),2:ncol(frame)]
     
     settingsStart = fileHead %>% grep(x = .,pattern = 'Settings')
     settingsEnd = fileHead %>%  grep(x = .,pattern = '#!----')
