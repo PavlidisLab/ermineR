@@ -64,3 +64,8 @@ test_that('setting seed',{
     testthat::expect_false(identical(result1$results,resultDifferent$results))
     
 })
+
+testthat::test_that('Reading the european output',{
+    result = readErmineJOutput('testFiles/europeanResults.tsv')
+    testthat::expect_is(result$results$Pval,'numeric')
+})
