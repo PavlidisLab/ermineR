@@ -8,7 +8,7 @@ geneSetOpts(geneSetDescription = "Latest_GO", customGeneSets = NULL,
   minClassSize = 20, maxClassSize = 200)
 }
 \arguments{
-\item{geneSetDescription}{"Latest_GO", a file path that leads to a GO XML file
+\item{geneSetDescription}{"Latest_GO", a file path that leads to a GO XML or OBO file
 or a URL that leads to a go ontology file that ends with rdf-xml.gz. Note that
 this is a mandatory argument. It defaults to Latest_GO but that option won't
 work if you don't have a working internet connection. See \url{http://erminej.msl.ubc.ca/help/input-files/gene-set-descriptions/}
