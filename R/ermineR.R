@@ -1,13 +1,3 @@
-# #' Universal inputs
-# #' 
-# #' @keywords internal
-# #' 
-# #' @name universalInputs
-# NULL
-# config file isnt supported
-# different annotation styles aren't supported
-
-
 
 #' Run ermineJ analysis
 #' 
