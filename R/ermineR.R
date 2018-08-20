@@ -100,7 +100,7 @@ ermineR = function(annotation = NULL,
             bigIsBetter = FALSE
             threshold = 0.5
             scoreColumn = 1
-            annoFile = read.table(annotation, header=T,sep='\t', quote="", stringsAsFactors = F)
+            annoFile = readErmineJAnnot(annotation)
 
             allGenes = annoFile[,1] %>% unique
             
