@@ -14,8 +14,8 @@ from annotation repository of Pavlidis Lab (\url{www.chibi.ubc.ca/microannots/})
 Note that if there is a file or folder with the same name as the platform 
 name in the directory, that file will be read instead of getting a copy from 
 Pavlidis Lab. If this file isn't a valid annotation file, the function will fail.
-If providing a custom annotation file, see
-\url{erminej.msl.ubc.ca/help/input-files/gene-annotations/}}
+If providing a custom annotation file, see \code{\link{makeAnnotation}} to do it from
+R or  \url{erminej.msl.ubc.ca/help/input-files/gene-annotations/} to do it manually.}
 
 \item{aspects}{Character vector. Which Go aspects to include in the analysis.
 Can be in long form (eg. 'Molecular Function') or short form (eg. \code{c('M','C','B')})}
