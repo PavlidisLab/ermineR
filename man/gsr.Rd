@@ -52,10 +52,13 @@ Can be in long form (eg. 'Molecular Function') or short form (eg. \code{c('M','C
 \item{geneSetDescription}{"Latest_GO", a file path that leads to a GO XML or OBO file
 or a URL that leads to a go ontology file that ends with rdf-xml.gz. Note that
 this is a mandatory argument. It defaults to Latest_GO but that option won't
-work if you don't have a working internet connection. See \url{http://erminej.msl.ubc.ca/help/input-files/gene-set-descriptions/}
+work if you don't have a working internet connection. To get a frozen file
+that you can use later, see \code{\link{goToday}}, \code{\link{goAtDate}} and \code{\link{getGoDates}}.
+ See \url{http://erminej.msl.ubc.ca/help/input-files/gene-set-descriptions/}
 for details}
 
-\item{customGeneSets}{Directory path or a named list of character strings.
+\item{customGeneSets}{Path to a directory that contains custom gene set files,
+ paths to custom gene set files themselves or a named list of character strings.
 Use this option to create your own gene sets. If you provide directory you can
 specify probes or gene symbols to include in your gene sets. 
 See \url{http://erminej.msl.ubc.ca/help/input-files/gene-sets/}

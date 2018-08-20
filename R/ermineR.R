@@ -163,7 +163,8 @@ ermineR = function(annotation = NULL,
     
     # get custom gene sets --------
     if(is.list(customGeneSets)){
-        tempdir = tempdir()
+        tempdir = tempfile()
+        dir.create(tempdir)
         file.create(file.path(tempdir,'customGeneSet'))
         seq_along(customGeneSets) %>% lapply(function(i){
             cat(glue::glue('{names(customGeneSets)[i]}\tNA\t',
@@ -172,7 +173,20 @@ ermineR = function(annotation = NULL,
                 file = file.path(tempdir,'customGeneSet'),append=TRUE)
         })
         customGeneSets = tempdir
-    } # otherwise character leading to a directory
+    } else if(is.character(customGeneSets) && length(customGeneSets) == 1 && fs::is_dir(customGeneSets)){
+        # this is a directory, native ermineJ input, no modification needed
+    } else if(is.character(customGeneSets) && all(fs::is_file(customGeneSets))){
+        tempdir = tempfile()
+        dir.create(tempdir)
+        # this makes sure same file names doesn't cause issues
+        outnames = basename(customGeneSets) %>%
+            sapply(function(x){
+                paste0(x, paste(sample(LETTERS,10,TRUE),collapse = ''))
+            })
+        fs::link_create(customGeneSets, file.path(tempdir,outnames))
+        customGeneSets = tempdir
+    }
+    
     if(!is.null(customGeneSets)){
         arguments$customGeneSets = paste('-f', shQuote(customGeneSets))
     }
