@@ -185,6 +185,10 @@ ermineR = function(annotation = NULL,
             })
         fs::link_create(customGeneSets, file.path(tempdir,outnames))
         customGeneSets = tempdir
+    } else if(is.null(customGeneSets)){
+        # this is fine
+    } else{
+        stop('customGeneSets have to be a list or a character vector pointing to a directory or annotation files.\nSee documentation')
     }
     
     if(!is.null(customGeneSets)){
