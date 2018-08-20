@@ -173,7 +173,7 @@ ermineR = function(annotation = NULL,
                 file = file.path(tempdir,'customGeneSet'),append=TRUE)
         })
         customGeneSets = tempdir
-    } else if(is.character(customGeneSets) && length(customGeneSets) == 1 && fs::is_dir(customGeneSets)){
+    } else if(length(customGeneSets) == 1 && is.character(customGeneSets) && fs::is_dir(customGeneSets)){
         # this is a directory, native ermineJ input, no modification needed
     } else if(is.character(customGeneSets) && all(fs::is_file(customGeneSets))){
         tempdir = tempfile()
