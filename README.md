@@ -6,6 +6,19 @@ ErmineR <img src="inst/ermineR.png" align="right" height="100px"/>
 
 This is an R wrapper for Pavlidis Lab's [ermineJ](http://erminej.msl.ubc.ca/). A tool for gene set enrichment analysis with multifunctionality correction.
 
+Installation
+------------
+
+ermineR requries 64 bit version of java to function. If you are a Mac user make sure you have the java SDK.
+
+After java is installed you can install ermineR by doing
+
+``` r
+devtools::install_packages('PavlidisLab/ermineR')
+```
+
+If ermineR cannot find your java home by itself. Use either install rJava or use `Sys.setenv(JAVA_HOME=javaHome)` to point ermineR to the right path.
+
 Usage
 -----
 
