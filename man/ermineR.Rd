@@ -22,7 +22,9 @@ Note that if there is a file or folder with the same name as the platform
 name in the directory, that file will be read instead of getting a copy from 
 Pavlidis Lab. If this file isn't a valid annotation file, the function will fail.
 If providing a custom annotation file, see \code{\link{makeAnnotation}} to do it from
-R or  \url{erminej.msl.ubc.ca/help/input-files/gene-annotations/} to do it manually.}
+R or  \url{erminej.msl.ubc.ca/help/input-files/gene-annotations/} to do it manually.
+
+If you are providing a custom gene set, you can leave annotation as NULL}
 
 \item{aspects}{Character vector. Which Go aspects to include in the analysis.
 Can be in long form (eg. 'Molecular Function') or short form (eg. \code{c('M','C','B')})}
@@ -78,7 +80,9 @@ this is a mandatory argument. It defaults to Latest_GO but that option won't
 work if you don't have a working internet connection. To get a frozen file
 that you can use later, see \code{\link{goToday}}, \code{\link{goAtDate}} and \code{\link{getGoDates}}.
  See \url{http://erminej.msl.ubc.ca/help/input-files/gene-set-descriptions/}
-for details}
+for details.
+
+Can be set to NULL if annotation is also NULL and a cutsom gene set is provided.}
 
 \item{output}{Output file name.}
 

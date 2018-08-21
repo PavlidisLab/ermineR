@@ -55,8 +55,17 @@ ermineR = function(annotation = NULL,
     
     
     arguments = list()
-    
     # get the annotation data.  -------------
+    if(is.null(annotation)){
+        assertthat::assert_that(!is.null(customGeneSets),msg = 'annotation or customGeneSets must be defined')
+        annot = vector(mode = 'list',length = nrow(scores))
+        names(annot) = rownames(scores)
+        annotation = makeAnnotation(annot)
+        nullAnnot = TRUE
+    } else{
+        nullAnnot = FALSE
+    }
+    
     if('character' %in% class(annotation)){
         if(!file.exists(annotation)){
             message('Attempting to download annotation file')
@@ -77,10 +86,12 @@ ermineR = function(annotation = NULL,
     arguments$annotation = paste('--annots',shQuote(annotation))
     
     # get gene set descriptions -------------
-    if(geneSetDescription == 'Latest_GO'){
-        temp = tempfile(fileext = '.xml.gz')
-        utils::download.file('http://archive.geneontology.org/latest-termdb/go_daily-termdb.rdf-xml.gz',
-                             destfile = temp,quiet= TRUE)
+    if(is.null(geneSetDescription)){
+        assertthat::assert_that(nullAnnot,msg = 'geneSetDescription has to point to a XML file from go if annotation is provided')
+        geneSetDescription = system.file('go.xml.gz',package = 'ermineR') 
+    } else if(geneSetDescription == 'Latest_GO'){
+        temp = tempfile(fileext = '.xml')
+        goToday(temp)
         geneSetDescription = temp
     }else if(!file.exists(geneSetDescription)){
         message('Attempting to download gene set description from link')

@@ -51,6 +51,8 @@ hitlist = function(hitlist = NULL){
 #' Pavlidis Lab. If this file isn't a valid annotation file, the function will fail.
 #' If providing a custom annotation file, see \code{\link{makeAnnotation}} to do it from
 #' R or  \url{erminej.msl.ubc.ca/help/input-files/gene-annotations/} to do it manually.
+#' 
+#' If you are providing a custom gene set, you can leave annotation as NULL
 #' @param aspects Character vector. Which Go aspects to include in the analysis.
 #' Can be in long form (eg. 'Molecular Function') or short form (eg. \code{c('M','C','B')})
 #' 
@@ -120,7 +122,7 @@ generalStats = function(geneReplicates = c('mean','best'),
 
 #' geneSetOpts
 #' 
-#' @keywords internal uniersal
+#' @keywords internal universal
 #' 
 #' @name geneSetOpts
 #' 
@@ -130,7 +132,9 @@ generalStats = function(geneReplicates = c('mean','best'),
 #' work if you don't have a working internet connection. To get a frozen file
 #' that you can use later, see \code{\link{goToday}}, \code{\link{goAtDate}} and \code{\link{getGoDates}}.
 #'  See \url{http://erminej.msl.ubc.ca/help/input-files/gene-set-descriptions/}
-#' for details
+#' for details.
+#' 
+#' Can be set to NULL if annotation is also NULL and a cutsom gene set is provided.
 #' @param customGeneSets Path to a directory that contains custom gene set files,
 #'  paths to custom gene set files themselves or a named list of character strings.
 #' Use this option to create your own gene sets. If you provide directory you can

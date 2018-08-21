@@ -14,7 +14,9 @@ this is a mandatory argument. It defaults to Latest_GO but that option won't
 work if you don't have a working internet connection. To get a frozen file
 that you can use later, see \code{\link{goToday}}, \code{\link{goAtDate}} and \code{\link{getGoDates}}.
  See \url{http://erminej.msl.ubc.ca/help/input-files/gene-set-descriptions/}
-for details}
+for details.
+
+Can be set to NULL if annotation is also NULL and a cutsom gene set is provided.}
 
 \item{customGeneSets}{Path to a directory that contains custom gene set files,
  paths to custom gene set files themselves or a named list of character strings.
@@ -32,4 +34,4 @@ symbols are accepted.}
 geneSetOpts
 }
 \keyword{internal}
-\keyword{uniersal}
+\keyword{universal}
