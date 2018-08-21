@@ -96,15 +96,19 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>geneSetDescription</th>
-      <td><p>"Latest_GO", a file path that leads to a GO XML file
+      <td><p>"Latest_GO", a file path that leads to a GO XML or OBO file
 or a URL that leads to a go ontology file that ends with rdf-xml.gz. Note that
 this is a mandatory argument. It defaults to Latest_GO but that option won't
-work if you don't have a working internet connection. See <a href='http://erminej.msl.ubc.ca/help/input-files/gene-set-descriptions/'>http://erminej.msl.ubc.ca/help/input-files/gene-set-descriptions/</a>
-for details</p></td>
+work if you don't have a working internet connection. To get a frozen file
+that you can use later, see <code><a href='goToday.html'>goToday</a></code>, <code><a href='goAtDate.html'>goAtDate</a></code> and <code><a href='getGoDates.html'>getGoDates</a></code>.
+ See <a href='http://erminej.msl.ubc.ca/help/input-files/gene-set-descriptions/'>http://erminej.msl.ubc.ca/help/input-files/gene-set-descriptions/</a>
+for details.</p>
+<p>Can be set to NULL if annotation is also NULL and a cutsom gene set is provided.</p></td>
     </tr>
     <tr>
       <th>customGeneSets</th>
-      <td><p>Directory path or a named list of character strings.
+      <td><p>Path to a directory that contains custom gene set files,
+ paths to custom gene set files themselves or a named list of character strings.
 Use this option to create your own gene sets. If you provide directory you can
 specify probes or gene symbols to include in your gene sets. 
 See <a href='http://erminej.msl.ubc.ca/help/input-files/gene-sets/'>http://erminej.msl.ubc.ca/help/input-files/gene-sets/</a>

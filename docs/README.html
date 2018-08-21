@@ -83,18 +83,27 @@
 
 <div id="erminer" class="section level1">
 <h1 class="hasAnchor">
-<a href="#erminer" class="anchor"></a>ErmineR</h1>
+<a href="#erminer" class="anchor"></a>ErmineR <img src="inst/ermineR.png" align="right" height="100px">
+</h1>
 <p><a href="https://travis-ci.org/PavlidisLab/ermineR"><img src="https://travis-ci.org/PavlidisLab/ermineR.svg?branch=master" alt="Build Status"></a> <a href="https://codecov.io/gh/PavlidisLab/ermineR"><img src="https://codecov.io/gh/PavlidisLab/ermineR/branch/master/graph/badge.svg" alt="codecov"></a> <a href="https://ci.appveyor.com/project/PavlidisLab/ermineR"><img src="https://ci.appveyor.com/api/projects/status/github/PavlidisLab/ermineR?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></p>
 <p>This is an R wrapper for Pavlidis Lab’s <a href="http://erminej.msl.ubc.ca/">ermineJ</a>. A tool for gene set enrichment analysis with multifunctionality correction.</p>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p>ermineR requries 64 bit version of java to function. If you are a Mac user make sure you have the java SDK.</p>
+<p>After java is installed you can install ermineR by doing</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_packages</span>(<span class="st">'PavlidisLab/ermineR'</span>)</code></pre></div>
+<p>If ermineR cannot find your java home by itself. Use either install rJava or use <code>Sys.setenv(JAVA_HOME=javaHome)</code> to point ermineR to the right path.</p>
+</div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
 <p>See documentation for <code>ora</code>, <code>roc</code>, <code>gsr</code>, <code>precRecall</code> and <code>corr</code> to see how to use them.</p>
-<p>Explanation of what each method does is explained</p>
+<p>An explanation of what each method does is given. We recommend users start with the <code>precRecall</code> (for gene ranking-based enrichment analysis) or <code>ora</code> (for hit-list over-representation analysis).</p>
 <div id="replicable-go-terms" class="section level3">
 <h3 class="hasAnchor">
 <a href="#replicable-go-terms" class="anchor"></a>Replicable go terms</h3>
-<p>Go terms are updated frequently so results can differ between versions. The default option of all ermineR functions is to get the latest GO version however this means you may get different results when you repeat the experiment later. If you want to use a specific version of GO, ermineR provides functions to deal with that.</p>
+<p>GO terms are updated frequently so results can differ between versions. The default option of all ermineR functions is to get the latest GO version however this means you may get different results when you repeat the experiment later. If you want to use a specific version of GO, ermineR provides functions to deal with that.</p>
 <ul>
 <li>
 <code>goToday</code>: Downloads the latest version of go to a path you provide</li>
@@ -136,7 +145,7 @@ oraOut =<span class="st"> </span><span class="kw"><a href="reference/ora.html">o
              <span class="dt">hitlist =</span> hitlist)
 
 <span class="kw">head</span>(oraOut$results) %&gt;%<span class="st"> </span>knitr::<span class="kw">kable</span>()</code></pre></div>
-<table>
+<table style="width:100%;">
 <colgroup>
 <col width="3%">
 <col width="1%">
@@ -149,7 +158,7 @@ oraOut =<span class="st"> </span><span class="kw"><a href="reference/ora.html">o
 <col width="1%">
 <col width="1%">
 <col width="0%">
-<col width="85%">
+<col width="86%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Name</th>
@@ -169,86 +178,86 @@ oraOut =<span class="st"> </span><span class="kw"><a href="reference/ora.html">o
 <tr class="odd">
 <td align="left">unfolded protein binding</td>
 <td align="left"><a href="GO:0051082" class="uri">GO:0051082</a></td>
-<td align="right">115</td>
-<td align="right">115</td>
-<td align="right">115</td>
+<td align="right">123</td>
+<td align="right">123</td>
+<td align="right">114</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">0.634</td>
+<td align="right">0.641</td>
 <td align="left">NA</td>
 <td align="left">AAMP</td>
 </tr>
 <tr class="even">
-<td align="left">protein binding involved in protein folding</td>
-<td align="left"><a href="GO:0044183" class="uri">GO:0044183</a></td>
-<td align="right">29</td>
-<td align="right">29</td>
-<td align="right">25</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0.545</td>
-<td align="left">NA</td>
-<td align="left">BBS12</td>
-</tr>
-<tr class="odd">
 <td align="left">chaperone-mediated protein folding</td>
 <td align="left"><a href="GO:0061077" class="uri">GO:0061077</a></td>
-<td align="right">59</td>
-<td align="right">59</td>
-<td align="right">28</td>
+<td align="right">81</td>
+<td align="right">81</td>
+<td align="right">37</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">0.681</td>
+<td align="right">0.679</td>
+<td align="left">NA</td>
+<td align="left">BAG1</td>
+</tr>
+<tr class="odd">
+<td align="left">protein binding involved in protein folding</td>
+<td align="left"><a href="GO:0044183" class="uri">GO:0044183</a></td>
+<td align="right">43</td>
+<td align="right">43</td>
+<td align="right">31</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0.641</td>
 <td align="left">NA</td>
 <td align="left">BBS12</td>
 </tr>
 <tr class="even">
 <td align="left">‘de novo’ protein folding</td>
 <td align="left"><a href="GO:0006458" class="uri">GO:0006458</a></td>
-<td align="right">35</td>
-<td align="right">35</td>
-<td align="right">22</td>
+<td align="right">54</td>
+<td align="right">54</td>
+<td align="right">31</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">0.683</td>
+<td align="right">0.707</td>
 <td align="left">NA</td>
-<td align="left">BBS12</td>
+<td align="left">BAG1</td>
 </tr>
 <tr class="odd">
 <td align="left">chaperone binding</td>
 <td align="left"><a href="GO:0051087" class="uri">GO:0051087</a></td>
-<td align="right">85</td>
-<td align="right">85</td>
-<td align="right">22</td>
+<td align="right">96</td>
+<td align="right">96</td>
+<td align="right">23</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">0.740</td>
+<td align="right">0.758</td>
 <td align="left">NA</td>
 <td align="left">AHSA1</td>
 </tr>
 <tr class="even">
 <td align="left">response to topologically incorrect protein</td>
 <td align="left"><a href="GO:0035966" class="uri">GO:0035966</a></td>
-<td align="right">173</td>
-<td align="right">173</td>
-<td align="right">22</td>
+<td align="right">182</td>
+<td align="right">182</td>
+<td align="right">26</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">0.909</td>
+<td align="right">0.903</td>
 <td align="left">NA</td>
-<td align="left">AARS</td>
+<td align="left">ACADVL</td>
 </tr>
 </tbody>
 </table>
@@ -257,7 +266,7 @@ oraOut =<span class="st"> </span><span class="kw"><a href="reference/ora.html">o
 <h4 class="hasAnchor">
 <a href="#using-your-own-go-annotations" class="anchor"></a>Using your own GO annotations</h4>
 <p>If you want to use your own GO annotations instead of getting files provided by Pavlidis Lab, you can use <code>makeAnnotation</code> after turning your annotations into a list. See the example below</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">'org.Hs.eg.db'</span>) <span class="co"># get go terms from the bioconductor affy </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">'org.Hs.eg.db'</span>) <span class="co"># get go terms from bioconductor </span>
 goAnnots =<span class="st"> </span><span class="kw">as.list</span>(org.Hs.egGO)
 goAnnots =<span class="st"> </span>goAnnots %&gt;%<span class="st"> </span><span class="kw">lapply</span>(names)
 goAnnots %&gt;%<span class="st"> </span>head</code></pre></div>
@@ -306,7 +315,7 @@ mockHitlist %&gt;%<span class="st"> </span>head</code></pre></div>
              <span class="dt">hitlist =</span> mockHitlist)
 
 <span class="kw">head</span>(oraOut$results) %&gt;%<span class="st"> </span>knitr::<span class="kw">kable</span>()</code></pre></div>
-<table style="width:100%;">
+<table>
 <colgroup>
 <col width="3%">
 <col width="1%">
@@ -346,7 +355,7 @@ mockHitlist %&gt;%<span class="st"> </span>head</code></pre></div>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">0.642</td>
+<td align="right">0.644</td>
 <td align="left">NA</td>
 <td align="left">AAMP</td>
 </tr>
@@ -360,7 +369,7 @@ mockHitlist %&gt;%<span class="st"> </span>head</code></pre></div>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">0.541</td>
+<td align="right">0.543</td>
 <td align="left">NA</td>
 <td align="left">BBS12</td>
 </tr>
@@ -374,7 +383,7 @@ mockHitlist %&gt;%<span class="st"> </span>head</code></pre></div>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">0.673</td>
+<td align="right">0.674</td>
 <td align="left">NA</td>
 <td align="left">BBS12</td>
 </tr>
@@ -409,14 +418,14 @@ mockHitlist %&gt;%<span class="st"> </span>head</code></pre></div>
 <tr class="even">
 <td align="left">response to topologically incorrect protein</td>
 <td align="left"><a href="GO:0035966" class="uri">GO:0035966</a></td>
-<td align="right">182</td>
-<td align="right">182</td>
+<td align="right">179</td>
+<td align="right">179</td>
 <td align="right">25</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">0.909</td>
+<td align="right">0.907</td>
 <td align="left">NA</td>
 <td align="left">ACADVL</td>
 </tr>

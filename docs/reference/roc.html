@@ -93,7 +93,7 @@ from gene scores.</p>
     
 
     <pre class="usage"><span class='fu'>roc</span>(<span class='no'>scores</span>, <span class='kw'>scoreColumn</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>bigIsBetter</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>logTrans</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>annotation</span>, <span class='kw'>aspects</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"Molecular Function"</span>, <span class='st'>"Cellular Component"</span>,
+  <span class='kw'>annotation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>aspects</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"Molecular Function"</span>, <span class='st'>"Cellular Component"</span>,
   <span class='st'>"Biological Process"</span>), <span class='kw'>geneReplicates</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>, <span class='st'>"best"</span>),
   <span class='kw'>pAdjust</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"FDR"</span>, <span class='st'>"Bonferroni"</span>), <span class='kw'>geneSetDescription</span> <span class='kw'>=</span> <span class='st'>"Latest_GO"</span>,
   <span class='kw'>customGeneSets</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>minClassSize</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>maxClassSize</span> <span class='kw'>=</span> <span class='fl'>200</span>,
@@ -104,10 +104,11 @@ from gene scores.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>scores</th>
-      <td><p>A data.frame. Rownames have to be gene identifiers, followed by
-any number of columns. The column used for scoring is chosen by <code>scoreColumn</code>.
-See <a href='http://erminej.msl.ubc.ca/help/input-files/gene-scores/'>http://erminej.msl.ubc.ca/help/input-files/gene-scores/</a>
-for information abot how to specify scores. (for test = ORA, GSR and ROC)</p></td>
+      <td><p>A data.frame. Rownames have to be gene identifiers (eg. probes,
+must be unique), followed by any number of columns. The column used for
+scoring is chosen by <code>scoreColumn</code>. See
+<a href='http://erminej.msl.ubc.ca/help/input-files/gene-scores/'>http://erminej.msl.ubc.ca/help/input-files/gene-scores/</a> for
+information abot how to specify scores. (for test = ORA, GSR and ROC)</p></td>
     </tr>
     <tr>
       <th>scoreColumn</th>
@@ -134,8 +135,9 @@ from annotation repository of Pavlidis Lab (<a href='www.chibi.ubc.ca/microannot
 Note that if there is a file or folder with the same name as the platform 
 name in the directory, that file will be read instead of getting a copy from 
 Pavlidis Lab. If this file isn't a valid annotation file, the function will fail.
-If providing a custom annotation file, see
-<a href='erminej.msl.ubc.ca/help/input-files/gene-annotations/'>erminej.msl.ubc.ca/help/input-files/gene-annotations/</a></p></td>
+If providing a custom annotation file, see <code><a href='makeAnnotation.html'>makeAnnotation</a></code> to do it from
+R or  <a href='erminej.msl.ubc.ca/help/input-files/gene-annotations/'>erminej.msl.ubc.ca/help/input-files/gene-annotations/</a> to do it manually.</p>
+<p>If you are providing a custom gene set, you can leave annotation as NULL</p></td>
     </tr>
     <tr>
       <th>aspects</th>
@@ -154,15 +156,19 @@ Can be in long form (eg. 'Molecular Function') or short form (eg. <code>c('M','C
     </tr>
     <tr>
       <th>geneSetDescription</th>
-      <td><p>"Latest_GO", a file path that leads to a GO XML file
+      <td><p>"Latest_GO", a file path that leads to a GO XML or OBO file
 or a URL that leads to a go ontology file that ends with rdf-xml.gz. Note that
 this is a mandatory argument. It defaults to Latest_GO but that option won't
-work if you don't have a working internet connection. See <a href='http://erminej.msl.ubc.ca/help/input-files/gene-set-descriptions/'>http://erminej.msl.ubc.ca/help/input-files/gene-set-descriptions/</a>
-for details</p></td>
+work if you don't have a working internet connection. To get a frozen file
+that you can use later, see <code><a href='goToday.html'>goToday</a></code>, <code><a href='goAtDate.html'>goAtDate</a></code> and <code><a href='getGoDates.html'>getGoDates</a></code>.
+ See <a href='http://erminej.msl.ubc.ca/help/input-files/gene-set-descriptions/'>http://erminej.msl.ubc.ca/help/input-files/gene-set-descriptions/</a>
+for details.</p>
+<p>Can be set to NULL if annotation is also NULL and a cutsom gene set is provided.</p></td>
     </tr>
     <tr>
       <th>customGeneSets</th>
-      <td><p>Directory path or a named list of character strings.
+      <td><p>Path to a directory that contains custom gene set files,
+ paths to custom gene set files themselves or a named list of character strings.
 Use this option to create your own gene sets. If you provide directory you can
 specify probes or gene symbols to include in your gene sets. 
 See <a href='http://erminej.msl.ubc.ca/help/input-files/gene-sets/'>http://erminej.msl.ubc.ca/help/input-files/gene-sets/</a>
