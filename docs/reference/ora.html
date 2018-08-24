@@ -123,7 +123,7 @@ Technical comment: The probabilities produced by ErmineJ ORA are computed
     
 
     <pre class="usage"><span class='fu'>ora</span>(<span class='kw'>scores</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hitlist</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scoreColumn</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>bigIsBetter</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>logTrans</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>annotation</span>, <span class='kw'>aspects</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"Molecular Function"</span>,
+  <span class='kw'>logTrans</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>annotation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>aspects</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"Molecular Function"</span>,
   <span class='st'>"Cellular Component"</span>, <span class='st'>"Biological Process"</span>), <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.001</span>,
   <span class='kw'>geneReplicates</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>, <span class='st'>"best"</span>), <span class='kw'>pAdjust</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"FDR"</span>, <span class='st'>"Bonferroni"</span>),
   <span class='kw'>geneSetDescription</span> <span class='kw'>=</span> <span class='st'>"Latest_GO"</span>, <span class='kw'>customGeneSets</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -197,13 +197,14 @@ Can be in long form (eg. 'Molecular Function') or short form (eg. <code>c('M','C
     <tr>
       <th>geneSetDescription</th>
       <td><p>"Latest_GO", a file path that leads to a GO XML or OBO file
-or a URL that leads to a go ontology file that ends with rdf-xml.gz. Note that
-this is a mandatory argument. It defaults to Latest_GO but that option won't
-work if you don't have a working internet connection. To get a frozen file
+or a URL that leads to a go ontology file that ends with rdf-xml.gz.</p>
+<p>If you left annotation as NULL and provided customGeneSets, this argument is
+not required and will default to NULL. Otherwise, by default it'll be set to
+"Latest_GO" which downloads the latest available GO XML file. This option won't work
+without an internet connection. To get a frozen file
 that you can use later, see <code><a href='goToday.html'>goToday</a></code>, <code><a href='goAtDate.html'>goAtDate</a></code> and <code><a href='getGoDates.html'>getGoDates</a></code>.
  See <a href='http://erminej.msl.ubc.ca/help/input-files/gene-set-descriptions/'>http://erminej.msl.ubc.ca/help/input-files/gene-set-descriptions/</a>
-for details.</p>
-<p>Can be set to NULL if annotation is also NULL and a cutsom gene set is provided.</p></td>
+for details.</p></td>
     </tr>
     <tr>
       <th>customGeneSets</th>

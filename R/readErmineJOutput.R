@@ -6,7 +6,7 @@
 #' @return A data.frame
 #' @export
 readErmineJOutput = function(output){
-    fileHead = readLines(output,100)
+    fileHead = readLines(output,100,warn = FALSE)
     dataStart = fileHead %>% grep(x = .,pattern = '#!') %>% max
     frame = suppressMessages(suppressWarnings(
         readr::read_tsv(output,skip = dataStart-1,col_names=TRUE)

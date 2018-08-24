@@ -58,10 +58,12 @@ ermineR = function(annotation = NULL,
     # get the annotation data.  -------------
     if(is.null(annotation)){
         assertthat::assert_that(!is.null(customGeneSets),msg = 'annotation or customGeneSets must be defined')
+        assertthat::assert_that(is.null(hitlist),msg = 'Hitlists require an annotation file to act as a negative set')
+        
         annot = vector(mode = 'list',length = nrow(scores))
         names(annot) = rownames(scores)
         annotation = makeAnnotation(annot)
-        nullAnnot = TRUE
+        nullAnnot = TRUE # remember if the annotation was NULL
     } else{
         nullAnnot = FALSE
     }
@@ -86,9 +88,8 @@ ermineR = function(annotation = NULL,
     arguments$annotation = paste('--annots',shQuote(annotation))
     
     # get gene set descriptions -------------
-    if(is.null(geneSetDescription)){
-        assertthat::assert_that(nullAnnot,msg = 'geneSetDescription has to point to a XML file from go if annotation is provided')
-        geneSetDescription = system.file('go.xml.gz',package = 'ermineR') 
+    if(is.null(geneSetDescription) | nullAnnot){
+        geneSetDescription = system.file('go-minimal.xml',package = 'ermineR') 
     } else if(geneSetDescription == 'Latest_GO'){
         temp = tempfile(fileext = '.xml')
         goToday(temp)
@@ -194,7 +195,7 @@ ermineR = function(annotation = NULL,
             sapply(function(x){
                 paste0(x, paste(sample(LETTERS,10,TRUE),collapse = ''))
             })
-        fs::link_create(customGeneSets, file.path(tempdir,outnames))
+        fs::link_create(normalizePath(customGeneSets), file.path(tempdir,outnames))
         customGeneSets = tempdir
     } else if(is.null(customGeneSets)){
         # this is fine

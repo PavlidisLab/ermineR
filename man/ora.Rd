@@ -5,7 +5,7 @@
 \title{ORA}
 \usage{
 ora(scores = NULL, hitlist = NULL, scoreColumn = 1, bigIsBetter = FALSE,
-  logTrans = FALSE, annotation, aspects = c("Molecular Function",
+  logTrans = FALSE, annotation = NULL, aspects = c("Molecular Function",
   "Cellular Component", "Biological Process"), threshold = 0.001,
   geneReplicates = c("mean", "best"), pAdjust = c("FDR", "Bonferroni"),
   geneSetDescription = "Latest_GO", customGeneSets = NULL,
@@ -56,14 +56,15 @@ Can be in long form (eg. 'Molecular Function') or short form (eg. \code{c('M','C
 'Westfall-Young' (slower).}
 
 \item{geneSetDescription}{"Latest_GO", a file path that leads to a GO XML or OBO file
-or a URL that leads to a go ontology file that ends with rdf-xml.gz. Note that
-this is a mandatory argument. It defaults to Latest_GO but that option won't
-work if you don't have a working internet connection. To get a frozen file
+or a URL that leads to a go ontology file that ends with rdf-xml.gz. 
+
+If you left annotation as NULL and provided customGeneSets, this argument is
+not required and will default to NULL. Otherwise, by default it'll be set to
+"Latest_GO" which downloads the latest available GO XML file. This option won't work
+without an internet connection. To get a frozen file
 that you can use later, see \code{\link{goToday}}, \code{\link{goAtDate}} and \code{\link{getGoDates}}.
  See \url{http://erminej.msl.ubc.ca/help/input-files/gene-set-descriptions/}
-for details.
-
-Can be set to NULL if annotation is also NULL and a cutsom gene set is provided.}
+for details.}
 
 \item{customGeneSets}{Path to a directory that contains custom gene set files,
  paths to custom gene set files themselves or a named list of character strings.

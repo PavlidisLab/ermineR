@@ -117,3 +117,39 @@ test_that('test hitlist input',{
     
     testthat::expect_true(oraOut$results$Pval[oraOut$results$ID == 'GO:0051082']<0.05)
 })
+
+
+
+test_that('test custom gene lists without annotation or go.xml',{
+    
+    scores <-read.table("testFiles/pValues", header=T, row.names = 1)
+    
+    precRecallOut = precRecall(# annotation = 'testFiles/chip',
+                 customGeneSets = 'testFiles/customGeneSet.tsv',
+                 scores = scores,
+                 scoreColumn = 1,
+                 geneSetDescription = NULL)
+    
+    testthat::expect_true(precRecallOut$results$Pval[precRecallOut$results$Name == 'GO:0051082']<0.05)
+    
+    
+    # for this test probeset names are acting as gene symbols
+    hitlist = readLines('testFiles/hitlist')
+    chip = readErmineJAnnot('testFiles/chip')
+    chip$GeneSymbols = chip$ProbeName
+    oraOut = ora(annotation = chip,
+                 hitlist = hitlist,
+                 geneSetDescription = NULL,
+                 customGeneSets =  'testFiles/customGeneSet.tsv')
+    testthat::expect_true(precRecallOut$results$Pval[oraOut$results$Name == 'GO:0051082']<0.05)
+    
+    testthat::expect_error(
+        ora(hitlist = hitlist,
+            geneSetDescription = NULL,
+            customGeneSets =  'testFiles/customGeneSet.tsv'),
+        regexp = "Hitlists require an annotation file")
+    
+    
+    
+    
+})

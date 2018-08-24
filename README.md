@@ -1,5 +1,5 @@
 
-ErmineR <img src="inst/ermineR.png" align="right" height="100px"/>
+ErmineR <img src="ermineR.png" align="right" height="100px"/>
 ==================================================================
 
 [![Build Status](https://travis-ci.org/PavlidisLab/ermineR.svg?branch=master)](https://travis-ci.org/PavlidisLab/ermineR) [![codecov](https://codecov.io/gh/PavlidisLab/ermineR/branch/master/graph/badge.svg)](https://codecov.io/gh/PavlidisLab/ermineR) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/PavlidisLab/ermineR?branch=master&svg=true)](https://ci.appveyor.com/project/PavlidisLab/ermineR)
