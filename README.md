@@ -1,6 +1,6 @@
 
 ErmineR <img src="ermineR.png" align="right" height="100px"/>
-==================================================================
+=============================================================
 
 [![Build Status](https://travis-ci.org/PavlidisLab/ermineR.svg?branch=master)](https://travis-ci.org/PavlidisLab/ermineR) [![codecov](https://codecov.io/gh/PavlidisLab/ermineR/branch/master/graph/badge.svg)](https://codecov.io/gh/PavlidisLab/ermineR) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/PavlidisLab/ermineR?branch=master&svg=true)](https://ci.appveyor.com/project/PavlidisLab/ermineR)
 
@@ -28,7 +28,7 @@ An explanation of what each method does is given. We recommend users start with 
 
 ### Replicable go terms
 
-GO terms are updated frequently so results can differ between versions. The default option of all ermineR functions is to get the latest GO version however this means you may get different results when you repeat the experiment later. If you want to use a specific version of GO, ermineR provides functions to deal with that.
+GO terms are updated frequently so results [can differ between versions](https://gotrack.msl.ubc.ca/). The default option of all ermineR functions is to get the latest GO version however this means you may get different results when you repeat the experiment later. If you want to use a specific version of GO, ermineR provides functions to deal with that.
 
 -   `goToday`: Downloads the latest version of go to a path you provide
 -   `getGoDates`: Lists all dates where a go version is available, from the most recent to oldest
