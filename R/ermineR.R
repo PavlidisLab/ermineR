@@ -147,7 +147,7 @@ ermineR = function(annotation = NULL,
             scoreColumn = which(names(scores) %in% scoreColumn)
         }
         scoreColumn = scoreColumn +1
-        arguments$scoreColumn = paste('--scoreCol',scoreColumn)
+        arguments$scoreColumn = paste('--scoreCol',as.integer(scoreColumn))
     } else if(test == "CORR" & !is.null(scores)){
         warning('You have provided gene scores to use with correlation analysis.',
                 ' This is not possible. Gene scores will be ignored. Please refer',
@@ -238,7 +238,7 @@ ermineR = function(annotation = NULL,
     if(!is.null(iterations)){
         if(test %in% c('GSR','CORR')){
             assertthat::is.number(iterations)
-            arguments$iterations = paste('--iters', iterations)
+            arguments$iterations = paste('--iters', as.integer(iterations))
         } else{
             warning('You have provided an iteration count for ',test,' anaylsis. ',
                     'This is not possible. Iterations will be ignored. Please',
@@ -270,9 +270,9 @@ ermineR = function(annotation = NULL,
     }
     
     assertthat::is.number(minClassSize)
-    arguments$minClassSize = paste('--minClassSize',minClassSize)
+    arguments$minClassSize = paste('--minClassSize',as.integer(minClassSize))
     assertthat::is.number(maxClassSize)
-    arguments$maxClassSize = paste('--maxClassSize',maxClassSize)
+    arguments$maxClassSize = paste('--maxClassSize',as.integer(maxClassSize))
     
     if(test == 'GSR'){
         stats = switch(stats,
@@ -317,7 +317,6 @@ ermineR = function(annotation = NULL,
     } else if(any(grepl(pattern = 'Could not reserve enough space for', x = response))){
         stop("Java could not reserve space. You may be running 32 bit Java. 32 bit java is bad java.")
     }
-    
     if(!any(grepl(pattern ='^Done!$',response))){
         stop('Something went wrong. Blame the dev\n',paste(response,collapse= '\n'))
     }
