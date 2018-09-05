@@ -6,10 +6,10 @@
 \usage{
 precRecall(scores, scoreColumn = 1, bigIsBetter = FALSE, logTrans = FALSE,
   annotation = NULL, aspects = c("Molecular Function", "Cellular Component",
-  "Biological Process"), iterations, geneReplicates = c("mean", "best"),
-  pAdjust = c("FDR", "Bonferroni"), geneSetDescription = "Latest_GO",
-  customGeneSets = NULL, minClassSize = 20, maxClassSize = 200,
-  output = NULL, return = TRUE)
+  "Biological Process"), iterations = 10000, geneReplicates = c("mean",
+  "best"), pAdjust = c("FDR", "Bonferroni"),
+  geneSetDescription = "Latest_GO", customGeneSets = NULL,
+  minClassSize = 20, maxClassSize = 200, output = NULL, return = TRUE)
 }
 \arguments{
 \item{scores}{A data.frame. Rownames have to be gene identifiers (eg. probes,
@@ -43,7 +43,11 @@ If you are providing a custom gene set, you can leave annotation as NULL}
 \item{aspects}{Character vector. Which Go aspects to include in the analysis.
 Can be in long form (eg. 'Molecular Function') or short form (eg. \code{c('M','C','B')})}
 
-\item{iterations}{Number of iterations (test = GSR and CORR methods only)}
+\item{iterations}{Number of iterations. We suggest a starting value of 10000 
+iterations. When you decide on parameters you like, we recommend a larger
+number of iterations (perhaps 200,000 or more). This is to get sufficient
+precision in the p-values to make multiple-test correction work correctly. 
+(test = GSR CORR and precRecall methods only)}
 
 \item{geneReplicates}{What to do when genes have multiple scores in input file
 (due to multiple probes per gene)}

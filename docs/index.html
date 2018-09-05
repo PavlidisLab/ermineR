@@ -52,12 +52,35 @@
       
       </header><div class="row">
   <div class="contents col-md-9">
-    <div id="erminer" class="section level1">
+    
+<div id="erminer" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#erminer" class="anchor"></a>ErmineR <img src="ermineR.png" align="right" height="100px">
 </h1></div>
 
 <p>This is an R wrapper for Pavlidis Lab’s <a href="http://erminej.msl.ubc.ca/">ermineJ</a>. A tool for gene set enrichment analysis with multifunctionality correction.</p>
+</div>
+<div id="table-of-contents" class="section level1">
+<h1 class="hasAnchor">
+<a href="#table-of-contents" class="anchor"></a>Table of Contents</h1>
+<ul>
+<li><a href="#installation">Installation</a></li>
+<li>
+<a href="#usage">Usage</a>
+<ul>
+<li><a href="#replicable-go-terms">Replicable go terms</a></li>
+<li>
+<a href="#examples">Examples</a>
+<ul>
+<li><a href="#use-gsr-with-gene-scores">Use GSR with gene scores</a></li>
+<li><a href="#use-precision-recall-with-gene-scores">Use Precision Recall with gene scores</a></li>
+<li><a href="#use-ora-with-a-hitlist">Use ORA with a hitlist</a></li>
+<li><a href="#using-your-own-go-annotations">Using your own GO annotations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -74,7 +97,7 @@
 <div id="replicable-go-terms" class="section level3">
 <h3 class="hasAnchor">
 <a href="#replicable-go-terms" class="anchor"></a>Replicable go terms</h3>
-<p>GO terms are updated frequently so results can differ between versions. The default option of all ermineR functions is to get the latest GO version however this means you may get different results when you repeat the experiment later. If you want to use a specific version of GO, ermineR provides functions to deal with that.</p>
+<p>GO terms are updated frequently so results <a href="https://gotrack.msl.ubc.ca/">can differ between versions</a>. The default option of all ermineR functions is to get the latest GO version however this means you may get different results when you repeat the experiment later. If you want to use a specific version of GO, ermineR provides functions to deal with that.</p>
 <ul>
 <li>
 <code>goToday</code>: Downloads the latest version of go to a path you provide</li>
@@ -88,6 +111,274 @@
 <div id="examples" class="section level3">
 <h3 class="hasAnchor">
 <a href="#examples" class="anchor"></a>Examples</h3>
+<div id="use-gsr-with-gene-scores" class="section level4">
+<h4 class="hasAnchor">
+<a href="#use-gsr-with-gene-scores" class="anchor"></a>Use GSR with gene scores</h4>
+<p>Here we will use a mock scores file located in our tests directory. The score file is specifically created to be enriched in genes with the term <a href="GO:0051082" class="uri">GO:0051082</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">scores =<span class="st"> </span><span class="kw">read.table</span>(<span class="st">"tests/testthat/testFiles/pValues"</span>, <span class="dt">header=</span>T, <span class="dt">row.names =</span> <span class="dv">1</span>)
+<span class="kw">head</span>(scores)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r">##                pvalue
+## 206190_at   0.3163401
+## 208385_at   0.5186824
+## 65086_at    0.6620389
+## 202281_at   0.4068895
+## 211622_s_at 0.9128846
+## 219257_s_at 0.2936740</code></pre></div>
+<p>This scores file only includes scores for 118 genes. The file was generated using GPL96’s probesets so that is the annotation we’ll be using. Any gene that is not reperesented by the score file will be ignored.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gsrOut =<span class="st"> </span><span class="kw"><a href="reference/gsr.html">gsr</a></span>(<span class="dt">annotation =</span> <span class="st">'GPL96'</span>,
+                 <span class="dt">scores =</span> scores,
+                 <span class="dt">scoreColumn =</span> <span class="dv">1</span>,
+                 <span class="dt">iterations =</span> <span class="dv">10000</span>,
+                 <span class="dt">bigIsBetter =</span> <span class="ot">FALSE</span>,
+                 <span class="dt">logTrans =</span> <span class="ot">TRUE</span>)
+
+<span class="kw">head</span>(gsrOut$results) %&gt;%<span class="st"> </span>knitr::<span class="kw">kable</span>()</code></pre></div>
+<table class="table">
+<colgroup>
+<col width="5%">
+<col width="2%">
+<col width="2%">
+<col width="1%">
+<col width="1%">
+<col width="1%">
+<col width="3%">
+<col width="2%">
+<col width="3%">
+<col width="3%">
+<col width="1%">
+<col width="69%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Name</th>
+<th align="left">ID</th>
+<th align="right">NumProbes</th>
+<th align="right">NumGenes</th>
+<th align="right">RawScore</th>
+<th align="right">Pval</th>
+<th align="right">CorrectedPvalue</th>
+<th align="right">MFPvalue</th>
+<th align="right">CorrectedMFPvalue</th>
+<th align="right">Multifunctionality</th>
+<th align="left">Same as</th>
+<th align="left">GeneMembers</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">protein folding</td>
+<td align="left"><a href="GO:0006457" class="uri">GO:0006457</a></td>
+<td align="right">44</td>
+<td align="right">26</td>
+<td align="right">3.091833</td>
+<td align="right">0.00e+00</td>
+<td align="right">0.000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.219</td>
+<td align="left">NA</td>
+<td align="left">AIP</td>
+</tr>
+<tr class="even">
+<td align="left">cellular component biogenesis</td>
+<td align="left"><a href="GO:0044085" class="uri">GO:0044085</a></td>
+<td align="right">59</td>
+<td align="right">27</td>
+<td align="right">2.548777</td>
+<td align="right">0.00e+00</td>
+<td align="right">0.000000</td>
+<td align="right">0.0001000</td>
+<td align="right">0.0033000</td>
+<td align="right">0.769</td>
+<td align="left">NA</td>
+<td align="left">AAMP</td>
+</tr>
+<tr class="odd">
+<td align="left">unfolded protein binding</td>
+<td align="left"><a href="GO:0051082" class="uri">GO:0051082</a></td>
+<td align="right">61</td>
+<td align="right">33</td>
+<td align="right">3.306600</td>
+<td align="right">0.00e+00</td>
+<td align="right">0.000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.175</td>
+<td align="left">NA</td>
+<td align="left">AAMP</td>
+</tr>
+<tr class="even">
+<td align="left">protein binding</td>
+<td align="left"><a href="GO:0005515" class="uri">GO:0005515</a></td>
+<td align="right">114</td>
+<td align="right">63</td>
+<td align="right">1.922271</td>
+<td align="right">5.94e-05</td>
+<td align="right">0.001959</td>
+<td align="right">0.0001511</td>
+<td align="right">0.0039900</td>
+<td align="right">0.564</td>
+<td align="left">NA</td>
+<td align="left">AAMP</td>
+</tr>
+<tr class="odd">
+<td align="left">cellular component assembly</td>
+<td align="left"><a href="GO:0022607" class="uri">GO:0022607</a></td>
+<td align="right">58</td>
+<td align="right">26</td>
+<td align="right">2.513885</td>
+<td align="right">1.00e-04</td>
+<td align="right">0.002640</td>
+<td align="right">0.0001000</td>
+<td align="right">0.0044000</td>
+<td align="right">0.808</td>
+<td align="left">NA</td>
+<td align="left">CALR</td>
+</tr>
+<tr class="even">
+<td align="left">intracellular organelle part</td>
+<td align="left"><a href="GO:0044446" class="uri">GO:0044446</a></td>
+<td align="right">99</td>
+<td align="right">52</td>
+<td align="right">1.980901</td>
+<td align="right">1.00e-04</td>
+<td align="right">0.002200</td>
+<td align="right">0.0019580</td>
+<td align="right">0.0198779</td>
+<td align="right">0.302</td>
+<td align="left">NA</td>
+<td align="left">AIP</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="use-precision-recall-with-gene-scores" class="section level4">
+<h4 class="hasAnchor">
+<a href="#use-precision-recall-with-gene-scores" class="anchor"></a>Use Precision Recall with gene scores</h4>
+<p>We will use the same scores file from the example above</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">precRecallOut =<span class="st"> </span><span class="kw"><a href="reference/precRecall.html">precRecall</a></span>(<span class="dt">annotation =</span> <span class="st">'GPL96'</span>,
+                           <span class="dt">scores =</span> scores,
+                           <span class="dt">scoreColumn =</span> <span class="dv">1</span>,
+                           <span class="dt">iterations =</span> <span class="dv">10000</span>,
+                           <span class="dt">bigIsBetter =</span> <span class="ot">FALSE</span>,
+                           <span class="dt">logTrans =</span> <span class="ot">TRUE</span>)
+
+<span class="kw">head</span>(precRecallOut$results) %&gt;%<span class="st"> </span>knitr::<span class="kw">kable</span>()</code></pre></div>
+<table class="table">
+<colgroup>
+<col width="4%">
+<col width="2%">
+<col width="2%">
+<col width="1%">
+<col width="2%">
+<col width="1%">
+<col width="3%">
+<col width="1%">
+<col width="3%">
+<col width="3%">
+<col width="1%">
+<col width="71%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Name</th>
+<th align="left">ID</th>
+<th align="right">NumProbes</th>
+<th align="right">NumGenes</th>
+<th align="right">RawScore</th>
+<th align="right">Pval</th>
+<th align="right">CorrectedPvalue</th>
+<th align="right">MFPvalue</th>
+<th align="right">CorrectedMFPvalue</th>
+<th align="right">Multifunctionality</th>
+<th align="left">Same as</th>
+<th align="left">GeneMembers</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">protein folding</td>
+<td align="left"><a href="GO:0006457" class="uri">GO:0006457</a></td>
+<td align="right">44</td>
+<td align="right">26</td>
+<td align="right">0.7209345</td>
+<td align="right">0e+00</td>
+<td align="right">0.00000</td>
+<td align="right">0.0000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.219</td>
+<td align="left">NA</td>
+<td align="left">AIP</td>
+</tr>
+<tr class="even">
+<td align="left">unfolded protein binding</td>
+<td align="left"><a href="GO:0051082" class="uri">GO:0051082</a></td>
+<td align="right">61</td>
+<td align="right">33</td>
+<td align="right">1.0000000</td>
+<td align="right">0e+00</td>
+<td align="right">0.00000</td>
+<td align="right">0.0000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.175</td>
+<td align="left">NA</td>
+<td align="left">AAMP</td>
+</tr>
+<tr class="odd">
+<td align="left">protein binding</td>
+<td align="left"><a href="GO:0005515" class="uri">GO:0005515</a></td>
+<td align="right">114</td>
+<td align="right">63</td>
+<td align="right">0.9259590</td>
+<td align="right">1e-04</td>
+<td align="right">0.00440</td>
+<td align="right">0.0002</td>
+<td align="right">0.0088000</td>
+<td align="right">0.564</td>
+<td align="left">NA</td>
+<td align="left">AAMP</td>
+</tr>
+<tr class="even">
+<td align="left">extracellular region</td>
+<td align="left"><a href="GO:0005576" class="uri">GO:0005576</a></td>
+<td align="right">55</td>
+<td align="right">30</td>
+<td align="right">0.6050500</td>
+<td align="right">1e-04</td>
+<td align="right">0.00330</td>
+<td align="right">0.0023</td>
+<td align="right">0.0337333</td>
+<td align="right">0.264</td>
+<td align="left">NA</td>
+<td align="left">AAMP</td>
+</tr>
+<tr class="odd">
+<td align="left">intracellular</td>
+<td align="left"><a href="GO:0005622" class="uri">GO:0005622</a></td>
+<td align="right">129</td>
+<td align="right">70</td>
+<td align="right">0.9568881</td>
+<td align="right">1e-04</td>
+<td align="right">0.00264</td>
+<td align="right">0.0011</td>
+<td align="right">0.0363000</td>
+<td align="right">0.652</td>
+<td align="left">NA</td>
+<td align="left">AAMP</td>
+</tr>
+<tr class="even">
+<td align="left">intracellular part</td>
+<td align="left"><a href="GO:0044424" class="uri">GO:0044424</a></td>
+<td align="right">129</td>
+<td align="right">70</td>
+<td align="right">0.9568881</td>
+<td align="right">1e-04</td>
+<td align="right">0.00220</td>
+<td align="right">0.0011</td>
+<td align="right">0.0290400</td>
+<td align="right">0.653</td>
+<td align="left">NA</td>
+<td align="left">AAMP</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div id="use-ora-with-a-hitlist" class="section level4">
 <h4 class="hasAnchor">
 <a href="#use-ora-with-a-hitlist" class="anchor"></a>Use ORA with a hitlist</h4>
@@ -407,6 +698,7 @@ mockHitlist %&gt;%<span class="st"> </span>head</code></pre></div>
 </div>
 </div>
 </div>
+
   </div>
 
   <div class="col-md-3" id="sidebar">

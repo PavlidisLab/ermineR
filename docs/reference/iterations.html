@@ -88,14 +88,18 @@
     <p>iterations</p>
     
 
-    <pre class="usage"><span class='fu'>iterations</span>(<span class='no'>iterations</span>)</pre>
+    <pre class="usage"><span class='fu'>iterations</span>(<span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>10000</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>iterations</th>
-      <td><p>Number of iterations (test = GSR and CORR methods only)</p></td>
+      <td><p>Number of iterations. We suggest a starting value of 10000 
+iterations. When you decide on parameters you like, we recommend a larger
+number of iterations (perhaps 200,000 or more). This is to get sufficient
+precision in the p-values to make multiple-test correction work correctly. 
+(test = GSR CORR and precRecall methods only)</p></td>
     </tr>
     </table>
     

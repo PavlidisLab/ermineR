@@ -4,10 +4,14 @@
 \alias{iterations}
 \title{iterations}
 \usage{
-iterations(iterations)
+iterations(iterations = 10000)
 }
 \arguments{
-\item{iterations}{Number of iterations (test = GSR and CORR methods only)}
+\item{iterations}{Number of iterations. We suggest a starting value of 10000 
+iterations. When you decide on parameters you like, we recommend a larger
+number of iterations (perhaps 200,000 or more). This is to get sufficient
+precision in the p-values to make multiple-test correction work correctly. 
+(test = GSR CORR and precRecall methods only)}
 }
 \description{
 iterations
@@ -15,3 +19,4 @@ iterations
 \keyword{CORR}
 \keyword{GSR}
 \keyword{internal}
+\keyword{precRecall}

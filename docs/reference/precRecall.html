@@ -126,10 +126,10 @@ Method overview taken from:
 
     <pre class="usage"><span class='fu'>precRecall</span>(<span class='no'>scores</span>, <span class='kw'>scoreColumn</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>bigIsBetter</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>logTrans</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>annotation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>aspects</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"Molecular Function"</span>, <span class='st'>"Cellular Component"</span>,
-  <span class='st'>"Biological Process"</span>), <span class='no'>iterations</span>, <span class='kw'>geneReplicates</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>, <span class='st'>"best"</span>),
-  <span class='kw'>pAdjust</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"FDR"</span>, <span class='st'>"Bonferroni"</span>), <span class='kw'>geneSetDescription</span> <span class='kw'>=</span> <span class='st'>"Latest_GO"</span>,
-  <span class='kw'>customGeneSets</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>minClassSize</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>maxClassSize</span> <span class='kw'>=</span> <span class='fl'>200</span>,
-  <span class='kw'>output</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='st'>"Biological Process"</span>), <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>geneReplicates</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>,
+  <span class='st'>"best"</span>), <span class='kw'>pAdjust</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"FDR"</span>, <span class='st'>"Bonferroni"</span>),
+  <span class='kw'>geneSetDescription</span> <span class='kw'>=</span> <span class='st'>"Latest_GO"</span>, <span class='kw'>customGeneSets</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>minClassSize</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>maxClassSize</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>output</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -178,7 +178,11 @@ Can be in long form (eg. 'Molecular Function') or short form (eg. <code>c('M','C
     </tr>
     <tr>
       <th>iterations</th>
-      <td><p>Number of iterations (test = GSR and CORR methods only)</p></td>
+      <td><p>Number of iterations. We suggest a starting value of 10000 
+iterations. When you decide on parameters you like, we recommend a larger
+number of iterations (perhaps 200,000 or more). This is to get sufficient
+precision in the p-values to make multiple-test correction work correctly. 
+(test = GSR CORR and precRecall methods only)</p></td>
     </tr>
     <tr>
       <th>geneReplicates</th>

@@ -6,10 +6,7 @@
 #' @param path File path. Without gz extension
 #' @param overwrite If TRUE, overwrites existing file
 #'
-#' @return
 #' @export
-#'
-#' @examples
 goToday = function(path,overwrite = FALSE){
     if(exists(path) & !overwrite){
         stop('File exists, not downloading')
@@ -46,7 +43,6 @@ getGoDates = function(){
 #' @param date Character. A valid date as returned from \code{\link{getGoDates}}.
 #' @param overwrite If TRUE, overwrites existing file
 #'
-#' @return
 #' @export
 goAtDate = function(path, date, overwrite = FALSE){
     if(exists(path)){
