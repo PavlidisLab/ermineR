@@ -6,6 +6,18 @@ ErmineR <img src="ermineR.png" align="right" height="100px"/>
 
 This is an R wrapper for Pavlidis Lab's [ermineJ](http://erminej.msl.ubc.ca/). A tool for gene set enrichment analysis with multifunctionality correction.
 
+Table of Contents
+=================
+
+-   [Installation](#installation)
+-   [Usage](#usage)
+    -   [Replicable go terms](#replicable-go-terms)
+    -   [Examples](#examples)
+        -   [Use GSR with gene scores](#use-gsr-with-gene-scores)
+        -   [Use Precision Recall with gene scores](#use-precision-recall-with-gene-scores)
+        -   [Use ORA with a hitlist](#use-ora-with-a-hitlist)
+        -   [Using your own GO annotations](#using-your-own-go-annotations)
+
 Installation
 ------------
 
@@ -37,6 +49,69 @@ GO terms are updated frequently so results [can differ between versions](https:/
 To use a specific version of GO, make sure to set `geneSetDescription` argument of all ermineR functions to the file path where you saved the go terms
 
 ### Examples
+
+#### Use GSR with gene scores
+
+Here we will use a mock scores file located in our tests directory. The score file is specifically created to be enriched in genes with the term <GO:0051082>.
+
+``` r
+scores = read.table("tests/testthat/testFiles/pValues", header=T, row.names = 1)
+head(scores)
+```
+
+    ##                pvalue
+    ## 206190_at   0.3163401
+    ## 208385_at   0.5186824
+    ## 65086_at    0.6620389
+    ## 202281_at   0.4068895
+    ## 211622_s_at 0.9128846
+    ## 219257_s_at 0.2936740
+
+This scores file only includes scores for 118 genes. The file was generated using GPL96's probesets so that is the annotation we'll be using. Any gene that is not reperesented by the score file will be ignored.
+
+``` r
+gsrOut = gsr(annotation = 'GPL96',
+                 scores = scores,
+                 scoreColumn = 1,
+                 iterations = 10000,
+                 bigIsBetter = FALSE,
+                 logTrans = TRUE)
+
+head(gsrOut$results) %>% knitr::kable()
+```
+
+| Name                          | ID           |  NumProbes|  NumGenes|  RawScore|      Pval|  CorrectedPvalue|   MFPvalue|  CorrectedMFPvalue|  Multifunctionality| Same as | GeneMembers                                                                                                                                                                                                                                                                                                                                                                                            |
+|:------------------------------|:-------------|----------:|---------:|---------:|---------:|----------------:|----------:|------------------:|-------------------:|:--------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| protein folding               | <GO:0006457> |         44|        26|  3.091833|  0.00e+00|         0.000000|  0.0000000|          0.0000000|               0.219| NA      | AIP|CALR|CCT5|CCT6A|CCT8L2|CDC37L1|CLGN|CLPX|DNAJB1|DNAJB4|GAK|HSP90AA1|HSPA1A|HSPA9|HSPB6|HSPD1|NUDC|PFDN6|PIKFYVE|PTGES3|RUVBL2|SPHK1|ST13|TCP1|TOR1A|UGGT1|                                                                                                                                                                                                                                         |
+| cellular component biogenesis | <GO:0044085> |         59|        27|  2.548777|  0.00e+00|         0.000000|  0.0001000|          0.0033000|               0.769| NA      | AAMP|CALR|CHAF1A|CPT1A|GAK|GEMIN2|HMGCR|HSP90AA1|HSPA1A|HSPA9|HSPD1|HTRA2|PFDN6|PIKFYVE|PRKCI|PTGES3|RUVBL2|SHQ1|SRSF10|ST13|TAPBP|TCP1|TOMM20|TOR1A|TUBB4B|UNC13B|ZNF207|                                                                                                                                                                                                                             |
+| unfolded protein binding      | <GO:0051082> |         61|        33|  3.306600|  0.00e+00|         0.000000|  0.0000000|          0.0000000|               0.175| NA      | AAMP|AIP|CALR|CCT5|CCT6A|CCT8L2|CDC37L1|CHAF1A|CLGN|CLPX|DNAJB1|DNAJB4|DZIP3|HSP90AA1|HSPA1A|HSPA9|HSPB6|HSPD1|HTRA2|NUDC|PFDN6|PIKFYVE|PTGES3|RUVBL2|SHQ1|SRSF10|ST13|TAPBP|TCP1|TOMM20|TOR1A|TUBB4B|UGGT1|                                                                                                                                                                                           |
+| protein binding               | <GO:0005515> |        114|        63|  1.922271|  5.94e-05|         0.001959|  0.0001511|          0.0039900|               0.564| NA      | AAMP|AIP|C5AR2|CALR|CCNG1|CCT5|CCT6A|CCT8L2|CDC37L1|CHAF1A|CLGN|CLPX|CPT1A|CRABP1|DMBT1|DNAJB1|DNAJB4|DZIP3|EPHB2|FOXB1|FRS2|GAK|GEMIN2|HCK|HMGCR|HSP90AA1|HSPA1A|HSPA9|HSPB6|HSPD1|HTRA2|NELFA|NUDC|OGG1|PASK|PEX5|PFDN6|PIKFYVE|PPARA|PRKCI|PRPSAP1|PTGES3|RUVBL2|SEMA3B|SHQ1|SLC24A1|SPHK1|SRSF10|ST13|TAPBP|TBKBP1|TCP1|TNFRSF12A|TOMM20|TOR1A|TUBB4B|UGGT1|UNC13B|USP33|VPS8|YIPF2|ZCCHC8|ZNF207| |
+| cellular component assembly   | <GO:0022607> |         58|        26|  2.513885|  1.00e-04|         0.002640|  0.0001000|          0.0044000|               0.808| NA      | CALR|CHAF1A|CPT1A|GAK|GEMIN2|HMGCR|HSP90AA1|HSPA1A|HSPA9|HSPD1|HTRA2|PFDN6|PIKFYVE|PRKCI|PTGES3|RUVBL2|SHQ1|SRSF10|ST13|TAPBP|TCP1|TOMM20|TOR1A|TUBB4B|UNC13B|ZNF207|                                                                                                                                                                                                                                  |
+| intracellular organelle part  | <GO:0044446> |         99|        52|  1.980901|  1.00e-04|         0.002200|  0.0019580|          0.0198779|               0.302| NA      | AIP|ARF3|CALR|CCNG1|CCT5|CCT6A|CDC37L1|CHAF1A|CLGN|CLPX|CPT1A|DDX46|DMBT1|DNAJB1|DNAJB4|DZIP3|GEMIN2|HCK|HMGCR|HSP90AA1|HSPA1A|HSPA9|HSPD1|HTRA2|ITIH2|MAN1B1|NELFA|NR2E3|NUDC|OGG1|PEX5|PIKFYVE|POLR3K|PPARA|PRKCI|PTGES3|RUVBL2|SHQ1|SRSF10|SULF1|TAPBP|TCP1|TOMM20|TOR1A|TUBB4B|UGGT1|UNC13B|USP33|VPS8|YIPF2|ZCCHC8|ZNF207|                                                                        |
+
+#### Use Precision Recall with gene scores
+
+We will use the same scores file from the example above
+
+``` r
+precRecallOut = precRecall(annotation = 'GPL96',
+                           scores = scores,
+                           scoreColumn = 1,
+                           iterations = 10000,
+                           bigIsBetter = FALSE,
+                           logTrans = TRUE)
+
+head(precRecallOut$results) %>% knitr::kable()
+```
+
+| Name                     | ID           |  NumProbes|  NumGenes|   RawScore|   Pval|  CorrectedPvalue|  MFPvalue|  CorrectedMFPvalue|  Multifunctionality| Same as | GeneMembers                                                                                                                                                                                                                                                                                                                                                                                                                           |
+|:-------------------------|:-------------|----------:|---------:|----------:|------:|----------------:|---------:|------------------:|-------------------:|:--------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| protein folding          | <GO:0006457> |         44|        26|  0.7209345|  0e+00|          0.00000|    0.0000|          0.0000000|               0.219| NA      | AIP|CALR|CCT5|CCT6A|CCT8L2|CDC37L1|CLGN|CLPX|DNAJB1|DNAJB4|GAK|HSP90AA1|HSPA1A|HSPA9|HSPB6|HSPD1|NUDC|PFDN6|PIKFYVE|PTGES3|RUVBL2|SPHK1|ST13|TCP1|TOR1A|UGGT1|                                                                                                                                                                                                                                                                        |
+| unfolded protein binding | <GO:0051082> |         61|        33|  1.0000000|  0e+00|          0.00000|    0.0000|          0.0000000|               0.175| NA      | AAMP|AIP|CALR|CCT5|CCT6A|CCT8L2|CDC37L1|CHAF1A|CLGN|CLPX|DNAJB1|DNAJB4|DZIP3|HSP90AA1|HSPA1A|HSPA9|HSPB6|HSPD1|HTRA2|NUDC|PFDN6|PIKFYVE|PTGES3|RUVBL2|SHQ1|SRSF10|ST13|TAPBP|TCP1|TOMM20|TOR1A|TUBB4B|UGGT1|                                                                                                                                                                                                                          |
+| protein binding          | <GO:0005515> |        114|        63|  0.9259590|  1e-04|          0.00440|    0.0002|          0.0088000|               0.564| NA      | AAMP|AIP|C5AR2|CALR|CCNG1|CCT5|CCT6A|CCT8L2|CDC37L1|CHAF1A|CLGN|CLPX|CPT1A|CRABP1|DMBT1|DNAJB1|DNAJB4|DZIP3|EPHB2|FOXB1|FRS2|GAK|GEMIN2|HCK|HMGCR|HSP90AA1|HSPA1A|HSPA9|HSPB6|HSPD1|HTRA2|NELFA|NUDC|OGG1|PASK|PEX5|PFDN6|PIKFYVE|PPARA|PRKCI|PRPSAP1|PTGES3|RUVBL2|SEMA3B|SHQ1|SLC24A1|SPHK1|SRSF10|ST13|TAPBP|TBKBP1|TCP1|TNFRSF12A|TOMM20|TOR1A|TUBB4B|UGGT1|UNC13B|USP33|VPS8|YIPF2|ZCCHC8|ZNF207|                                |
+| extracellular region     | <GO:0005576> |         55|        30|  0.6050500|  1e-04|          0.00330|    0.0023|          0.0337333|               0.264| NA      | AAMP|ARF3|BHMT2|CALR|CCT5|CCT6A|CDC37L1|DMBT1|DNAJB1|DNAJB4|EPHB2|FBLN2|HSP90AA1|HSPA1A|HSPA9|HSPB6|HSPD1|ITIH2|LIPF|MAN1B1|PRKCI|PTGES3|RUVBL2|SEMA3B|ST13|SULF1|TCP1|TOR1A|TUBB4B|UGGT1|                                                                                                                                                                                                                                            |
+| intracellular            | <GO:0005622> |        129|        70|  0.9568881|  1e-04|          0.00264|    0.0011|          0.0363000|               0.652| NA      | AAMP|AIP|ARC|ARF3|BHMT2|CALR|CCNG1|CCT5|CCT6A|CCT8L2|CDC37L1|CHAF1A|CLGN|CLPX|CPT1A|CRABP1|DDX46|DMBT1|DNAJB1|DNAJB4|DZIP3|EPHB2|FOXB1|FRS2|GAK|GEMIN2|HCK|HMGCR|HSP90AA1|HSPA1A|HSPA9|HSPB6|HSPD1|HTRA2|ITIH2|LIPF|MAN1B1|NELFA|NR2E3|NUDC|OGG1|PASK|PEX5|PFDN6|PIKFYVE|PLCH1|POLR3K|PPARA|PRKCI|PTGES3|RUVBL2|SEMA3B|SHOX2|SHQ1|SPHK1|SRSF10|ST13|SULF1|TAPBP|TCP1|TOMM20|TOR1A|TUBB4B|UGGT1|UNC13B|USP33|VPS8|YIPF2|ZCCHC8|ZNF207| |
+| intracellular part       | <GO:0044424> |        129|        70|  0.9568881|  1e-04|          0.00220|    0.0011|          0.0290400|               0.653| NA      | AAMP|AIP|ARC|ARF3|BHMT2|CALR|CCNG1|CCT5|CCT6A|CCT8L2|CDC37L1|CHAF1A|CLGN|CLPX|CPT1A|CRABP1|DDX46|DMBT1|DNAJB1|DNAJB4|DZIP3|EPHB2|FOXB1|FRS2|GAK|GEMIN2|HCK|HMGCR|HSP90AA1|HSPA1A|HSPA9|HSPB6|HSPD1|HTRA2|ITIH2|LIPF|MAN1B1|NELFA|NR2E3|NUDC|OGG1|PASK|PEX5|PFDN6|PIKFYVE|PLCH1|POLR3K|PPARA|PRKCI|PTGES3|RUVBL2|SEMA3B|SHOX2|SHQ1|SPHK1|SRSF10|ST13|SULF1|TAPBP|TCP1|TOMM20|TOR1A|TUBB4B|UGGT1|UNC13B|USP33|VPS8|YIPF2|ZCCHC8|ZNF207| |
 
 #### Use ORA with a hitlist
 

@@ -12,6 +12,18 @@ devtools::load_all()
 
 This is an R wrapper for Pavlidis Lab's [ermineJ](http://erminej.msl.ubc.ca/). A tool for gene set enrichment analysis with multifunctionality correction.
 
+Table of Contents
+=================
+   * [Installation](#installation)
+   * [Usage](#usage)
+      * [Replicable go terms](#replicable-go-terms)
+      * [Examples](#examples)
+         * [Use GSR with gene scores](#use-gsr-with-gene-scores)
+         * [Use Precision Recall with gene scores](#use-precision-recall-with-gene-scores)
+         * [Use ORA with a hitlist](#use-ora-with-a-hitlist)
+         * [Using your own GO annotations](#using-your-own-go-annotations)
+            
+
 ## Installation
 
 ermineR requries 64 bit version of java to function. If you are a Mac user make sure you have the java SDK.
@@ -46,6 +58,47 @@ To use a specific version of GO, make sure to set `geneSetDescription` argument
 of all ermineR functions to the file path where you saved the go terms
 
 ### Examples 
+
+#### Use GSR with gene scores
+
+Here we will use a mock scores file located in our tests directory. The score file is specifically created to be enriched in genes with the term GO:0051082.
+
+```{r}
+scores = read.table("tests/testthat/testFiles/pValues", header=T, row.names = 1)
+head(scores)
+
+```
+
+This scores file only includes scores for 118 genes. The file was generated using GPL96's probesets so that is the annotation
+we'll be using. Any gene that is not reperesented by the score file will be ignored.
+
+```{r}
+gsrOut = gsr(annotation = 'GPL96',
+                 scores = scores,
+                 scoreColumn = 1,
+                 iterations = 10000,
+                 bigIsBetter = FALSE,
+                 logTrans = TRUE)
+
+head(gsrOut$results) %>% knitr::kable()
+
+```
+
+#### Use Precision Recall with gene scores
+
+We will use the same scores file from the example above
+
+```{r}
+precRecallOut = precRecall(annotation = 'GPL96',
+                           scores = scores,
+                           scoreColumn = 1,
+                           iterations = 10000,
+                           bigIsBetter = FALSE,
+                           logTrans = TRUE)
+
+head(precRecallOut$results) %>% knitr::kable()
+
+```
 
 #### Use ORA with a hitlist
 
