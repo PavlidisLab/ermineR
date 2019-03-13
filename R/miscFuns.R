@@ -12,7 +12,7 @@ getGemmaAnnot = function(chipName,chipFile,annotType = c('noParents','bioProcess
         warning('annotation file already exists. not overwriting')
         return(FALSE)
     }
-    download.file(paste0('http://chibi.ubc.ca/microannots/',chipName,annotType,'.an.txt.gz'),
+    download.file(paste0('https://gemma.msl.ubc.ca/annots/',chipName,annotType,'.an.txt.gz'),
                   paste0(chipFile,'.gz'))
     
     R.utils::gunzip(paste0(chipFile,'.gz'), overwrite = TRUE)
