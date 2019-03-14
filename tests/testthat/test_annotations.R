@@ -31,12 +31,18 @@ test_that('goToday, latest go, go at date test and get go from link',{
     oraOut2 = ora(annotation = 'testFiles/chip',
                   hitlist = hitlist,
                   geneSetDescription = 'Latest_GO')
-    testthat::expect_identical(oraOut$results,oraOut2$results)
+    
+    stripAttributes = function(x){
+        attributes(x) = NULL
+        return(x)
+    }
+    
+    testthat::expect_equivalent(oraOut$results,oraOut2$results)
     
     oraOut3 = ora(annotation = 'testFiles/chip',
                   hitlist = hitlist,
                   geneSetDescription = 'http://archive.geneontology.org/latest-termdb/go_daily-termdb.rdf-xml.gz')
-    testthat::expect_identical(oraOut$results,oraOut3$results)
+    testthat::expect_equivalent(oraOut$results,oraOut3$results)
     
     validDates = getGoDates()
     

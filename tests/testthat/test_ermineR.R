@@ -60,7 +60,7 @@ test_that('setting seed',{
                                stats="precisionRecall",
                                logTrans=T,
                                geneSetDescription = 'testFiles/Go.xml')
-    testthat::expect_identical(result1$results,result2$results)
+    testthat::expect_equivalent(result1$results,result2$results)
     testthat::expect_false(identical(result1$results,resultDifferent$results))
     
 })
