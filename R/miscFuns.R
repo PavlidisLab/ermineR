@@ -11,6 +11,14 @@ listGemmaAnnotations = function(){
     return(annots)
 }
 
+#' Get annotation files from gemma
+#' 
+#' @param chipName Name of platform. Use \code{\link{listGemmaAnnotations}} to get
+#' a list of valid platform names.
+#' @param chipFile Name of the output file.
+#' @param annotType Type of annotation to download. ErmineR typically uses "noParents"
+#' @param overwrite Should it overwrite an existing file?
+#' 
 #' @export
 getGemmaAnnot = function(chipName,chipFile,annotType = c('noParents','bioProcess','allParents'), 
                          overwrite=FALSE){
