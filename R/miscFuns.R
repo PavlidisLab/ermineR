@@ -1,3 +1,16 @@
+#' List gemma annotations
+#' 
+#' Returns a vector that has names of all available gemma annotation files that
+#' can be automatically downloaded from Gemma for use with ermineR. See \code{annotation}
+#' argument in \code{\link{ermineR}} and it's wrappers ()
+#' @export
+listGemmaAnnotations = function(){
+    annots =
+        XML::getHTMLLinks(RCurl::getURL('https://gemma.msl.ubc.ca/annots/')) %>% 
+        {.[grepl('noParents',.)]} %>% stringr::str_extract('.*?(?=_noParents)')
+    return(annots)
+}
+
 #' @export
 getGemmaAnnot = function(chipName,chipFile,annotType = c('noParents','bioProcess','allParents'), 
                          overwrite=FALSE){

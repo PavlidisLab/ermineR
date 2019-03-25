@@ -45,7 +45,8 @@ hitlist = function(hitlist = NULL){
 #' 
 #' @param annotation Annotation. A file path, a data.frame or a platform short 
 #' name (eg. GPL127). If given a platform short name it will be downloaded
-#' from annotation repository of Pavlidis Lab (\url{www.chibi.ubc.ca/microannots/}). 
+#' from annotation repository of Pavlidis Lab (\url{https://gemma.msl.ubc.ca/annots/}). 
+#' To get a list of available annotations, use \code{\link{listGemmaAnnotations}}.
 #' Note that if there is a file or folder with the same name as the platform 
 #' name in the directory, that file will be read instead of getting a copy from 
 #' Pavlidis Lab. If this file isn't a valid annotation file, the function will fail.

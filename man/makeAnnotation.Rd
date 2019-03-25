@@ -4,8 +4,8 @@
 \alias{makeAnnotation}
 \title{makeAnnotation}
 \usage{
-makeAnnotation(annotationList, symbol = names(annotationList), name = NULL,
-  output = NULL, return = TRUE)
+makeAnnotation(annotationList, symbol = names(annotationList),
+  name = NULL, output = NULL, return = TRUE)
 }
 \arguments{
 \item{annotationList}{A list of go terms for each gene identifier. Gene identifiers

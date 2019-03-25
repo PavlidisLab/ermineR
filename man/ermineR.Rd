@@ -6,18 +6,20 @@
 \usage{
 ermineR(annotation = NULL, aspects = c("Molecular Function",
   "Cellular Component", "Biological Process"), scores = NULL,
-  hitlist = NULL, scoreColumn = 1, threshold = 0.001, expression = NULL,
-  bigIsBetter = FALSE, customGeneSets = NULL, geneReplicates = c("mean",
-  "best"), logTrans = FALSE, pAdjust = c("FDR", "FWE"), test = c("ORA",
-  "GSR", "CORR", "ROC"), iterations = NULL, stats = c("mean", "quantile",
-  "meanAboveQuantile", "precisionRecall"), quantile = 50,
-  geneSetDescription = "Latest_GO", output = NULL, return = TRUE,
-  minClassSize = 20, maxClassSize = 200)
+  hitlist = NULL, scoreColumn = 1, threshold = 0.001,
+  expression = NULL, bigIsBetter = FALSE, customGeneSets = NULL,
+  geneReplicates = c("mean", "best"), logTrans = FALSE,
+  pAdjust = c("FDR", "FWE"), test = c("ORA", "GSR", "CORR", "ROC"),
+  iterations = NULL, stats = c("mean", "quantile", "meanAboveQuantile",
+  "precisionRecall"), quantile = 50, geneSetDescription = "Latest_GO",
+  output = NULL, return = TRUE, minClassSize = 20,
+  maxClassSize = 200)
 }
 \arguments{
 \item{annotation}{Annotation. A file path, a data.frame or a platform short 
 name (eg. GPL127). If given a platform short name it will be downloaded
-from annotation repository of Pavlidis Lab (\url{www.chibi.ubc.ca/microannots/}). 
+from annotation repository of Pavlidis Lab (\url{https://gemma.msl.ubc.ca/annots/}). 
+To get a list of available annotations, use \code{\link{listGemmaAnnotations}}.
 Note that if there is a file or folder with the same name as the platform 
 name in the directory, that file will be read instead of getting a copy from 
 Pavlidis Lab. If this file isn't a valid annotation file, the function will fail.
