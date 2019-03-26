@@ -18,6 +18,7 @@ test_that('geting annotations from gemma',{
 
 
 test_that('goToday, latest go, go at date test and get go from link',{
+    testthat::skip_on_travis()
     todayGo = tempfile()
     goToday(todayGo,overwrite = TRUE)
     hitlist = readLines('testFiles/hitlist')

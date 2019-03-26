@@ -1,6 +1,7 @@
 context('test java')
 
 test_that('successful java detection',{
+    testthat::skip_on_appveyor()
     print('successful java detection')
     
     oldJavaHome = Sys.getenv('JAVA_HOME')
