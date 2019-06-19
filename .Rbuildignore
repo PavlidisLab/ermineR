@@ -1,5 +1,9 @@
+^LICENSE\.md$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^appveyor\.yml$
 ^travis\.yml$
 ^README\.rmd$
+^docs$
+^ermineR.png$
+^.travis.yml$
