@@ -7,6 +7,7 @@
 #' 
 #' @inheritParams annotation
 #' @inheritParams scores
+#' @inheritParams hitlist
 #' @inheritParams threshold
 #' @inheritParams expression
 #' @inheritParams generalStats

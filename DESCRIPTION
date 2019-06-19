@@ -16,7 +16,7 @@ Imports:
     RCurl,
     stringr,
     XML
-License: Apache License 2.0 + file LICENSE
+License: Apache License (>= 2.0)
 Encoding: UTF-8
 LazyData: true
 Suggests: 

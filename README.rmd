@@ -32,7 +32,7 @@ ermineR requries 64 bit version of java to function. If you are a Mac user make 
 After java is installed you can install ermineR by doing
 
 ```r
-devtools::install_packages('PavlidisLab/ermineR')
+devtools::install_github('PavlidisLab/ermineR')
 ```
 
 If ermineR cannot find your java home by itself. Use either install rJava or use `Sys.setenv(JAVA_HOME=javaHome)` to point
