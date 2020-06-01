@@ -62,7 +62,7 @@ test_that('setting seed',{
                                geneSetDescription = 'testFiles/Go.xml')
     testthat::expect_identical(result1$results$Pval,result2$results$Pval)
     testthat::expect_false(identical(result1$results$Pval,resultDifferent$results$Pval))
-    
+
 })
 
 testthat::test_that('Reading the european output',{

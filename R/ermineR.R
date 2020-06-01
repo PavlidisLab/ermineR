@@ -7,6 +7,7 @@
 #' 
 #' @inheritParams annotation
 #' @inheritParams scores
+#' @inheritParams hitlist
 #' @inheritParams threshold
 #' @inheritParams expression
 #' @inheritParams generalStats
@@ -75,7 +76,7 @@ ermineR = function(annotation = NULL,
                                                     chipFile = annotation,
                                                     annotType = 'noParents')),
                      error = function(e){
-                         stop('"annotation" is not a valid file or exists in Pavlidis lab annotations. See http://www.chibi.ubc.ca/microannots for available options.')
+                         stop('"annotation" is not a valid file or exists in Pavlidis lab annotations. Use listGemmaAnnotations() to get a list of available annotations.')
                      })
         }
     } else if('data.frame' %in% class(annotation)) {

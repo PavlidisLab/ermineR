@@ -5,11 +5,12 @@
 \title{ROC}
 \usage{
 roc(scores, scoreColumn = 1, bigIsBetter = FALSE, logTrans = FALSE,
-  annotation = NULL, aspects = c("Molecular Function", "Cellular Component",
-  "Biological Process"), geneReplicates = c("mean", "best"),
-  pAdjust = c("FDR", "Bonferroni"), geneSetDescription = "Latest_GO",
-  customGeneSets = NULL, minClassSize = 20, maxClassSize = 200,
-  output = NULL, return = TRUE)
+  annotation = NULL, aspects = c("Molecular Function",
+  "Cellular Component", "Biological Process"), geneReplicates = c("mean",
+  "best"), pAdjust = c("FDR", "Bonferroni"),
+  geneSetDescription = "Latest_GO", customGeneSets = NULL,
+  minClassSize = 20, maxClassSize = 200, output = NULL,
+  return = TRUE)
 }
 \arguments{
 \item{scores}{A data.frame. Rownames have to be gene identifiers (eg. probes,
@@ -31,7 +32,8 @@ p values. \code{FALSE} by default}
 
 \item{annotation}{Annotation. A file path, a data.frame or a platform short 
 name (eg. GPL127). If given a platform short name it will be downloaded
-from annotation repository of Pavlidis Lab (\url{www.chibi.ubc.ca/microannots/}). 
+from annotation repository of Pavlidis Lab (\url{https://gemma.msl.ubc.ca/annots/}). 
+To get a list of available annotations, use \code{\link{listGemmaAnnotations}}.
 Note that if there is a file or folder with the same name as the platform 
 name in the directory, that file will be read instead of getting a copy from 
 Pavlidis Lab. If this file isn't a valid annotation file, the function will fail.

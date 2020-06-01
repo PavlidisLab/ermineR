@@ -18,6 +18,7 @@ test_that('geting annotations from gemma',{
 
 
 test_that('goToday, latest go, go at date test and get go from link',{
+    testthat::skip_on_travis()
     todayGo = tempfile()
     goToday(todayGo,overwrite = TRUE)
     hitlist = readLines('testFiles/hitlist')
@@ -32,12 +33,12 @@ test_that('goToday, latest go, go at date test and get go from link',{
                   hitlist = hitlist,
                   geneSetDescription = 'Latest_GO')
     testthat::expect_identical(oraOut$results$Name,oraOut2$results$Name)
+
     
     oraOut3 = ora(annotation = 'testFiles/chip',
                   hitlist = hitlist,
                   geneSetDescription = 'http://archive.geneontology.org/latest-termdb/go_daily-termdb.rdf-xml.gz')
     testthat::expect_identical(oraOut$results$Name,oraOut3$results$Name)
-    
     validDates = getGoDates()
     
     # get latest date

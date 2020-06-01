@@ -4,7 +4,8 @@
 \alias{scores}
 \title{scores}
 \usage{
-scores(scores, scoreColumn = 1, bigIsBetter = FALSE, logTrans = FALSE)
+scores(scores, scoreColumn = 1, bigIsBetter = FALSE,
+  logTrans = FALSE)
 }
 \arguments{
 \item{scores}{A data.frame. Rownames have to be gene identifiers (eg. probes,
