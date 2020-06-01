@@ -303,7 +303,7 @@ ermineR = function(annotation = NULL,
     call = paste(shQuote(ermineExec),paste(unlist(arguments),collapse = ' '))
     # system(paste(shQuote(ermineExec),paste(unlist(arguments),collapse = ' ')), ignore.stderr = TRUE)
     response = system2(ermineExec,args = arguments, stdout = TRUE, stderr = TRUE)
-    
+
     badJavaHome = "JAVA_HOME is not defined correctly|JAVA_HOME is set to an invalid directory"
     
     
