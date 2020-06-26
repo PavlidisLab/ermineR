@@ -41,6 +41,7 @@ ermineR = function(annotation = NULL,
                    return = TRUE,
                    minClassSize = 20, 
                    maxClassSize =200){
+    
     test = match.arg(test)
     pAdjust = match.arg(pAdjust)
     geneReplicates = match.arg(geneReplicates)
@@ -68,16 +69,20 @@ ermineR = function(annotation = NULL,
     } else{
         nullAnnot = FALSE
     }
-    
     if('character' %in% class(annotation)){
         if(!file.exists(annotation)){
             message('Attempting to download annotation file')
-            tryCatch(suppressWarnings(getGemmaAnnot(annotation,
-                                                    chipFile = annotation,
-                                                    annotType = 'noParents')),
+            annoTemp = tempfile()
+            tryCatch(suppressWarnings(getAnnotation(platform = annotation,
+                                                    file = annoTemp,
+                                                    annotType = 'noParents', 
+                                                    return = FALSE)),
                      error = function(e){
                          stop('"annotation" is not a valid file or exists in Pavlidis lab annotations. Use listGemmaAnnotations() to get a list of available annotations.')
                      })
+            
+            annotation = annoTemp
+            
         }
     } else if('data.frame' %in% class(annotation)) {
         temp = tempfile()

@@ -4,8 +4,10 @@
 \alias{annotation}
 \title{annotation}
 \usage{
-annotation(annotation, aspects = c("Molecular Function",
-  "Cellular Component", "Biological Process"))
+annotation(
+  annotation,
+  aspects = c("Molecular Function", "Cellular Component", "Biological Process")
+)
 }
 \arguments{
 \item{annotation}{Annotation. A file path, a data.frame or a platform short 

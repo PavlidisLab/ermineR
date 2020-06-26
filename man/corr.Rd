@@ -4,12 +4,20 @@
 \alias{corr}
 \title{CORR}
 \usage{
-corr(expression, annotation = NULL, aspects = c("Molecular Function",
-  "Cellular Component", "Biological Process"), iterations = 10000,
-  geneReplicates = c("mean", "best"), pAdjust = c("FDR", "Bonferroni"),
-  geneSetDescription = "Latest_GO", customGeneSets = NULL,
-  minClassSize = 20, maxClassSize = 200, output = NULL,
-  return = TRUE)
+corr(
+  expression,
+  annotation = NULL,
+  aspects = c("Molecular Function", "Cellular Component", "Biological Process"),
+  iterations = 10000,
+  geneReplicates = c("mean", "best"),
+  pAdjust = c("FDR", "Bonferroni"),
+  geneSetDescription = "Latest_GO",
+  customGeneSets = NULL,
+  minClassSize = 20,
+  maxClassSize = 200,
+  output = NULL,
+  return = TRUE
+)
 }
 \arguments{
 \item{expression}{A file path or a data frame. Expression data. (test = CORR only)

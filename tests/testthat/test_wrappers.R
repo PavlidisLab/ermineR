@@ -151,5 +151,9 @@ test_that('test custom gene lists without annotation or go.xml',{
     
     
     
+    # custom gene list as objects
+    customList = readLines('testFiles/customGeneSet.tsv') %>% strsplit('\t')
+    names(customList) = customList %>% purrr::map_chr(1)
+    
     
 })

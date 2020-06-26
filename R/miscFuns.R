@@ -11,34 +11,6 @@ listGemmaAnnotations = function(){
     return(annots)
 }
 
-#' Get annotation files from gemma
-#' 
-#' @param chipName Name of platform. Use \code{\link{listGemmaAnnotations}} to get
-#' a list of valid platform names.
-#' @param chipFile Name of the output file.
-#' @param annotType Type of annotation to download. ErmineR typically uses "noParents"
-#' @param overwrite Should it overwrite an existing file?
-#' 
-#' @export
-getGemmaAnnot = function(chipName,chipFile,annotType = c('noParents','bioProcess','allParents'), 
-                         overwrite=FALSE){
-    
-    annotType = match.arg(annotType)
-    if (annotType == 'allParents'){
-        annotType = ''
-    } else{
-        annotType = paste0('_',annotType)
-    }
-    if(file.exists(chipFile) & !overwrite){
-        warning('annotation file already exists. not overwriting')
-        return(FALSE)
-    }
-    download.file(paste0('https://gemma.msl.ubc.ca/annots/',chipName,annotType,'.an.txt.gz'),
-                  paste0(chipFile,'.gz'))
-    
-    R.utils::gunzip(paste0(chipFile,'.gz'), overwrite = TRUE)
-    
-}
 
 #' Get genes for a term
 #' 

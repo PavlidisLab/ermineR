@@ -4,8 +4,10 @@
 \alias{GSRstats}
 \title{GSRstats}
 \usage{
-GSRstats(stats = c("mean", "quantile", "meanAboveQuantile",
-  "precisionRecall"), quantile = 50)
+GSRstats(
+  stats = c("mean", "quantile", "meanAboveQuantile", "precisionRecall"),
+  quantile = 50
+)
 }
 \arguments{
 \item{stats}{Method for computing raw class statistics (test = GSR only)}
