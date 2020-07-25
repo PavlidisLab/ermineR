@@ -15,7 +15,8 @@ Imports:
     R.utils,
     RCurl,
     stringr,
-    XML
+    XML,
+    gemmaAPI
 License: Apache License (>= 2.0)
 Encoding: UTF-8
 LazyData: true
@@ -23,4 +24,6 @@ Suggests:
     rJava,
     testthat,
     tools
-RoxygenNote: 6.1.1
+Remotes:
+    PavlidisLab/gemmaAPI.R
+RoxygenNote: 7.1.0

@@ -4,14 +4,23 @@
 \alias{precRecall}
 \title{Precision-recall}
 \usage{
-precRecall(scores, scoreColumn = 1, bigIsBetter = FALSE,
-  logTrans = FALSE, annotation = NULL,
-  aspects = c("Molecular Function", "Cellular Component",
-  "Biological Process"), iterations = 10000, geneReplicates = c("mean",
-  "best"), pAdjust = c("FDR", "Bonferroni"),
-  geneSetDescription = "Latest_GO", customGeneSets = NULL,
-  minClassSize = 20, maxClassSize = 200, output = NULL,
-  return = TRUE)
+precRecall(
+  scores,
+  scoreColumn = 1,
+  bigIsBetter = FALSE,
+  logTrans = FALSE,
+  annotation = NULL,
+  aspects = c("Molecular Function", "Cellular Component", "Biological Process"),
+  iterations = 10000,
+  geneReplicates = c("mean", "best"),
+  pAdjust = c("FDR", "Bonferroni"),
+  geneSetDescription = "Latest_GO",
+  customGeneSets = NULL,
+  minClassSize = 20,
+  maxClassSize = 200,
+  output = NULL,
+  return = TRUE
+)
 }
 \arguments{
 \item{scores}{A data.frame. Rownames have to be gene identifiers (eg. probes,
