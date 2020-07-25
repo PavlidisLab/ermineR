@@ -189,6 +189,7 @@ ermineR = function(annotation = NULL,
     } else if(length(customGeneSets) == 1 && is.character(customGeneSets) && fs::is_dir(customGeneSets)){
         # this is a directory, native ermineJ input, no modification needed
     } else if(is.character(customGeneSets) && all(fs::is_file(customGeneSets))){
+
         tempdir = tempfile()
         dir.create(tempdir)
         # this makes sure same file names doesn't cause issues
@@ -196,7 +197,8 @@ ermineR = function(annotation = NULL,
             sapply(function(x){
                 paste0(x, paste(sample(LETTERS,10,TRUE),collapse = ''))
             })
-        fs::link_create(normalizePath(customGeneSets), file.path(tempdir,outnames))
+        file.copy(normalizePath(customGeneSets), normalizePath(file.path(tempdir,outnames),mustWork = FALSE))
+        # fs::link_create(normalizePath(customGeneSets), normalizePath(file.path(tempdir,outnames)))
         customGeneSets = tempdir
     } else if(is.null(customGeneSets)){
         # this is fine
@@ -303,6 +305,7 @@ ermineR = function(annotation = NULL,
     #         args = unlist(arguments))
     call = paste(shQuote(ermineExec),paste(unlist(arguments),collapse = ' '))
     # system(paste(shQuote(ermineExec),paste(unlist(arguments),collapse = ' ')), ignore.stderr = TRUE)
+
     response = system2(ermineExec,args = arguments, stdout = TRUE, stderr = TRUE)
 
     badJavaHome = "JAVA_HOME is not defined correctly|JAVA_HOME is set to an invalid directory"
