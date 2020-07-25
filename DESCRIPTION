@@ -25,5 +25,5 @@ Suggests:
     testthat,
     tools
 Remotes:
-    oganm/gemmaAPI.R
+    PavlidisLab/gemmaAPI.R
 RoxygenNote: 7.1.0
