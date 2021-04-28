@@ -37,7 +37,7 @@ test_that('goToday, latest go, go at date test and get go from link',{
     
     oraOut3 = ora(annotation = 'testFiles/chip',
                   hitlist = hitlist,
-                  geneSetDescription = 'http://archive.geneontology.org/latest-termdb/go_daily-termdb.rdf-xml.gz')
+                  geneSetDescription = 'http://purl.obolibrary.org/obo/go.obo')
     testthat::expect_identical(oraOut$results$Name,oraOut3$results$Name)
     validDates = getGoDates()
     

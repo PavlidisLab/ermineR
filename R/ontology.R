@@ -28,8 +28,8 @@ getGoDates = function(){
     out = ''
     
     while(length(out) < 2){
-        out = b$Runtime$evaluate("document.querySelector('#tbody-s3objects').innerText")$result$value %>% strsplit('/\t') %>% {.[[1]]} %>% trimws()
         Sys.sleep(1)
+        out = b$Runtime$evaluate("document.querySelector('#tbody-s3objects').innerText")$result$value %>% strsplit('/\t') %>% {.[[1]]} %>% trimws()
     }
     b$close()
     return(out)
