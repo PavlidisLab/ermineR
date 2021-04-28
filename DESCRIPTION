@@ -16,7 +16,8 @@ Imports:
     RCurl,
     stringr,
     XML,
-    gemmaAPI
+    gemmaAPI,
+    chromote
 License: Apache License (>= 2.0)
 Encoding: UTF-8
 LazyData: true

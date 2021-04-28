@@ -21,17 +21,18 @@ goToday = function(path,overwrite = FALSE){
 #' \code{\link{goAtDate}}
 #' @export
 getGoDates = function(){
-    # check the links to use. for soime reason archive link is faster
-    files = 
-        RCurl::getURL('ftp://ftp.geneontology.org/pub/go/godatabase/archive/termdb/',dirlistonly = TRUE,ftp.use.epsv=TRUE)
+    # check the links to use. for some reason archive link is faster
+    b <- chromote::ChromoteSession$new()
+    b$Page$navigate('http://release.geneontology.org/index.html')
     
-    files = RCurl::getURL('http://release.geneontology.org/')
+    out = ''
     
-    # dates = files %>% strsplit('a href') %>% {.[[1]]} %>% {.[grepl(x = .,pattern = '[0-9]+?-[0-9]+?-[0-9]+(?=/)',perl = TRUE)]} %>% 
-    #     stringr::str_extract( '[0-9]+?-[0-9]+?-[0-9]+(?=/)')
-    files %<>% strsplit('\n') %>% {.[[1]]} %>% {.[grepl(pattern = '[0-9]+?-[0-9]+?-[0-9]+', .)]}
-    
-    rev(files)
+    while(length(out) < 2){
+        out = b$Runtime$evaluate("document.querySelector('#tbody-s3objects').innerText")$result$value %>% strsplit('/\t') %>% {.[[1]]} %>% trimws()
+        Sys.sleep(1)
+    }
+    b$close()
+    return(out)
 }
 
 
