@@ -12,7 +12,7 @@ goToday = function(path,overwrite = FALSE){
         stop('File exists, not downloading')
     }
     utils::download.file('http://purl.obolibrary.org/obo/go.obo',
-                         destfile = paste0(path),quiet= TRUE)
+                         destfile = path,quiet= TRUE)
 }
 
 #' getGoDates
@@ -50,9 +50,8 @@ goAtDate = function(path, date, overwrite = FALSE){
         stop('File exists. Not overwriting')
     }
     utils::download.file(
-        glue::glue('http://archive.geneontology.org/termdb/{date}/go_daily-termdb.rdf-xml.gz'),
-                         destfile = paste0(path,'.gz'),quiet= TRUE)
-    R.utils::gunzip(paste0(path,'.gz'),overwrite = overwrite)  
+        glue::glue('http://release.geneontology.org/{date}/ontology/go.obo'),
+                         destfile = path,quiet= TRUE)
 }
 
 
