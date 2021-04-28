@@ -19,7 +19,7 @@ test_that('successful java detection',{
                      scoreColumn = 1,
                      scores = scores,
                      return = TRUE,
-                     geneSetDescription = 'testFiles/Go.xml')
+                     geneSetDescription = 'testFiles/go.obo')
     testthat::expect_is(result,'list')
     Sys.setenv(JAVA_HOME = oldJavaHome)
 })
@@ -38,7 +38,7 @@ test_that('bad java home error',{
                          scores = scores,
                          output = 'out',
                          return = TRUE,
-                         geneSetDescription = 'testFiles/Go.xml'),
+                         geneSetDescription = 'testFiles/go.obo'),
                  'JAVA_HOME is not defined correctly')
     Sys.setenv(JAVA_HOME = oldJavaHome)
 })

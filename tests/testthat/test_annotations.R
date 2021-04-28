@@ -11,7 +11,7 @@ test_that('geting annotations from gemma',{
                      scoreColumn = 'Endothelial',
                      scores = scores,
                      return = TRUE,
-                     geneSetDescription = 'testFiles/Go.xml')
+                     geneSetDescription = 'testFiles/go.obo')
     testthat::expect_is(result,'list')
     testthat::expect_is(result$results,'data.frame')    
 })
@@ -55,7 +55,7 @@ test_that('data.frame annotation',{
     
     oraOut = ora(annotation = annotations,
                  hitlist = hitlist,
-                 geneSetDescription = 'testFiles/Go.xml')
+                 geneSetDescription = 'testFiles/go.obo')
     testthat::expect_true(oraOut$results$Pval[oraOut$results$ID == 'GO:0051082']<0.05)
 })
 
@@ -71,7 +71,7 @@ test_that('make annotation',{
     
     oraOut = ora(annotation = annotations,
                  hitlist = hitlist,
-                 geneSetDescription = 'testFiles/Go.xml')
+                 geneSetDescription = 'testFiles/go.obo')
     
     testthat::expect_true(oraOut$results$Pval[oraOut$results$ID == 'GO:0051082']<0.05)
     

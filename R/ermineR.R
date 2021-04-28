@@ -47,7 +47,7 @@ ermineR = function(annotation = NULL,
     geneReplicates = match.arg(geneReplicates)
     stats = match.arg(stats)
     # set ermineJ home so users won't have to
-    ermineJHome = system.file("ermineJ-3.1.2",package = 'ermineR')
+    ermineJHome = system.file("ermineJ-3.2",package = 'ermineR')
     Sys.setenv(ERMINEJ_HOME = ermineJHome)
     
     # find that java home at all costs
@@ -95,20 +95,21 @@ ermineR = function(annotation = NULL,
     
     # get gene set descriptions -------------
     if(is.null(geneSetDescription) | nullAnnot){
-        geneSetDescription = system.file('go-minimal.xml',package = 'ermineR') 
+        geneSetDescription = system.file('go-minimal.obo',package = 'ermineR') 
     } else if(geneSetDescription == 'Latest_GO'){
-        temp = tempfile(fileext = '.xml')
+        temp = tempfile()
         goToday(temp)
         geneSetDescription = temp
     }else if(!file.exists(geneSetDescription)){
         message('Attempting to download gene set description from link')
-        temp = tempfile(fileext = 'xml.gz')
+        temp = tempfile()
         download.file(url = geneSetDescription,destfile = temp,quiet= TRUE)
         geneSetDescription = temp
     } # and else, geneSetDescription is a local file
     
     assertthat::is.string(geneSetDescription) # geneSetDescription is mandatory
     arguments$geneSetDescription = paste('--classFile',shQuote(geneSetDescription))
+    
     
     # get scores and score columns-------------
     if(test %in% c('ORA','GSR','ROC')){
@@ -335,7 +336,7 @@ ermineR = function(annotation = NULL,
     #     warning('Something went wrong and I have no idea what. Returning response')
     #     return(response)
     # }
-    
+
     if(return){
         out = readErmineJOutput(output)
         out$details$call = call

@@ -3,7 +3,7 @@
 #' 
 #' Downloads latest gene ontology term information (not gene annotations)
 #'
-#' @param path File path. Without gz extension
+#' @param path File path
 #' @param overwrite If TRUE, overwrites existing file
 #'
 #' @export
@@ -11,9 +11,8 @@ goToday = function(path,overwrite = FALSE){
     if(exists(path) & !overwrite){
         stop('File exists, not downloading')
     }
-    utils::download.file('http://archive.geneontology.org/latest-termdb/go_daily-termdb.rdf-xml.gz',
-                         destfile = paste0(path,'.gz'),quiet= TRUE)
-    R.utils::gunzip(paste0(path,'.gz'),overwrite = overwrite)    
+    utils::download.file('http://purl.obolibrary.org/obo/go.obo',
+                         destfile = paste0(path),quiet= TRUE)
 }
 
 #' getGoDates
@@ -25,6 +24,8 @@ getGoDates = function(){
     # check the links to use. for soime reason archive link is faster
     files = 
         RCurl::getURL('ftp://ftp.geneontology.org/pub/go/godatabase/archive/termdb/',dirlistonly = TRUE,ftp.use.epsv=TRUE)
+    
+    files = RCurl::getURL('http://release.geneontology.org/')
     
     # dates = files %>% strsplit('a href') %>% {.[[1]]} %>% {.[grepl(x = .,pattern = '[0-9]+?-[0-9]+?-[0-9]+(?=/)',perl = TRUE)]} %>% 
     #     stringr::str_extract( '[0-9]+?-[0-9]+?-[0-9]+(?=/)')

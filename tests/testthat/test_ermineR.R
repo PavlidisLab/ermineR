@@ -7,7 +7,7 @@ test_that('ermineJ basic usage',{
     scores <-read.table("testFiles/pValues", header=T, row.names = 1)
     
     result1 = ermineR(annotation = 'testFiles/chip',
-                      geneSetDescription = 'testFiles/Go.xml',
+                      geneSetDescription = 'testFiles/go.obo',
                       scoreColumn = 1,
                       scores = scores,
                       output = 'out',
@@ -17,7 +17,7 @@ test_that('ermineJ basic usage',{
     
     # check column names and integers give the same results
     result2 = ermineR(annotation = 'testFiles/chip',
-                      geneSetDescription = 'testFiles/Go.xml',
+                      geneSetDescription = 'testFiles/go.obo',
                       scoreColumn = 'pvalue',
                       scores = scores,
                       output = 'out',
@@ -43,7 +43,7 @@ test_that('setting seed',{
                        test="GSR", 
                        stats="precisionRecall",
                        logTrans=T,
-                       geneSetDescription = 'testFiles/Go.xml')
+                       geneSetDescription = 'testFiles/go.obo')
     set.seed(1)
     result2 <- ermineR(annotation = "testFiles/chip", 
                        scores=scores,
@@ -51,7 +51,7 @@ test_that('setting seed',{
                        test="GSR", 
                        stats="precisionRecall",
                        logTrans=T,
-                       geneSetDescription = 'testFiles/Go.xml')
+                       geneSetDescription = 'testFiles/go.obo')
     set.seed(3)
     resultDifferent <- ermineR(annotation = "testFiles/chip", 
                                scores=scores,
@@ -59,7 +59,7 @@ test_that('setting seed',{
                                test="GSR", 
                                stats="precisionRecall",
                                logTrans=T,
-                               geneSetDescription = 'testFiles/Go.xml')
+                               geneSetDescription = 'testFiles/go.obo')
     testthat::expect_identical(result1$results$Pval,result2$results$Pval)
     testthat::expect_false(identical(result1$results$Pval,resultDifferent$results$Pval))
 
