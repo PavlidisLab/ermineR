@@ -21,18 +21,14 @@ goToday = function(path,overwrite = FALSE){
 #' \code{\link{goAtDate}}
 #' @export
 getGoDates = function(){
-    # check the links to use. for some reason archive link is faster
-    b <- chromote::ChromoteSession$new()
-    b$Page$navigate('http://release.geneontology.org/index.html')
     
-    out = ''
+    xml = XML::xmlParse('http://go-data-product-release.s3.amazonaws.com/?list-type=2&delimiter=%2F&prefix=') %>% 
+        XML::xmlToList()
     
-    while(length(out) < 2){
-        out = b$Runtime$evaluate("document.querySelector('#tbody-s3objects').innerText")$result$value %>% strsplit('/\t') %>% {.[[1]]} %>% trimws()
-        Sys.sleep(1)
-    }
-    b$close()
-    return(out)
+    xml %>% purrr::map('Prefix') %>%
+        unlist %>% unname %>% 
+        gsub(pattern = '/', replacement = '',x = .,fixed = TRUE)
+
 }
 
 
