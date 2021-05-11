@@ -1,5 +1,5 @@
 language: r
-sudo: false
+sudo: required
 cache: packages
 r_github_packages:
     - r-lib/covr
@@ -9,4 +9,5 @@ after_success:
 warnings_are_errors: false
 os:
   - linux
-  - osx
+apt_packages:
+ - r-cran-rjava
