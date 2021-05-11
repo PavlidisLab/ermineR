@@ -27,7 +27,8 @@ getGoDates = function(){
     
     xml %>% purrr::map('Prefix') %>%
         unlist %>% unname %>% 
-        gsub(pattern = '/', replacement = '',x = .,fixed = TRUE)
+        gsub(pattern = '/', replacement = '',x = .,fixed = TRUE) %>% 
+        rev
 
 }
 
@@ -46,9 +47,17 @@ goAtDate = function(path, date, overwrite = FALSE){
     if(exists(path)){
         stop('File exists. Not overwriting')
     }
-    utils::download.file(
-        glue::glue('http://release.geneontology.org/{date}/ontology/go.obo'),
-                         destfile = path,quiet= TRUE)
+    
+    
+     xml = XML::xmlParse(glue::glue('http://go-data-product-release.s3.amazonaws.com/?list-type=2&delimiter=%2F&prefix={date2}%2Fontology%2F')) %>% 
+        XML::xmlToList()
+     
+     oboFile = xml %>% purrr::map('Key') %>%
+         unlist %>% unname %>% {.[basename(.) %in% c('go.obo','gene_ontology.obo')]}
+     
+     utils::download.file(
+         glue::glue('http://release.geneontology.org/{oboFile}'),
+         destfile = path,quiet= TRUE)
 }
 
 
