@@ -43,7 +43,7 @@ readErmineJOutput = function(output){
 readErmineJAnnot = function(annotation){
     fileHead = readLines(annotation,20)
     toSkip = fileHead %>% grep(x = .,pattern = '^#') %>% {suppressWarnings(max(.))} %>% max(.,0)
-    annoFile = read.table(annotation, header=T,sep='\t', quote="", 
-                          stringsAsFactors = F,comment.char = '',skip = toSkip)
+    annoFile = utils::read.table(annotation, header=T,sep='\t', quote="", 
+                                 stringsAsFactors = F,comment.char = '',skip = toSkip)
     return(annoFile)
 }

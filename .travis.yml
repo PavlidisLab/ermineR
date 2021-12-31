@@ -1,5 +1,5 @@
 language: r
-sudo: false
+sudo: required
 cache: packages
 r_github_packages:
     - r-lib/covr
@@ -7,7 +7,7 @@ r_github_packages:
 after_success:
     - Rscript -e 'covr::codecov()'
 warnings_are_errors: false
-dist: trusty
 os:
   - linux
-  - osx
+apt_packages:
+ - r-cran-rjava

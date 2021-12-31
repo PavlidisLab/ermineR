@@ -21,18 +21,15 @@ goToday = function(path,overwrite = FALSE){
 #' \code{\link{goAtDate}}
 #' @export
 getGoDates = function(){
-    # check the links to use. for some reason archive link is faster
-    b <- chromote::ChromoteSession$new()
-    b$Page$navigate('http://release.geneontology.org/index.html')
     
-    out = ''
+    xml = XML::xmlParse('http://go-data-product-release.s3.amazonaws.com/?list-type=2&delimiter=%2F&prefix=') %>% 
+        XML::xmlToList()
     
-    while(length(out) < 2){
-        Sys.sleep(1)
-        out = b$Runtime$evaluate("document.querySelector('#tbody-s3objects').innerText")$result$value %>% strsplit('/\t') %>% {.[[1]]} %>% trimws()
-    }
-    b$close()
-    return(out)
+    xml %>% purrr::map('Prefix') %>%
+        unlist %>% unname %>% 
+        gsub(pattern = '/', replacement = '',x = .,fixed = TRUE) %>% 
+        rev
+    
 }
 
 
@@ -50,9 +47,17 @@ goAtDate = function(path, date, overwrite = FALSE){
     if(exists(path)){
         stop('File exists. Not overwriting')
     }
+    
+    
+    xml = XML::xmlParse(glue::glue('http://go-data-product-release.s3.amazonaws.com/?list-type=2&delimiter=%2F&prefix={date2}%2Fontology%2F')) %>% 
+        XML::xmlToList()
+    
+    oboFile = xml %>% purrr::map('Key') %>%
+        unlist %>% unname %>% {.[basename(.) %in% c('go.obo','gene_ontology.obo')]}
+    
     utils::download.file(
-        glue::glue('http://release.geneontology.org/{date}/ontology/go.obo'),
-                         destfile = path,quiet= TRUE)
+        glue::glue('http://release.geneontology.org/{oboFile}'),
+        destfile = path,quiet= TRUE)
 }
 
 

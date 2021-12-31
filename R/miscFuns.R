@@ -5,9 +5,9 @@
 #' argument in \code{\link{ermineR}} and it's wrappers ()
 #' @export
 listGemmaAnnotations = function(){
-    annots =
-        XML::getHTMLLinks(RCurl::getURL('https://gemma.msl.ubc.ca/annots/')) %>% 
+    annots = httr::GET('https://gemma.msl.ubc.ca/annots/')$content %>% rawToChar() %>% XML::getHTMLLinks() %>% 
         {.[grepl('noParents',.)]} %>% stringr::str_extract('.*?(?=_noParents)')
+    
     return(annots)
 }
 
