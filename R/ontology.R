@@ -49,7 +49,7 @@ goAtDate = function(path, date, overwrite = FALSE){
     }
     
     
-    xml = XML::xmlParse(glue::glue('http://go-data-product-release.s3.amazonaws.com/?list-type=2&delimiter=%2F&prefix={date2}%2Fontology%2F')) %>% 
+    xml = XML::xmlParse(glue::glue('http://go-data-product-release.s3.amazonaws.com/?list-type=2&delimiter=%2F&prefix={date}%2Fontology%2F')) %>% 
         XML::xmlToList()
     
     oboFile = xml %>% purrr::map('Key') %>%
