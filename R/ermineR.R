@@ -73,10 +73,11 @@ ermineR = function(annotation = NULL,
         if(!file.exists(annotation)){
             message('Attempting to download annotation file')
             annoTemp = tempfile()
-            tryCatch(suppressWarnings(getAnnotation(platform = annotation,
-                                                    file = annoTemp,
-                                                    annotType = 'noParents', 
-                                                    return = FALSE)),
+            tryCatch(suppressWarnings(gemma.R::getPlatformAnnotation(platform = annotation,
+                                                                     file = annoTemp,
+                                                                     annotType = 'noParents',
+                                                                     memoised = FALSE,
+                                                                     unzip = TRUE)),
                      error = function(e){
                          stop('"annotation" is not a valid file or exists in Pavlidis lab annotations. Use listGemmaAnnotations() to get a list of available annotations.')
                      })

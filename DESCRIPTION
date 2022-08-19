@@ -16,7 +16,7 @@ Imports:
     RCurl,
     stringr,
     XML,
-    gemmaAPI
+    gemma.R
 License: Apache License (>= 2.0)
 Encoding: UTF-8
 LazyData: true
@@ -25,5 +25,5 @@ Suggests:
     testthat,
     tools
 Remotes:
-    oganm/gemmaAPI.R
+    PavlidisLab/gemma.R
 RoxygenNote: 7.1.0

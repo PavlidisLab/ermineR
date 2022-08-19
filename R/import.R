@@ -7,6 +7,6 @@ magrittr::`%>%`
 #' @export
 magrittr::`%<>%`
 
-#' @importFrom gemmaAPI getAnnotation 
+#' @importFrom gemma.R getPlatformAnnotation 
 
 globalVariables(".")
