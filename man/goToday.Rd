@@ -7,7 +7,7 @@
 goToday(path, overwrite = FALSE)
 }
 \arguments{
-\item{path}{File path. Without gz extension}
+\item{path}{File path}
 
 \item{overwrite}{If TRUE, overwrites existing file}
 }
