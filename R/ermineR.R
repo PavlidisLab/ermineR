@@ -73,7 +73,7 @@ ermineR = function(annotation = NULL,
         if(!file.exists(annotation)){
             message('Attempting to download annotation file')
             annoTemp = tempfile()
-            tryCatch(suppressWarnings(gemma.R::getPlatformAnnotation(platform = annotation,
+            tryCatch(suppressWarnings(gemma.R::get_platform_annotations(platform = annotation,
                                                                      file = annoTemp,
                                                                      annotType = 'noParents',
                                                                      memoised = FALSE,
