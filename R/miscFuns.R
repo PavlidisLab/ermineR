@@ -8,7 +8,13 @@ listGemmaAnnotations = function(){
     annots = httr::GET('https://gemma.msl.ubc.ca/annots/')$content %>% rawToChar() %>% XML::getHTMLLinks() %>% 
         {.[grepl('noParents',.)]} %>% stringr::str_extract('.*?(?=_noParents)')
     
-    return(annots)
+    platforms = gemma.R::get_platforms_by_ids() %>% gemma.R::get_all_pages()
+    generics = platforms$platform.shortName %>%
+        grepl('Generic_[a-z]*_ncbiIds',.) %>% 
+        {platforms$platform.shortName[.]}
+    
+    
+    return(c(platforms$platform.shortName,generics %>% gsub('_ncbiIds','',.)))
 }
 
 

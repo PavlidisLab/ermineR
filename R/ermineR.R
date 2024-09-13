@@ -69,7 +69,7 @@ ermineR = function(annotation = NULL,
     } else{
         nullAnnot = FALSE
     }
-    if('character' %in% class(annotation)){
+    if('character' %in% class(annotation) && !grepl('Generic_[a-z]*$',annotation)){
         if(!file.exists(annotation)){
             message('Attempting to download annotation file')
             annoTemp = tempfile()
@@ -85,7 +85,21 @@ ermineR = function(annotation = NULL,
             annotation = annoTemp
             
         }
-    } else if('data.frame' %in% class(annotation)) {
+    }else if('character' %in% class(annotation) && grepl('Generic_[a-z]*$',annotation)){
+        
+        annot = tryCatch(suppressWarnings(gemma.R::get_platform_annotations(platform = paste0(annotation,'_ncbiIds'),
+                                                                    annotType = 'noParents',
+                                                                    memoised = FALSE,
+                                                                    unzip = TRUE)),
+                 error = function(e){
+                     stop('"annotation" is not a valid file or exists in Pavlidis lab annotations. Use listGemmaAnnotations() to get a list of available annotations.')
+                 })
+        annot$ElementName = annot$GeneSymbols
+        temp = tempfile()
+        annot %>% readr::write_tsv(temp)
+        annotation = temp
+        
+    }else if('data.frame' %in% class(annotation)) {
         temp = tempfile()
         annotation %>% readr::write_tsv(temp)
         annotation = temp # replace the annotation object with the newly created file name
