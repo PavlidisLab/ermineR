@@ -30,7 +30,7 @@ After java is installed you can install ermineR by doing
 devtools::install_github('PavlidisLab/ermineR')
 ```
 
-If ermineR cannot find your java home by itself. Use either install
+If ermineR cannot find your java home by itself. Either install
 rJava or use `Sys.setenv(JAVA_HOME=javaHome)` to point ermineR to the
 right path.
 
