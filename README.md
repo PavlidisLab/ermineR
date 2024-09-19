@@ -89,7 +89,7 @@ also generic annotation files available that contain all genes from a
 species. These are typically named something like “Generic_human”.
 
 You can manually download these annotation files from
-<https://gemma.msl.ubc.ca/annots/> or by using the `getAnnotation`
+<https://gemma.msl.ubc.ca/annots/> or by using the `gemma.R::get_platform_annotations`
 function. ErmineR typically uses “noParents” versions of these files
 since parent terms are derived using the ontology file acquired from GO.
 
