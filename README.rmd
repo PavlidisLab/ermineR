@@ -6,7 +6,7 @@ knitr::opts_chunk$set(echo = TRUE)
 devtools::load_all()
 ```
 
-# ErmineR <img src="ermineR.png" align="right" height="100px"/>
+# ErmineR <img src="ermineR.png" align="right" style="height:100px"/>
 
 
 This is an R wrapper for Pavlidis Lab's [ermineJ](http://erminej.msl.ubc.ca/). A tool for gene set enrichment analysis with multifunctionality correction.
