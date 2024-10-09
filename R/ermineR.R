@@ -17,7 +17,26 @@
 #' @inheritParams geneSetOpts
 #' @inheritParams returnOpts
 #'
-#' @return A list
+#' @return A list containing a "results" component and a "details" component. 
+#' "results" is a data.frame containing the main output. The columns of this table are
+#' 
+#' \itemize{
+#'     \item \code{Name}: the name of the gene set
+#'     \item \code{ID}: the id of the gene set
+#'     \item \code{NumProbes}:  the number of elements (e.g. probes) in the gene set.
+#'     \item \code{NumGenes}: the number of genes in the gene set.
+#'     \item \code{RawScore}: the raw statistic for the gene set. For explanations see this page
+#'     \item \code{Pval}: the p value for the gene set.
+#'     \item \code{CorrectedPvalue}: the corrected p pvalue. See this page for more information.
+#'     \item \code{MFPvalue}: pvalue after multifunctionality correction. Might be missing if correction was not performed.
+#'     \item \code{CorrectedMFPvalue}: Like CorrectedPvalue, but for the multifunctionality “corrected” pvalue.
+#'     \item \code{Multifunctionality}: How biased the genes in the set are towards multifunctional genes.
+#'     \item \code{Same as}: a list of gene sets which have the exact same members as this one. Such gene sets are not listed anywhere else.
+#'     \item \code{GeneMembers}: If you selected the “Include genes” option when saving, this will contain a list of the genes that are in the gene set, separated by “|”.
+#' }
+#' 
+#' "details" section contain settings that were used to run the analysis.
+#' 
 #' @export
 #'
 ermineR = function(annotation = NULL, 

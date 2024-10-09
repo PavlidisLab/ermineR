@@ -29,6 +29,9 @@
 #' @inheritParams generalStats
 #' @inheritParams geneSetOpts
 #' @inheritParams returnOpts
+#' 
+#' @inherit ermineR return
+#' 
 #' @export
 ora = function(scores = NULL,
                hitlist = NULL,
@@ -88,6 +91,8 @@ ora = function(scores = NULL,
 #' @inheritParams geneSetOpts
 #' @inheritParams returnOpts
 #' 
+#' @inherit ermineR return
+#' 
 #' @export
 gsr = function(scores,
                scoreColumn = 1,
@@ -142,6 +147,8 @@ gsr = function(scores,
 #' @inheritParams generalStats
 #' @inheritParams geneSetOpts
 #' @inheritParams returnOpts
+#' 
+#' @inherit ermineR return
 #' 
 #' @export
 precRecall = function(scores,
@@ -203,6 +210,8 @@ precRecall = function(scores,
 #' @inheritParams generalStats
 #' @inheritParams geneSetOpts
 #' @inheritParams returnOpts
+#' 
+#' @inherit ermineR return
 #' 
 #' @export
 corr = function(expression,
@@ -267,6 +276,8 @@ corr = function(expression,
 #' @inheritParams generalStats
 #' @inheritParams geneSetOpts
 #' @inheritParams returnOpts
+#' 
+#' @inherit ermineR return
 #' 
 #' @export
 roc = function(scores,

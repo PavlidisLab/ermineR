@@ -1,6 +1,6 @@
 Package: ermineR
 Title: Gene set analysis with multifunctionality assessment
-Version: 1.0.2.9000
+Version: 1.0.3.9000
 Authors@R: person("Ogan", "Mancarci", email = "ogan.mancarci@gmail.com", role = c("aut", "cre"))
 Description: ErmineR is an interface to the ermineJ gene set analysis software (http://erminej.msl.ubc.ca). 
 Depends: R (>= 3.4.0)
@@ -26,4 +26,4 @@ Suggests:
     tools
 Remotes:
     PavlidisLab/gemma.R
-RoxygenNote: 7.2.1
+RoxygenNote: 7.3.2
