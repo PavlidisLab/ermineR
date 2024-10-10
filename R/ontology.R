@@ -8,8 +8,8 @@
 #'
 #' @export
 goToday = function(path,overwrite = FALSE){
-    if(exists(path) & !overwrite){
-        stop('File exists, not downloading')
+    if(file.exists(path) & !overwrite){
+        warning('File exists, not downloading')
     }
     utils::download.file('http://purl.obolibrary.org/obo/go.obo',
                          destfile = path,quiet= TRUE)
