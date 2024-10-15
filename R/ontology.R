@@ -44,7 +44,7 @@ getGoDates = function(){
 #'
 #' @export
 goAtDate = function(path, date, overwrite = FALSE){
-    if(exists(path)){
+    if(file.exists(path) & !overwrite){
         stop('File exists. Not overwriting')
     }
     
