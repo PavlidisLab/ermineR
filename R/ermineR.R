@@ -332,7 +332,7 @@ ermineR = function(annotation = NULL,
     } # no warning because there's a default
     
     # set seed here
-    arguments$seed = paste('-seed',runif(1)*10^16)
+    arguments$seed = paste('-seed',as.integer(runif(1)*10^9))
     
     # make the sh call ---------------
     if(Sys.info()['sysname'] =='Windows'){
