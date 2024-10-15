@@ -8,16 +8,19 @@
 readErmineJOutput = function(output){
     fileHead = readLines(output,100,warn = FALSE)
     dataStart = fileHead %>% grep(x = .,pattern = '#!') %>% max
+    cn = c("#!", "Name", "ID", "NumProbes", "NumGenes", "RawScore", "Pval", 
+           "CorrectedPvalue", "MFPvalue", "CorrectedMFPvalue", "Multifunctionality", 
+           "Same as", "GeneMembers","")
     frame = suppressMessages(suppressWarnings(
-        readr::read_tsv(output,skip = dataStart-1,col_names=TRUE)
+        readr::read_tsv(output,skip = dataStart,col_names=cn)
         ))
     
     if(!is.numeric(frame$Pval)){
         frame = suppressMessages(suppressWarnings(
-            readr::read_tsv(output,skip = dataStart-1,col_names=TRUE, locale = readr::locale(decimal_mark = ','))
+            readr::read_tsv(output,skip = dataStart,col_names=cn, locale = readr::locale(decimal_mark = ','))
         ))
     }
-    frame = frame[1:(nrow(frame)-1),2:ncol(frame)]
+    frame = frame[,2:(ncol(frame)-1)]
     
     settingsStart = fileHead %>% grep(x = .,pattern = 'Settings')
     settingsEnd = fileHead %>%  grep(x = .,pattern = '#!----')
