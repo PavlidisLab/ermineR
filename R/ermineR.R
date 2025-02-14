@@ -1,3 +1,20 @@
+#' Run ermineJ GUI 
+#' 
+#' Launches the GUI window for ermineJ. Documentation for the GUI can be found 
+#' at https://erminej.msl.ubc.ca/help/
+#' 
+#' @export
+launchGui = function(){
+    ermineJHome = system.file("ermineJ-3.2",package = 'ermineR')
+    if(Sys.info()['sysname'] =='Windows'){
+        ermineExec = file.path(ermineJHome,'bin/ermineJ.bat')
+    } else{
+        ermineExec = file.path(ermineJHome,'bin/ermineJ.sh')
+    }
+    system2(ermineExec,args = '-G &')
+    invisible(NULL)
+}
+
 
 #' Run ermineJ analysis
 #' 
